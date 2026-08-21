@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DNK's House — AI Agents cho doanh nghiệp</title>
+  <meta name="description"
+    content="DNK's House triển khai AI Agent hiểu sản phẩm của bạn, tự động giải quyết hơn 70% yêu cầu hỗ trợ khách hàng — hoạt động 24/7, đúng giọng thương hiệu." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+
+<body>
+  <a class="visually-hidden" href="#main">Bỏ qua tới nội dung chính</a>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <span class="logo-mark">DH</span>
+        DNK's House
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#features">Sản phẩm</a>
+        <a href="#how-it-works">Cách hoạt động</a>
+        <a href="#pricing">Bảng giá</a>
+        <a href="#insights">Blog</a>
+        <a href="pages/contact.html">Liên hệ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="pages/contact.html" class="btn btn-black btn-sm">Dùng thử miễn phí</a>
+        <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="nav-links">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="section hero section-blue">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">AI AGENTS CHO DOANH NGHIỆP</span>
+          <h1>Bạn không mở công ty<br />để trả lời email hỗ trợ cả ngày.</h1>
+          <p class="hero-sub">
+            DNK's House triển khai AI Agent hiểu rõ sản phẩm của bạn, tự động giải quyết hơn 70% yêu cầu khách
+            hàng — hoạt động 24/7, đúng giọng điệu thương hiệu, không cần tăng thêm nhân sự.
+          </p>
+          <div class="cta-row">
+            <a href="pages/contact.html" class="btn btn-black">Bắt đầu miễn phí</a>
+            <a href="#how-it-works" class="btn btn-outline-light">Xem cách hoạt động</a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" style="--reveal-delay:.15s">
+          <div class="mockup-frame">
+            <div class="mockup-dots"><span></span><span></span><span></span></div>
+            <div class="chat-bubble from-user">Đơn hàng #4821 của tôi bao giờ tới nơi vậy ạ?</div>
+            <div class="chat-bubble from-agent">Chào bạn! Đơn #4821 đang giao và dự kiến đến vào ngày mai trước
+              18h. Bạn có muốn mình gửi link theo dõi trực tiếp không?</div>
+            <div class="chat-typing"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGO STRIP -->
+    <section class="section-cream logo-strip">
+      <div class="container reveal">
+        <p>Được tin dùng bởi các đội ngũ chăm sóc khách hàng hàng đầu</p>
+        <div class="logo-row">
+          <span>ACME CO.</span>
+          <span>NORTHWIND</span>
+          <span>ORBITAL</span>
+          <span>ATLASWORK</span>
+          <span>NOVA&nbsp;LABS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT SHOWCASE -->
+    <section class="section-pink product-showcase">
+      <div class="container reveal">
+        <div class="product-frame">
+          <aside class="product-sidebar">
+            <div class="product-sidebar-item active">AI Agents</div>
+            <div class="product-sidebar-item">Inbox</div>
+            <div class="product-sidebar-item">Chatbots</div>
+            <div class="product-sidebar-item">Ask DNK</div>
+            <div class="product-sidebar-item">Training</div>
+            <div class="product-sidebar-item">Reporting</div>
+          </aside>
+          <div class="product-panel">
+            <div class="product-panel-header">
+              <span class="avatar">TL</span>
+              <div>
+                <strong>Trần Linh</strong>
+                <span class="product-panel-sub">Yêu cầu đổi size sản phẩm</span>
+              </div>
+              <span class="tag" style="margin-left:auto;background:var(--color-cream)">Đang mở</span>
+            </div>
+            <div class="chat-bubble from-user">Tôi muốn đổi size áo, phải làm sao ạ?</div>
+            <div class="chat-bubble from-agent">Bạn có thể đổi size miễn phí trong 30 ngày kể từ ngày nhận
+              hàng. Mình đã tạo sẵn yêu cầu đổi hàng — kiểm tra email để xác nhận nhé!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -> SOLUTION -->
+    <section class="section section-pink tight-top" id="solution">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">VẤN ĐỀ THỰC TẾ</span>
+          <h2>Giải quyết vấn đề thật,<br />không chỉ trả lời câu hỏi.</h2>
+          <p>Phần lớn hệ thống hỗ trợ hiện nay được xây trên những khuyến khích ngược chiều — ưu tiên đóng ticket
+            nhanh thay vì xây dựng lòng tin với khách hàng. AI Agent của DNK's House hiểu ngữ cảnh trước khi trả
+            lời, để mỗi phản hồi thật sự giải quyết được vấn đề.</p>
+        </div>
+
+        <div class="split-cards">
+          <div class="split-card card-dark reveal">
+            <span class="tag">Trước đây</span>
+            <h3>Chatbot rập khuôn, trả lời sai ngữ cảnh</h3>
+            <p>Khách hàng lặp lại câu hỏi nhiều lần, chờ đợi lâu, cuối cùng vẫn phải gặp nhân viên.</p>
+          </div>
+          <div class="split-card card-light reveal" style="--reveal-delay:.1s">
+            <span class="tag">Với DNK's House</span>
+            <h3>AI Agent hiểu sản phẩm, trả lời như chuyên gia</h3>
+            <p>Học từ tài liệu và lịch sử ticket thật, phản hồi cá nhân hoá và chính xác ngay từ lần đầu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section section-white" id="features">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <span class="eyebrow">SẢN PHẨM</span>
+          <h2>Một nền tảng, mọi việc hỗ trợ khách hàng</h2>
+          <p>Từ AI Agent tới hộp thư hợp nhất — mọi công cụ bạn cần để mở rộng hỗ trợ khách hàng mà không mở rộng
+            đội ngũ.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 3a2 2 0 0 1 2 2v1h1a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h1V5a2 2 0 0 1 2-2Z" />
+                <circle cx="9.5" cy="12.5" r="1" fill="currentColor" stroke="none" />
+                <circle cx="14.5" cy="12.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </div>
+            <h3>AI Agents</h3>
+            <p>Triển khai tác nhân AI hiểu sản phẩm của bạn, xử lý các câu hỏi thường gặp với độ chính xác cao,
+              hoạt động 24/7.</p>
+          </article>
+
+          <article class="feature-card reveal" style="--reveal-delay:.08s">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L3 21l1.8-5.4A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 1 1 21 11.5Z" />
+              </svg>
+            </div>
+            <h3>Chatbots</h3>
+            <p>Trợ lý tự động trên website, app và mọi kênh chat — luôn sẵn sàng phản hồi khách hàng ngay lập
+              tức.</p>
+          </article>
+
+          <article class="feature-card reveal" style="--reveal-delay:.16s">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <path d="M3 9h18M8 4v5" />
+              </svg>
+            </div>
+            <h3>Unified Inbox</h3>
+            <p>Một không gian làm việc chung cho AI và con người trên mọi kênh — email, chat, mạng xã hội.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+              </svg>
+            </div>
+            <h3>Ask DNK</h3>
+            <p>Công cụ hỏi-đáp nội bộ giúp đội ngũ tra cứu quy trình, chính sách và tài liệu sản phẩm tức thì.</p>
+          </article>
+
+          <article class="feature-card reveal" style="--reveal-delay:.08s">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 20v-6M6 20V10M18 20V4" />
+              </svg>
+            </div>
+            <h3>Training Module</h3>
+            <p>Đào tạo AI Agent bằng tài liệu, website và dữ liệu ticket sẵn có — không cần đội ngũ kỹ thuật.</p>
+          </article>
+
+          <article class="feature-card reveal" style="--reveal-delay:.16s">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 3v18h18" />
+                <path d="M7 15l4-5 3 3 5-7" />
+              </svg>
+            </div>
+            <h3>Reporting</h3>
+            <p>Báo cáo và phân tích chi tiết: tỷ lệ tự động hoá, thời gian phản hồi, mức độ hài lòng khách hàng.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="section section-blue">
+      <div class="container final-cta reveal">
+        <span class="eyebrow">TRIỂN KHAI NHANH</span>
+        <h2>Hỗ trợ nhiều khách hàng hơn,<br />chỉ trong vài phút thiết lập.</h2>
+        <div class="cta-row centered">
+          <a href="pages/contact.html" class="btn btn-white">Bắt đầu ngay</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAINING / KNOWLEDGE -->
+    <section class="section section-white" id="how-it-works">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">ĐÀO TẠO</span>
+          <h2>Đào tạo AI Agent một lần.<br />Xem nó cải thiện mãi mãi.</h2>
+          <p>Kết nối website, tài liệu sản phẩm hoặc dữ liệu ticket hiện có. AI Agent phân tích và học liên tục
+            từ mỗi tương tác thật để ngày càng chính xác hơn.</p>
+        </div>
+
+        <div class="knowledge-visual reveal">
+          <div class="source-list">
+            <div class="source-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z" />
+              </svg>
+              Tài liệu sản phẩm
+            </div>
+            <div class="source-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+              </svg>
+              Website công ty
+            </div>
+            <div class="source-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 12h8M8 16h5M8 8h8" />
+                <rect x="4" y="4" width="16" height="16" rx="2" />
+              </svg>
+              Lịch sử ticket
+            </div>
+          </div>
+
+          <div class="hub">DNK<br />AI</div>
+
+          <div class="output-card">
+            <div class="chat-bubble from-agent" style="margin-left:0;border-radius:16px;">
+              Xin chào! Mình đã kiểm tra chính sách đổi trả — bạn có thể đổi sản phẩm trong vòng 30 ngày kể từ
+              ngày nhận hàng nhé.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TONE BANNER -->
+    <section class="section section-blue">
+      <div class="container final-cta reveal">
+        <span class="eyebrow">GIỌNG ĐIỆU THƯƠNG HIỆU</span>
+        <h2>Làm chủ giọng điệu của bạn.<br />Đồng hành cùng đội ngũ.</h2>
+        <p style="max-width:56ch;margin-inline:auto;opacity:.9;margin-top:1rem;">AI Agent không thay thế đội ngũ
+          của bạn — nó là đồng đội, luôn giữ đúng phong cách và giá trị thương hiệu trong từng phản hồi.</p>
+      </div>
+    </section>
+
+    <!-- WORKSPACE -->
+    <section class="section section-cream">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">KHÔNG GIAN LÀM VIỆC</span>
+          <h2>Nơi con người và AI làm việc cùng nhau</h2>
+          <p>Đội ngũ của bạn theo dõi, chỉnh sửa và duyệt phản hồi của AI ngay trong một hộp thư — không cần
+            chuyển đổi qua lại giữa nhiều công cụ.</p>
+        </div>
+
+        <div class="workspace-grid">
+          <figure class="inbox-card reveal">
+            <div class="inbox-row active">
+              <div class="avatar">TL</div>
+              <div>Trần Linh <span class="snippet">— Hỏi về đơn hàng #4821</span></div>
+            </div>
+            <div class="inbox-row">
+              <div class="avatar">NM</div>
+              <div>Nguyễn Minh <span class="snippet">— Yêu cầu đổi trả sản phẩm</span></div>
+            </div>
+            <div class="inbox-row">
+              <div class="avatar">HP</div>
+              <div>Hoàng Phúc <span class="snippet">— Câu hỏi về bảng giá</span></div>
+            </div>
+            <figcaption>Mọi cuộc hội thoại từ email, chat, mạng xã hội — gom về một nơi.</figcaption>
+          </figure>
+
+          <figure class="inbox-card reveal" style="--reveal-delay:.1s">
+            <div class="chat-bubble from-user">Sản phẩm này còn bảo hành không ạ?</div>
+            <div class="chat-bubble from-agent">Còn bạn nhé, sản phẩm được bảo hành 12 tháng kể từ ngày mua.
+              Bạn có cần mình gửi phiếu bảo hành điện tử không?</div>
+            <figcaption class="workspace-caption">AI soạn sẵn phản hồi — đội ngũ chỉnh sửa hoặc duyệt gửi
+              trong một chạm.</figcaption>
+          </figure>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat reveal">
+            <div class="stat-number">70%+</div>
+            <div class="stat-label">yêu cầu được tự động giải quyết</div>
+          </div>
+          <div class="stat reveal" style="--reveal-delay:.08s">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">phản hồi khách hàng liên tục</div>
+          </div>
+          <div class="stat reveal" style="--reveal-delay:.16s">
+            <div class="stat-number">&lt; 5 phút</div>
+            <div class="stat-label">thời gian phản hồi trung bình</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING CTA -->
+    <section class="section section-blue" id="pricing">
+      <div class="container final-cta reveal">
+        <span class="eyebrow">BẢNG GIÁ</span>
+        <h2>Bảng giá phù hợp<br />với quy mô doanh nghiệp của bạn.</h2>
+        <p style="max-width:52ch;margin-inline:auto;opacity:.9;margin-top:1rem;">Minh bạch, không phí ẩn. Bắt
+          đầu miễn phí và nâng cấp khi doanh nghiệp bạn phát triển.</p>
+        <div class="cta-row centered">
+          <a href="pages/contact.html" class="btn btn-white">Khám phá bảng giá</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAUNCH -->
+    <section class="section section-white">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">TRIỂN KHAI</span>
+          <h2>Ra mắt trong vài phút.<br />Không cần code.</h2>
+          <p>Kết nối tài liệu hiện có, đồng bộ website và bắt đầu tự động hoá hỗ trợ khách hàng ngay hôm nay.</p>
+        </div>
+
+        <div class="steps-grid" style="margin-top:var(--space-6)">
+          <div class="step reveal" style="border-color:rgba(10,10,10,.1)">
+            <div class="step-number" style="color:var(--color-blue)">01</div>
+            <h3 style="color:var(--color-ink)">Đào tạo</h3>
+            <p style="color:var(--color-ink);opacity:.7">Kết nối website, tải tài liệu hoặc đồng bộ dữ liệu có
+              sẵn.</p>
+          </div>
+          <div class="step reveal" style="border-color:rgba(10,10,10,.1);--reveal-delay:.08s">
+            <div class="step-number" style="color:var(--color-blue)">02</div>
+            <h3 style="color:var(--color-ink)">Học tập</h3>
+            <p style="color:var(--color-ink);opacity:.7">AI phân tích tài liệu và các ticket đã xử lý trước đó.
+            </p>
+          </div>
+          <div class="step reveal" style="border-color:rgba(10,10,10,.1);--reveal-delay:.16s">
+            <div class="step-number" style="color:var(--color-blue)">03</div>
+            <h3 style="color:var(--color-ink)">Triển khai</h3>
+            <p style="color:var(--color-ink);opacity:.7">AI Agent hoạt động 24/7 để xử lý yêu cầu khách hàng.</p>
+          </div>
+          <div class="step reveal" style="border-color:rgba(10,10,10,.1);--reveal-delay:.24s">
+            <div class="step-number" style="color:var(--color-blue)">04</div>
+            <h3 style="color:var(--color-ink)">Cải thiện</h3>
+            <p style="color:var(--color-ink);opacity:.7">Hệ thống liên tục cập nhật theo dữ liệu và tương tác
+              mới.</p>
+          </div>
+        </div>
+
+        <div class="cta-row reveal">
+          <a href="pages/contact.html" class="btn btn-blue">Dùng thử miễn phí</a>
+          <a href="pages/contact.html" class="btn btn-outline-light" style="color:var(--color-ink);border-color:rgba(10,10,10,.25)">Đặt lịch demo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPLORE -->
+    <section class="section section-blue explore">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <span class="eyebrow">KHÁM PHÁ</span>
+          <h2>Khám phá DNK's House</h2>
+        </div>
+
+        <div class="explore-grid reveal">
+          <a href="#features" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a2 2 0 0 1 2 2v1h1a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h1V5a2 2 0 0 1 2-2Z" /></svg>
+            AI Agents
+          </a>
+          <a href="#features" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L3 21l1.8-5.4A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 1 1 21 11.5Z" /></svg>
+            Chatbots
+          </a>
+          <a href="#features" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M8 4v5" /></svg>
+            Unified Inbox
+          </a>
+          <a href="#features" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" /></svg>
+            Ask DNK
+          </a>
+          <a href="#how-it-works" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4" /></svg>
+            Training Module
+          </a>
+          <a href="#features" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18" /><path d="M7 15l4-5 3 3 5-7" /></svg>
+            Reporting
+          </a>
+          <a href="#pricing" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v10M9 9.5c0-1.4 1.3-2.5 3-2.5s3 1.1 3 2.5-1.3 2-3 2.5-3 1.1-3 2.5 1.3 2.5 3 2.5 3-1.1 3-2.5" /></svg>
+            Bảng giá
+          </a>
+          <a href="#" class="explore-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z" /></svg>
+            Tài liệu API
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="section section-cream" id="insights">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <span class="eyebrow">BLOG</span>
+          <h2>Góc nhìn mới nhất</h2>
+        </div>
+
+        <div class="insight-grid">
+          <article class="insight-card reveal">
+            <span class="tag">Hướng dẫn</span>
+            <h3>AI Agent nào phù hợp với doanh nghiệp của bạn?</h3>
+            <p>So sánh các mô hình AI Agent và cách chọn giải pháp phù hợp với quy mô đội ngũ.</p>
+          </article>
+          <article class="insight-card reveal" style="--reveal-delay:.08s">
+            <span class="tag">Case study</span>
+            <h3>Cách một thương hiệu bán lẻ giảm 60% thời gian phản hồi</h3>
+            <p>Hành trình triển khai AI Agent từ những ngày đầu đến khi vận hành ổn định.</p>
+          </article>
+          <article class="insight-card reveal" style="--reveal-delay:.16s">
+            <span class="tag">Sản phẩm</span>
+            <h3>Bên trong công nghệ đứng sau DNK's House</h3>
+            <p>Tìm hiểu cách AI Agent học và cải thiện liên tục từ dữ liệu thật.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEVELOPER BAND -->
+    <section class="section-black dev-band">
+      <div class="container dev-band-inner reveal">
+        <p>Lựa chọn của nhà phát triển. Chuẩn mực cho doanh nghiệp.</p>
+        <div class="link-row">
+          <a href="#" class="link-arrow">Tài liệu API →</a>
+          <a href="#how-it-works" class="link-arrow">Tìm hiểu thêm →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section section-cream" id="cta-final">
+      <div class="container final-cta reveal">
+        <span class="eyebrow" style="color:var(--color-blue)">SẴN SÀNG CHƯA?</span>
+        <h2>Bạn đã thấy nó hoạt động thế nào.<br />Giờ hãy áp dụng vào thực tế.</h2>
+        <div class="cta-row centered">
+          <a href="pages/contact.html" class="btn btn-black">Bắt đầu miễn phí →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-black">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo" style="color:#fff">
+            <span class="logo-mark">DH</span>
+            DNK's House
+          </a>
+          <p>Nền tảng AI Agents giúp doanh nghiệp tự động hoá và nhân bản hoá trải nghiệm hỗ trợ khách hàng.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Sản phẩm</h4>
+          <ul>
+            <li><a href="#features">AI Agents</a></li>
+            <li><a href="#features">Chatbots</a></li>
+            <li><a href="#features">Unified Inbox</a></li>
+            <li><a href="#features">Reporting</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Công ty</h4>
+          <ul>
+            <li><a href="#">Về chúng tôi</a></li>
+            <li><a href="#insights">Blog</a></li>
+            <li><a href="#">Tuyển dụng</a></li>
+            <li><a href="pages/contact.html">Liên hệ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tài nguyên</h4>
+          <ul>
+            <li><a href="#how-it-works">Cách hoạt động</a></li>
+            <li><a href="#pricing">Bảng giá</a></li>
+            <li><a href="#">Tài liệu API</a></li>
+            <li><a href="#">So sánh</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Pháp lý</h4>
+          <ul>
+            <li><a href="#">Điều khoản dịch vụ</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 DNK's House. Bảo lưu mọi quyền.</span>
+        <div class="social-icons">
+          <a href="#" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.9 3H21l-6.7 7.6L22 21h-6.4l-5-6.5-5.7 6.5H2.3l7.1-8.1L2 3h6.5l4.5 6 5.9-6Zm-1.1 16.1h1.2L7.3 4.8H6l11.8 14.3Z" />
+            </svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+/* ===== Design tokens — DNK's House ===== */
+:root {
+  /* Brand colors */
+  --color-blue: #1b2af2;
+  --color-blue-700: #121ecb;
+  --color-blue-900: #0b1240;
+  --color-pink: #f7d9de;
+  --color-pink-600: #f0bcc6;
+  --color-cream: #f7f5f0;
+  --color-white: #ffffff;
+  --color-black: #0a0a0a;
+  --color-ink: #0e0e10;
+  --color-gray-600: #63636a;
+  --color-gray-300: #d8d6d0;
+  --color-gray-100: #ececE6;
+  --color-error: #d92d20;
+  --color-error-bg: #fdf1f0;
+  --color-success: #16a34a;
+
+  /* Text-on-color */
+  --on-blue: #ffffff;
+  --on-black: #ffffff;
+  --on-light: var(--color-ink);
+
+  /* Typography */
+  --font-sans: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  /* Spacing scale */
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --space-8: 6.5rem;
+
+  /* Layout */
+  --container: 1180px;
+  --container-pad: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Shadow */
+  --shadow-card: 0 24px 48px -24px rgba(10, 10, 10, 0.28);
+  --shadow-soft: 0 12px 24px -16px rgba(10, 10, 10, 0.18);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.6s;
+}
