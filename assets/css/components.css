@@ -111,7 +111,8 @@
   justify-content: center;
   color: #fff;
   font-weight: 800;
-  font-size: 1.02rem;
+  font-size: 0.68rem;
+  letter-spacing: -0.02em;
   flex-shrink: 0;
 }
 
