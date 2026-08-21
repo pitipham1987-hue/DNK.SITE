@@ -1170,3 +1170,9 @@
     transition: opacity 0.3s var(--ease-out);
   }
 }
+
+@media (max-width: 960px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
