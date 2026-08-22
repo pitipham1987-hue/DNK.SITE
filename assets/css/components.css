@@ -8,7 +8,12 @@
   font-weight: 600;
   font-size: 0.95rem;
   border: 1.5px solid transparent;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+  transition:
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out),
+    background 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
   white-space: nowrap;
 }
 
@@ -114,6 +119,7 @@
   font-size: 0.68rem;
   letter-spacing: -0.02em;
   flex-shrink: 0;
+  object-fit: cover;
 }
 
 .nav-links {
@@ -299,7 +305,6 @@
 }
 
 @keyframes typing-bounce {
-
   0%,
   60%,
   100% {
@@ -473,7 +478,9 @@
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   box-shadow: var(--shadow-soft);
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
 }
 
 .feature-card:hover {
@@ -954,7 +961,9 @@
     transform: translateY(-12px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+    transition:
+      opacity 0.25s var(--ease-out),
+      transform 0.25s var(--ease-out);
   }
 
   .nav-links a {
@@ -1080,7 +1089,9 @@
   border: 1.5px solid var(--color-gray-300);
   background: #fff;
   color: var(--color-ink);
-  transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  transition:
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
 }
 
 .form-textarea {
