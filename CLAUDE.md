@@ -178,3 +178,17 @@ Giữ CSS chia theo lớp: tokens (design system) → base → components → pa
 
 - Copy tiếng Việt hoặc song ngữ Việt/Anh tuỳ yêu cầu — hỏi rõ ngôn ngữ chính trước khi viết nội dung dài nếu chưa được chỉ định trong hội thoại.
 - Giọng văn: tự tin, ngắn gọn, tập trung lợi ích kinh doanh của AI Agent (tiết kiệm thời gian, tự động hoá, phục vụ khách hàng 24/7) hơn là thuật ngữ kỹ thuật.
+
+## Agent skills
+
+### Issue tracker
+
+Issue và spec sống dưới dạng file markdown trong `.scratch/<feature>/`. Xem `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Dùng 5 vai trò triage chuẩn (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), tên nhãn trùng tên vai trò. Xem `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Bố cục single-context — một `CONTEXT.md` + `docs/adr/` ở gốc repo. Xem `docs/agents/domain.md`.
