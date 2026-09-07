@@ -1,46 +1,46 @@
 # Issue tracker: GitLab
 
-Issues and specs for this repo live as GitLab issues. Use the [`glab`](https://gitlab.com/gitlab-org/cli) CLI for all operations.
+Các issue và spec cho repo này sống dưới dạng GitLab issues. Dùng CLI [`glab`](https://gitlab.com/gitlab-org/cli) cho mọi thao tác.
 
-## Conventions
+## Quy ước
 
-- **Create an issue**: `glab issue create --title "..." --description "..."`. Use a heredoc for multi-line descriptions. Pass `--description -` to open an editor.
-- **Read an issue**: `glab issue view <number> --comments`. Use `-F json` for machine-readable output.
-- **List issues**: `glab issue list -F json` with appropriate `--label` filters.
-- **Comment on an issue**: `glab issue note <number> --message "..."`. GitLab calls comments "notes".
-- **Apply / remove labels**: `glab issue update <number> --label "..."` / `--unlabel "..."`. Multiple labels can be comma-separated or by repeating the flag.
-- **Close**: `glab issue close <number>`. `glab issue close` does not accept a closing comment, so post the explanation first with `glab issue note <number> --message "..."`, then close.
-- **Merge requests**: GitLab calls PRs "merge requests". Use `glab mr create`, `glab mr view`, `glab mr note`, etc. — the same shape as `gh pr ...` with `mr` in place of `pr` and `note`/`--message` in place of `comment`/`--body`.
+- **Tạo issue**: `glab issue create --title "..." --description "..."`. Dùng heredoc cho mô tả nhiều dòng. Truyền `--description -` để mở editor.
+- **Đọc issue**: `glab issue view <number> --comments`. Dùng `-F json` cho output mà máy có thể đọc.
+- **Liệt kê issues**: `glab issue list -F json` với các bộ lọc `--label` phù hợp.
+- **Bình luận trên issue**: `glab issue note <number> --message "..."`. GitLab gọi comment là "notes".
+- **Áp dụng / gỡ nhãn**: `glab issue update <number> --label "..."` / `--unlabel "..."`. Phân tách nhiều nhãn bằng dấu phẩy hoặc lặp lại cờ.
+- **Đóng issue**: `glab issue close <number>`. `glab issue close` không chấp nhận comment đóng, vì vậy hãy đăng giải thích trước bằng `glab issue note <number> --message "..."`, sau đó mới đóng.
+- **Merge requests**: GitLab gọi PR là "merge requests". Dùng `glab mr create`, `glab mr view`, `glab mr note`, v.v. — cùng hình dạng với `gh pr ...` thay `pr` bằng `mr` và `note`/`--message` bằng `comment`/`--body`.
 
-Infer the repo from `git remote -v` — `glab` does this automatically when run inside a clone.
+Suy luận repo từ `git remote -v` — `glab` tự động làm việc này khi chạy bên trong một bản clone.
 
-## Merge requests as a triage surface
+## Merge requests như một bề mặt triage
 
-**MRs as a request surface: no.** _(Set to `yes` if this repo treats external merge requests as feature requests; `/triage` reads this flag.)_
+**MRs như một bề mặt request: no.** _(Đặt thành `yes` nếu repo này coi các merge request bên ngoài như các yêu cầu tính năng; `/triage` đọc cờ này.)_
 
-When set to `yes`, MRs run through the same labels and states as issues, using the `glab mr` equivalents:
+Khi đặt thành `yes`, các MR chạy qua cùng nhãn và trạng thái như issue, dùng các lệnh tương đương `glab mr`:
 
-- **Read an MR**: `glab mr view <number> --comments` and `glab mr diff <number>` for the diff.
-- **List external MRs for triage**: `glab mr list -F json`, then keep only MRs whose author is not a project member/owner (a contributor's MR, not a maintainer's in-flight work).
-- **Comment / label / close**: `glab mr note`, `glab mr update --label`/`--unlabel`, `glab mr close`.
+- **Đọc an MR**: `glab mr view <number> --comments` và `glab mr diff <number>` để lấy diff.
+- **Liệt kê MRs bên ngoài cho triage**: `glab mr list -F json`, sau đó chỉ giữ lại các MR mà tác giả không phải là member/owner của project (MR của contributor, không phải công việc đang làm của maintainer).
+- **Bình luận / dán nhãn / đóng**: `glab mr note`, `glab mr update --label`/`--unlabel`, `glab mr close`.
 
-Unlike GitHub, GitLab numbers issues and MRs separately, so `#42` is unambiguous once you know which surface the maintainer means.
+Không giống GitHub, GitLab đánh số issue và MR riêng biệt, nên `#42` không bị mơ hồ một khi bạn biếtmaintainer muốn nói tới bề mặt nào.
 
-## When a skill says "publish to the issue tracker"
+## Khi một skill nói "xuất bản lên issue tracker"
 
-Create a GitLab issue.
+Tạo một GitLab issue.
 
-## When a skill says "fetch the relevant ticket"
+## Khi một skill nói "lấy ticket liên quan"
 
-Run `glab issue view <number> --comments`.
+Chạy `glab issue view <number> --comments`.
 
-## Wayfinding operations
+## Các thao tác Wayfinding
 
-Used by `/wayfinder`. The **map** is a single issue with **child** issues as tickets.
+Được sử dụng bởi `/wayfinder`. **Bản đồ (map)** là một issue đơn lẻ với các issue **con (child)** làm ticket.
 
-- **Map**: a single issue labelled `wayfinder:map`, holding the Notes / Decisions-so-far / Fog body. `glab issue create --label wayfinder:map`. (On GitLab tiers with native epics, an epic may hold the map instead; a labelled issue works everywhere.)
-- **Child ticket**: an issue carrying `Part of #<map>` at the top of its description and labels `wayfinder:<type>` (`research`/`prototype`/`grilling`/`task`). Once claimed, the ticket is assigned to the driving dev.
-- **Blocking**: GitLab's **native blocking link** — the canonical, UI-visible representation. Add it with the `/blocked_by #<n>` quick action, posted as a note (`glab issue note <child> --message "/blocked_by #<blocker>"`). Native blocking links are a Premium/Ultimate feature; on the free tier (or where unavailable) fall back to a `Blocked by: #<n>, #<n>` line at the top of the description. A ticket is unblocked when every blocker is closed.
-- **Frontier query**: `glab issue list -F json` scoped to the map's children, drop any with an open blocker — a native `blocked_by` link to an open issue (`glab api projects/:id/issues/:iid/links`), or an open issue in the `Blocked by` line — or an assignee; first in map order wins.
-- **Claim**: `glab issue update <n> --assignee @me` — the session's first write.
-- **Resolve**: `glab issue note <n> --message "<answer>"`, then `glab issue close <n>`, then append a context pointer (gist + link) to the map's Decisions-so-far.
+- **Bản đồ**: một issue đơn lẻ được dán nhãn `wayfinder:map`, giữ phần body Ghi chú / Quyết định-cho-đến-nay / Sương mù. `glab issue create --label wayfinder:map`. (Trên các gói GitLab có epics gốc, một epic có thể giữ bản đồ; một issue được dán nhãn hoạt động ở mọi nơi.)
+- **Ticket con**: một issue mang dòng `Part of #<map>` ở đầu mô tả và các nhãn `wayfinder:<type>` (`research`/`prototype`/`grilling`/`task`). Một khi được nhận làm, ticket được gán cho dev đang thực hiện.
+- **Chặn (Blocking)**: **liên kết chặn gốc (native blocking link)** của GitLab — biểu diễn chuẩn hóa, hiển thị được trên UI. Thêm nó bằng quick action `/blocked_by #<n>`, đăng dưới dạng note (`glab issue note <child> --message "/blocked_by #<blocker>"`). Các liên kết chặn gốc là tính năng của Premium/Ultimate; trên gói free (hoặc nơi không có sẵn) fallback về dòng `Blocked by: #<n>, #<n>` ở đầu mô tả. Một ticket được bỏ chặn khi mọi blocker đều đóng.
+- **Truy vấn đường biên (Frontier query)**: `glab issue list -F json` scoped vào các con của bản đồ, bỏ bất kỳ cái nào có một blocker đang mở — một liên kết `blocked_by` gốc tới một issue đang mở (`glab api projects/:id/issues/:iid/links`), hoặc một issue đang mở trong dòng `Blocked by` — hoặc đã có người nhận; cái đầu tiên theo thứ tự bản đồ sẽ thắng.
+- **Nhận làm (Claim)**: `glab issue update <n> --assignee @me` — lần ghi đầu tiên của phiên.
+- **Giải quyết (Resolve)**: `glab issue note <n> --message "<answer>"`, sau đó `glab issue close <n>`, rồi nối thêm một con trỏ ngữ cảnh (ý chính + link) vào mục Quyết định-cho-đến-nay của bản đồ.

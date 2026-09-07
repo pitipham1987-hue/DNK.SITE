@@ -1,114 +1,114 @@
 ---
 name: codebase-design
-description: Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.
+description: Từ vựng chung để thiết kế các module sâu (deep module). Dùng khi người dùng muốn thiết kế hoặc cải thiện interface của một module, tìm các cơ hội đào sâu, quyết định vị trí đặt một seam, làm cho code dễ test hơn hoặc dễ điều hướng hơn với AI, hoặc khi một skill khác cần từ vựng module-sâu.
 ---
 
 # Codebase Design
 
-Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
+Thiết kế các **module sâu (deep module)**: nhiều hành vi đằng sau một interface nhỏ, đặt tại một seam sạch, có thể test được qua interface đó. Dùng ngôn ngữ và các nguyên tắc này ở bất cứ đâu code đang được thiết kế hoặc tái cấu trúc. Mục tiêu là leverage cho caller, locality cho người bảo trì, và khả năng test cho tất cả mọi người.
 
-## Glossary
+## Bảng thuật ngữ
 
-Use these terms exactly — don't substitute "component," "service," "API," or "boundary." Consistent language is the whole point.
+Dùng chính xác các thuật ngữ này — đừng thay bằng "component," "service," "API," hay "boundary." Ngôn ngữ nhất quán chính là trọng tâm.
 
-**Module** — anything with an interface and an implementation. Deliberately scale-agnostic: a function, class, package, or tier-spanning slice. _Avoid_: unit, component, service.
+**Module** — bất cứ thứ gì có một interface và một implementation. Cố tình không phân biệt theo quy mô: một hàm, class, package, hoặc một lát cắt trải dài qua nhiều tầng (tier). _Tránh_: unit, component, service.
 
-**Interface** — everything a caller must know to use the module correctly: the type signature, but also invariants, ordering constraints, error modes, required configuration, and performance characteristics. _Avoid_: API, signature (too narrow — they refer only to the type-level surface).
+**Interface** — mọi thứ mà một caller phải biết để dùng module đúng cách: chữ ký kiểu (type signature), mà còn cả các bất biến (invariant), các ràng buộc về thứ tự, chế độ lỗi, cấu hình bắt buộc, và đặc tính hiệu năng. _Tránh_: API, signature (quá hẹp — chúng chỉ chỉ đến bề mặt ở cấp kiểu).
 
-**Implementation** — what's inside a module, its body of code. Distinct from **Adapter**: a thing can be a small adapter with a large implementation (a Postgres repo) or a large adapter with a small implementation (an in-memory fake). Reach for "adapter" when the seam is the topic; "implementation" otherwise.
+**Implementation** — những gì bên trong một module, phần thân code của nó. Khác với **Adapter**: một thứ có thể là một adapter nhỏ với một implementation lớn (một repo Postgres) hoặc một adapter lớn với một implementation nhỏ (một bản giả trong bộ nhớ — in-memory fake). Dùng "adapter" khi seam là chủ đề; nếu không thì dùng "implementation".
 
-**Depth** — leverage at the interface: the amount of behaviour a caller (or test) can exercise per unit of interface they have to learn. A module is **deep** when a large amount of behaviour sits behind a small interface, **shallow** when the interface is nearly as complex as the implementation.
+**Depth (Độ sâu)** — leverage tại interface: lượng hành vi mà một caller (hoặc test) có thể sử dụng trên mỗi đơn vị interface mà họ phải học. Một module là **sâu (deep)** khi một lượng lớn hành vi nằm sau một interface nhỏ, **nông (shallow)** khi interface gần phức tạp bằng chính implementation.
 
-**Seam** _(Michael Feathers)_ — a place where you can alter behaviour without editing in that place; the *location* at which a module's interface lives. Where to put the seam is its own design decision, distinct from what goes behind it. _Avoid_: boundary (overloaded with DDD's bounded context).
+**Seam** _(Michael Feathers)_ — một nơi bạn có thể thay đổi hành vi mà không cần sửa ngay tại đó; *vị trí* nơi interface của một module sống. Đặt seam ở đâu là một quyết định thiết kế riêng, khác với việc đặt gì đằng sau nó. _Tránh_: boundary (bị quá tải nghĩa với bounded context của DDD).
 
-**Adapter** — a concrete thing that satisfies an interface at a seam. Describes *role* (what slot it fills), not substance (what's inside).
+**Adapter** — một thứ cụ thể thỏa mãn một interface tại một seam. Mô tả *vai trò* (nó lấp vào chỗ nào), không phải *nội dung* (bên trong có gì).
 
-**Leverage** — what callers get from depth: more capability per unit of interface they learn. One implementation pays back across N call sites and M tests.
+**Leverage** — thứ caller nhận được từ depth: nhiều khả năng hơn trên mỗi đơn vị interface họ học. Một implementation trả công qua N điểm gọi và M test.
 
-**Locality** — what maintainers get from depth: change, bugs, knowledge, and verification concentrate in one place rather than spreading across callers. Fix once, fixed everywhere.
+**Locality (Tính cục bộ)** — thứ người bảo trì nhận được từ depth: thay đổi, bug, kiến thức, và việc kiểm chứng tập trung ở một nơi thay vì lan ra khắp các caller. Sửa một lần, sửa ở khắp mọi nơi.
 
-## Deep vs shallow
+## Sâu vs nông
 
-**Deep module** = small interface + lots of implementation:
+**Module sâu (Deep module)** = interface nhỏ + implementation nhiều:
 
 ```
 ┌─────────────────────┐
-│   Small Interface   │  ← Few methods, simple params
+│   Small Interface   │  ← Ít phương thức, tham số đơn giản
 ├─────────────────────┤
 │                     │
-│  Deep Implementation│  ← Complex logic hidden
+│  Deep Implementation│  ← Logic phức tạp được giấu đi
 │                     │
 └─────────────────────┘
 ```
 
-**Shallow module** = large interface + little implementation (avoid):
+**Module nông (Shallow module)** = interface lớn + implementation ít (tránh):
 
 ```
 ┌─────────────────────────────────┐
-│       Large Interface           │  ← Many methods, complex params
+│       Large Interface           │  ← Nhiều phương thức, tham số phức tạp
 ├─────────────────────────────────┤
-│  Thin Implementation            │  ← Just passes through
+│  Thin Implementation            │  ← Chỉ chuyển tiếp
 └─────────────────────────────────┘
 ```
 
-When designing an interface, ask:
+Khi thiết kế một interface, hãy hỏi:
 
-- Can I reduce the number of methods?
-- Can I simplify the parameters?
-- Can I hide more complexity inside?
+- Tôi có thể giảm số lượng phương thức không?
+- Tôi có thể đơn giản hóa các tham số không?
+- Tôi có thể giấu thêm nhiều độ phức tạp bên trong không?
 
-## Principles
+## Các nguyên tắc
 
-- **Depth is a property of the interface, not the implementation.** A deep module can be internally composed of small, mockable, swappable parts — they just aren't part of the interface. A module can have **internal seams** (private to its implementation, used by its own tests) as well as the **external seam** at its interface.
-- **The deletion test.** Imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.
-- **The interface is the test surface.** Callers and tests cross the same seam. If you want to test *past* the interface, the module is probably the wrong shape.
-- **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a seam unless something actually varies across it.
+- **Depth là một thuộc tính của interface, không phải của implementation.** Một module sâu có thể được cấu thành nội bộ từ các phần nhỏ, có thể mock, có thể hoán đổi — chúng chỉ đơn giản là không thuộc về interface. Một module có thể có các **seam nội bộ** (riêng tư với việc triển khai của nó, được dùng bởi test riêng của nó) cũng như **seam bên ngoài** tại interface của nó.
+- **Phép thử xóa bỏ (deletion test).** Hãy tưởng tượng xóa module đi. Nếu độ phức tạp biến mất, nó chỉ là một lớp chuyển tiếp (pass-through). Nếu độ phức tạp xuất hiện lại ở N caller, nó đang xứng đáng với vị trí của mình.
+- **Interface là bề mặt test.** Caller và test đi qua cùng một seam. Nếu bạn muốn test *vượt qua* interface, module có lẽ đang sai hình dạng.
+- **Một adapter nghĩa là một seam giả định. Hai adapter nghĩa là một seam thực.** Đừng đưa vào một seam trừ khi thực sự có thứ gì đó biến đổi qua nó.
 
-## Designing for testability
+## Thiết kế để dễ test
 
-Good interfaces make testing natural:
+Các interface tốt làm cho việc test trở nên tự nhiên:
 
-1. **Accept dependencies, don't create them.**
+1. **Nhận dependency, đừng tự tạo ra chúng.**
 
    ```typescript
-   // Testable
+   // Dễ test
    function processOrder(order, paymentGateway) {}
 
-   // Hard to test
+   // Khó test
    function processOrder(order) {
      const gateway = new StripeGateway();
    }
    ```
 
-2. **Return results, don't produce side effects.**
+2. **Trả về kết quả, đừng tạo hiệu ứng phụ (side effect).**
 
    ```typescript
-   // Testable
+   // Dễ test
    function calculateDiscount(cart): Discount {}
 
-   // Hard to test
+   // Khó test
    function applyDiscount(cart): void {
      cart.total -= discount;
    }
    ```
 
-3. **Small surface area.** Fewer methods = fewer tests needed. Fewer params = simpler test setup.
+3. **Bề mặt nhỏ.** Ít phương thức hơn = ít test cần hơn. Ít tham số hơn = thiết lập test đơn giản hơn.
 
-## Relationships
+## Các mối quan hệ
 
-- A **Module** has exactly one **Interface** (the surface it presents to callers and tests).
-- **Depth** is a property of a **Module**, measured against its **Interface**.
-- A **Seam** is where a **Module**'s **Interface** lives.
-- An **Adapter** sits at a **Seam** and satisfies the **Interface**.
-- **Depth** produces **Leverage** for callers and **Locality** for maintainers.
+- Một **Module** có đúng một **Interface** (bề mặt nó trình bày cho caller và test).
+- **Depth** là một thuộc tính của một **Module**, được đo dựa trên **Interface** của nó.
+- Một **Seam** là nơi **Interface** của một **Module** sống.
+- Một **Adapter** ngồi tại một **Seam** và thỏa mãn **Interface**.
+- **Depth** tạo ra **Leverage** cho caller và **Locality** cho người bảo trì.
 
-## Rejected framings
+## Các cách đóng khung bị bác bỏ
 
-- **Depth as ratio of implementation-lines to interface-lines** (Ousterhout): rewards padding the implementation. We use depth-as-leverage instead.
-- **"Interface" as the TypeScript `interface` keyword or a class's public methods**: too narrow — interface here includes every fact a caller must know.
-- **"Boundary"**: overloaded with DDD's bounded context. Say **seam** or **interface**.
+- **Depth như tỷ lệ số dòng implementation trên số dòng interface** (Ousterhout): thưởng cho việc độn thêm implementation. Thay vào đó chúng ta dùng depth-như-leverage.
+- **"Interface" như từ khóa `interface` của TypeScript hoặc các phương thức public của một class**: quá hẹp — interface ở đây bao gồm mọi sự kiện mà một caller phải biết.
+- **"Boundary"**: bị quá tải nghĩa với bounded context của DDD. Hãy dùng **seam** hoặc **interface**.
 
-## Going deeper
+## Đi sâu hơn
 
-- **Deepening a cluster given its dependencies** — see [DEEPENING.md](DEEPENING.md): dependency categories, seam discipline, and replace-don't-layer testing.
-- **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.
+- **Đào sâu một cụm dựa trên dependency của nó** — xem [DEEPENING.md](DEEPENING.md): các nhóm dependency, kỷ luật về seam, và cách test thay-thế-đừng-xếp-chồng.
+- **Khám phá các interface thay thế** — xem [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): khởi động các sub-agent song song để thiết kế interface theo nhiều cách khác biệt triệt để, rồi so sánh dựa trên depth, locality, và vị trí seam.

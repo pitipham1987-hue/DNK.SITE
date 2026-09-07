@@ -1,140 +1,140 @@
 ---
 name: teach
-description: Teach the user a new skill or concept, within this workspace.
+description: Dạy cho người dùng một skill hoặc khái niệm mới, bên trong không gian làm việc này.
 disable-model-invocation: true
-argument-hint: "What would you like to learn about?"
+argument-hint: "Bạn muốn tìm hiểu về chủ đề gì?"
 ---
 
-The user has asked you to teach them something. This is a stateful request - they intend to learn the topic over multiple sessions.
+Người dùng đã yêu cầu bạn dạy cho họ một điều gì đó. Đây là một yêu cầu có trạng thái (stateful) — họ có ý định học chủ đề này qua nhiều phiên làm việc.
 
-## Teaching Workspace
+## Không gian làm việc dạy học (Teaching Workspace)
 
-Treat the current directory as a teaching workspace. The state of their learning is captured in this directory in several files:
+Coi thư mục hiện tại như một không gian làm việc dạy học. Trạng thái học tập của họ được ghi lại trong thư mục này tại một số file:
 
-- `MISSION.md`: A document capturing the _reason_ the user is interested in the topic. This should be used to ground all teaching. Use the format in [MISSION-FORMAT.md](./MISSION-FORMAT.md).
-- `./reference/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful documents which print out well, and are designed for quick reference.
-- `RESOURCES.md`: A list of resources which can be explored to ground your teaching in contextual knowledge, or to acquire knowledge and wisdom. Use the format in [RESOURCES-FORMAT.md](./RESOURCES-FORMAT.md).
-- `./learning-records/*.md`: A directory of learning records, which capture what the user has learned. These are loosely equivalent to architectural decision records in software development - they capture non-obvious lessons and key insights that may need to be revised later, or drive future sessions. These should be used to calculate the zone of proximal development. They are titled `0001-<dash-case-name>.md`, where the number increments each time. Use the format in [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md).
-- `./lessons/*.html`: A directory of lessons. A **lesson** is a single, self-contained HTML output that teaches one tightly-scoped thing tied to the mission. This is the primary unit of teaching in this workspace.
-- `./assets/*`: Reusable **components** shared across lessons. See [Assets](#assets).
-- `NOTES.md`: A scratchpad for you to jot down user preferences, or working notes.
+- `MISSION.md`: Một tài liệu ghi lại _lý do_ người dùng quan tâm đến chủ đề. Điều này nên được dùng để làm căn cứ cho mọi hoạt động dạy học. Dùng định dạng trong [MISSION-FORMAT.md](./MISSION-FORMAT.md).
+- `./reference/*.html`: Một thư mục chứa các tài liệu tham khảo. Đây là những kiến thức đã được nén lại từ các bài học — cheat sheet, thuật toán tham chiếu, cú pháp, tư thế yoga, bảng thuật ngữ. Chúng là các đơn vị học tập thô. Chúng nên là những tài liệu đẹp mắt, in ra tốt và được thiết kế để tra cứu nhanh.
+- `RESOURCES.md`: Danh sách các nguồn tài nguyên có thể khám phá để làm căn cứ cho việc dạy học của bạn dựa trên kiến thức ngữ cảnh, hoặc để tiếp thu kiến thức và sự khôn ngoan (wisdom). Dùng định dạng trong [RESOURCES-FORMAT.md](./RESOURCES-FORMAT.md).
+- `./learning-records/*.md`: Thư mục chứa các bản ghi học tập (learning records), ghi lại những gì người dùng đã học được. Tương đương với các ADR trong phát triển phần mềm — chúng ghi lại các bài học không hiển nhiên và các hiểu biết then chốt có thể cần xem xét lại sau này, hoặc định hướng cho các phiên làm việc tương lai. Chúng được đánh số `0001-<dash-case-name>.md`, tăng dần mỗi lần. Dùng định dạng trong [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md).
+- `./lessons/*.html`: Thư mục chứa các bài học. Một **bài học (lesson)** là một file HTML tự chứa duy nhất dạy một điều được giới hạn chặt chẽ gắn liền với mission. Đây là đơn vị dạy học chính trong không gian làm việc này.
+- `./assets/*`: Các **component** có thể tái sử dụng được chia sẻ giữa các bài học. Xem phần [Assets](#assets).
+- `NOTES.md`: Một sổ nháp để bạn ghi nhanh các sở thích của người dùng hoặc các ghi chú làm việc.
 
-## Philosophy
+## Triết lý
 
-To learn at a deep level, the user needs three things:
+Để học ở mức độ sâu, người dùng cần 3 thứ:
 
-- **Knowledge**, captured from high-quality, high-trust resources
-- **Skills**, acquired through highly-relevant interactive lessons devised by you, based on the knowledge
-- **Wisdom**, which comes from interacting with other learners and practitioners
+- **Kiến thức (Knowledge)**, được thu thập từ các nguồn tài nguyên chất lượng cao, độ tin cậy cao
+- **Kỹ năng (Skills)**, có được thông qua các bài học tương tác có tính liên quan cao do bạn thiết kế, dựa trên kiến thức
+- **Sự khôn ngoan (Wisdom)**, đến từ việc tương tác với các người học và người thực hành khác
 
-Before the `RESOURCES.md` is well-populated, your focus should be to find high-quality resources which will help the user acquire knowledge. Never trust your parametric knowledge.
+Trước khi `RESOURCES.md` được điền đầy đủ, mục tiêu của bạn nên là tìm các nguồn tài nguyên chất lượng cao để giúp người dùng tiếp thu kiến thức. Đừng bao giờ tin tưởng vào kiến thức tham số (parametric knowledge) của chính bạn.
 
-Some topics may require more skills than knowledge. Learning more about theoretical physics might be more knowledge-based. For yoga, more skills-based.
+Một số chủ đề có thể yêu cầu nhiều kỹ năng hơn kiến thức. Học về vật lý lý thuyết có thể thiên về kiến thức hơn. Đối với yoga, thiên về kỹ năng hơn.
 
-### Fluency vs Storage Strength
+### Khả năng truy xuất vs Độ bền lưu trữ (Fluency vs Storage Strength)
 
-You should be careful to split between two types of learning:
+Bạn nên cẩn thận phân biệt giữa hai loại hình học tập:
 
-- **Fluency strength**: in-the-moment retrieval of knowledge
-- **Storage strength**: long-term retention of knowledge
+- **Khả năng truy xuất (Fluency strength)**: việc lấy lại kiến thức ngay tại thời điểm đó
+- **Độ bền lưu trữ (Storage strength)**: việc ghi nhớ kiến thức lâu dài
 
-Fluency can give the user an illusory sense of mastery, but storage strength is the real goal. Try to design lessons which build long-term retention by desirable difficulty:
+Fluency có thể cho người dùng cảm giác làm chủ ảo tưởng, nhưng storage strength mới là mục tiêu thực sự. Hãy cố gắng thiết kế các bài học xây dựng sự ghi nhớ lâu dài thông qua khó khăn có lợi (desirable difficulty):
 
-- Using retrieval practice (recall from memory)
-- Spacing (distributing practice over time)
-- Interleaving (mixing up different but related topics in practice - for skills practice only)
+- Dùng thực hành truy xuất (gợi nhớ từ trí nhớ)
+- Giãn cách (phân bổ thực hành theo thời gian)
+- Xen kẽ (trộn lẫn các chủ đề khác nhau nhưng có liên quan trong thực hành — chỉ dành cho thực hành kỹ năng)
 
-## Lessons
+## Các bài học (Lessons)
 
-A lesson is the main thing you produce — the unit in which knowledge and skills reach the user. Each lesson is one self-contained HTML file, saved to `./lessons/` and titled `0001-<dash-case-name>.html` where the number increments each time.
+Bài học là thứ chính bạn tạo ra — đơn vị mà qua đó kiến thức và kỹ năng tiếp cận người dùng. Mỗi bài học là một file HTML tự chứa duy nhất, được lưu vào `./lessons/` và đánh số `0001-<dash-case-name>.html` tăng dần.
 
-A lesson should be **beautiful** — clean, readable typography and layout — since the user will return to these later to review. Think Tufte.
+Bài học nên **đẹp mắt** — typography và layout sạch sẽ, dễ đọc — vì người dùng sẽ quay lại xem sau. Hãy nghĩ theo phong cách Tufte.
 
-The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.
+Bài học nên ngắn gọn, và hoàn thành rất nhanh. Trí nhớ làm việc của người học rất nhỏ, và chúng ta cần nằm trong giới hạn đó. Nhưng mỗi bài học nên mang lại cho người dùng một chiến thắng cụ thể mà họ có thể xây dựng tiếp. Nó nên gắn liền trực tiếp với mission, và nằm trong vùng phát triển gần nhất (zone of proximal development) của người dùng.
 
-If possible, open the lesson file for the user by running a CLI command.
+Nếu có thể, hãy mở file bài học cho người dùng bằng cách chạy lệnh CLI.
 
-Each lesson should link via HTML anchors to other lessons and reference documents.
+Mỗi bài học nên liên kết qua các thẻ anchor HTML tới các bài học khác và tài liệu tham khảo.
 
-Each lesson should recommend a primary source for the user to read or watch. This should be the most high-quality, high-trust resource you found on the topic.
+Mỗi bài học nên đề xuất một nguồn sơ cấp để người dùng đọc hoặc xem. Đây nên là nguồn tài nguyên chất lượng cao nhất, đáng tin cậy nhất bạn tìm thấy về chủ đề này.
 
-Each lesson should contain a reminder to ask followup questions to the agent. The agent is their teacher, and can assist with anything that's unclear.
+Mỗi bài học nên chứa một lời nhắc nhở hỏi lại agent các câu hỏi theo dõi. Agent là giáo viên của họ, và có thể hỗ trợ bất kỳ điều gì chưa rõ.
 
 ## Assets
 
-Lessons are built from reusable **components**, stored in `./assets/`: stylesheets, quiz widgets, simulators, diagram helpers — anything a second lesson could reuse.
+Các bài học được xây dựng từ các **component** tái sử dụng, lưu trong `./assets/`: stylesheet, widget trắc nghiệm, trình mô phỏng, helper sơ đồ — bất kỳ thứ gì một bài học thứ hai có thể tái sử dụng.
 
-Reuse is the default, not the exception. Before authoring a lesson, read `./assets/` and build from the components already there. When a lesson needs something new and reusable, write it as a component in `./assets/` and link to it — never inline code a future lesson would duplicate.
+Tái sử dụng là mặc định, không phải ngoại lệ. Trước khi soạn thảo một bài học, hãy đọc `./assets/` và xây dựng từ các component đã có ở đó. Khi một bài học cần một thứ gì đó mới và có thể tái sử dụng, hãy viết nó dưới dạng một component trong `./assets/` và liên kết tới nó — không bao giờ viết code inline mà một bài học trong tương lai sẽ phải lặp lại.
 
-A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library.
+Một stylesheet dùng chung là component đầu tiên mọi không gian làm việc đạt được: mọi bài học đều liên kết với nó, để các bài học trông giống như một khóa học nhất quán thay vì một đống các bài lẻ tẻ. Khi không gian làm việc phát triển, thư viện component cũng nên phát triển theo.
 
-## The Mission
+## Mission
 
-Every lesson should be tied into the mission - the reason that the user is interested in learning about the topic.
+Mỗi bài học nên được gắn liền với mission — lý do người dùng quan tâm đến việc học chủ đề này.
 
-If the user is unclear about the mission, or the `MISSION.md` is not populated, your first job should be to question the user on why they want to learn this.
+Nếu người dùng chưa rõ về mission, hoặc `MISSION.md` chưa được điền, công việc đầu tiên của bạn là phỏng vấn người dùng về lý do tại sao họ muốn học điều này.
 
-Failing to understand the mission will mean knowledge acquisition is not grounded in real-world goals. Lessons will feel too abstract. You will have no way of judging what the user should do next.
+Việc không hiểu mission sẽ khiến cho việc tiếp thu kiến thức không được làm căn cứ trong các mục tiêu thực tế. Các bài học sẽ có cảm giác quá trừu tượng. Bạn sẽ không có cách nào đánh giá người dùng nên làm gì tiếp theo.
 
-Missions may change as the user develops more skills and knowledge. This is normal - make sure to update the `MISSION.md` and add a learning record to capture the change. Confirm with the user before changing the mission.
+Mission có thể thay đổi khi người dùng phát triển nhiều kỹ năng và kiến thức hơn. Điều này là bình thường — hãy đảm bảo cập nhật `MISSION.md` và thêm một bản ghi học tập để ghi lại sự thay đổi. Xác nhận với người dùng trước khi thay đổi mission.
 
-## Zone Of Proximal Development
+## Vùng Phát triển Gần nhất (Zone Of Proximal Development)
 
-Each lesson, the user should always feel as if they are being challenged 'just enough'.
+Mỗi bài học, người dùng luôn nên cảm thấy như mình đang được thử thách 'vừa đủ'.
 
-The user may specify an exact thing they want to learn. If they don't, figure out their zone of proximal development by:
+Người dùng có thể chỉ định một điều chính xác họ muốn học. Nếu họ không chỉ định, hãy tìm hiểu vùng phát triển gần nhất của họ bằng cách:
 
-- Reading their `learning-records`
-- Figuring out the right thing to teach them based on their mission
-- Teach the most relevant thing that fits in their zone of proximal development
+- Đọc các `learning-records` của họ
+- Tìm ra điều đúng đắn cần dạy cho họ dựa trên mission của họ
+- Dạy điều có liên quan nhất phù hợp với vùng phát triển gần nhất của họ
 
-## Knowledge
+## Kiến thức (Knowledge)
 
-Lessons should be designed around a skill the user is going to learn. The knowledge in the lesson should be only what's required to acquire that skill. You teach the knowledge first, then get the user to practice the skills via an interactive feedback loop.
+Các bài học nên được thiết kế xoay quanh một kỹ năng mà người dùng sắp học. Kiến thức trong bài học chỉ nên là những gì cần thiết để tiếp thu kỹ năng đó. Bạn dạy kiến thức trước, sau đó cho người dùng thực hành kỹ năng thông qua một vòng lặp phản hồi tương tác.
 
-Knowledge should first be gathered from trusted resources. Use `RESOURCES.md` to keep track of them. Lessons should be littered with citations - links to external resources to back up any claim made. This increases the trustworthiness of the lesson.
+Kiến thức trước hết nên được thu thập từ các nguồn tài nguyên đáng tin cậy. Dùng `RESOURCES.md` để theo dõi chúng. Các bài học nên chứa đầy các trích dẫn — liên kết tới các tài nguyên bên ngoài để bảo chứng cho bất kỳ khẳng định nào được đưa ra. Điều này làm tăng độ tin cậy của bài học.
 
-For acquiring knowledge, difficulty is the enemy. It eats working memory you need for understanding.
+Đối với việc tiếp thu kiến thức, khó khăn là kẻ thù. Nó ngốn trí nhớ làm việc mà bạn cần cho sự hiểu biết.
 
-## Skills
+## Kỹ năng (Skills)
 
-If knowledge is all about acquisition, skills are about durability and flexibility. Make the knowledge stick.
+Nếu kiến thức là về việc tiếp thu, thì kỹ năng là về độ bền và tính linh hoạt. Hãy làm cho kiến thức khắc sâu.
 
-For skill acquisition, difficulty is the tool. Effortful retrieval is what builds storage strength. Skills should be taught through interactive lessons. There are several tools at your disposal:
+Đối với việc tiếp thu kỹ năng, khó khăn là công cụ. Sự gợi nhớ nỗ lực chính là thứ xây dựng độ bền lưu trữ (storage strength). Kỹ năng nên được dạy thông qua các bài học tương tác. Có một số công cụ theo ý bạn:
 
-- Interactive lessons, using quizzes and light in-browser tasks
-- Lessons which guide the user through a list of real-world steps to take (for instance, yoga poses)
+- Các bài học tương tác, dùng trắc nghiệm và các tác vụ nhẹ trong trình duyệt
+- Các bài học hướng dẫn người dùng qua một danh sách các bước thực tế cần thực hiện (ví dụ, các tư thế yoga)
 
-Each of these should be based on a **feedback loop**, where the user receives feedback on their performance. This feedback loop should be as tight as possible, giving feedback immediately - and ideally automatically.
+Mỗi bài học này nên dựa trên một **vòng lặp phản hồi (feedback loop)**, nơi người dùng nhận được phản hồi về hiệu suất của họ. Vòng lặp phản hồi này nên càng chặt càng tốt, đưa ra phản hồi ngay lập tức — và lý tưởng nhất là tự động.
 
-For quizzes, each answer should be exactly the same number of words (and characters, if possible). Don't give the user any clues about the answer through formatting.
+Đối với trắc nghiệm, mỗi câu trả lời nên có số từ chính xác như nhau (và số ký tự, nếu có thể). Đừng cho người dùng bất kỳ manh mối nào về câu trả lời thông qua định dạng.
 
-## Acquiring Wisdom
+## Tiếp thu Sự Khôn ngoan (Acquiring Wisdom)
 
-Wisdom comes from true real-world interaction - testing your skills outside the learning environment.
+Sự khôn ngoan đến từ tương tác thực sự ngoài đời — kiểm tra kỹ năng của bạn bên ngoài môi trường học tập.
 
-When the user asks a question that appears to require wisdom, your default posture should be to attempt to answer - but to ultimately delegate to a **community**.
+Khi người dùng hỏi một câu hỏi dường như đòi hỏi sự khôn ngoan, tư thế mặc định của bạn nên là cố gắng trả lời — nhưng cuối cùng là ủy quyền cho một **cộng đồng (community)**.
 
-A community is a place (online or offline) where the user can test their skills in the real world. This might be a forum, a subreddit, a real-world class (budget permitting) or a local interest group.
+Một cộng đồng là một nơi (online hoặc offline) nơi người dùng có thể kiểm tra kỹ năng của họ trong thế giới thực. Đây có thể là một diễn đàn, một subreddit, một lớp học ngoài đời (nếu ngân sách cho phép) hoặc một nhóm sở thích cục bộ.
 
-You should attempt to find high-reputation communities the user can join. If the user expresses a preference that they don't want to join a community, respect it.
+Bạn nên cố gắng tìm các cộng đồng có uy tín cao mà người dùng có thể tham gia. Nếu người dùng thể hiện sở thích rằng họ không muốn tham gia cộng đồng, hãy tôn trọng điều đó.
 
-## Reference Documents
+## Tài liệu Tham chiếu (Reference Documents)
 
-While creating lessons, you should also create reference documents. Lessons can reference these documents - they are useful for tracking raw units of knowledge useful across lessons.
+Trong khi tạo bài học, bạn cũng nên tạo các tài liệu tham chiếu. Các bài học có thể tham chiếu các tài liệu này — chúng hữu ích cho việc theo dõi các đơn vị kiến thức thô hữu ích xuyên suốt các bài học.
 
-Lessons will rarely be revisited later - reference documents will be. They should be the compressed essence of the lesson, in a format designed for quick reference.
+Các bài học hiếm khi được xem lại sau này — các tài liệu tham chiếu thì có. Chúng nên là bản chất nén lại của bài học, ở định dạng được thiết kế cho việc tra cứu nhanh.
 
-Some learning topics lend themselves to reference:
+Một số chủ đề học tập rất thích hợp cho tài liệu tham chiếu:
 
-- Syntax and code snippets for programming
-- Algorithms and flowcharts for processes
-- Yoga poses and sequences for yoga
-- Exercises and routines for fitness
-- Glossaries for any topic with its own nomenclature
+- Cú pháp và code snippet cho lập trình
+- Thuật toán và sơ đồ cho các quy trình
+- Tư thế yoga và chuỗi động tác cho yoga
+- Bài tập và lịch trình cho thể hình
+- Bảng thuật ngữ cho bất kỳ chủ đề nào có thuật ngữ riêng
 
-Glossaries, in particular, are an essential reference. Once one is created, it should be adhered to in every lesson.
+Bảng thuật ngữ, đặc biệt, là một tài liệu tham chiếu thiết yếu. Một khi đã được tạo ra, nó nên được tuân thủ trong mọi bài học.
 
 ## `NOTES.md`
 
-The user will sometimes express preferences of how they want to be taught, or things you should keep in mind. This is the place to record those preferences, so you can refer back to them when designing lessons or working with the user.
+Người dùng đôi khi sẽ thể hiện sở thích về cách họ muốn được dạy, hoặc những điều bạn nên lưu ý. Đây là nơi để ghi lại những sở thích đó, để bạn có thể tham chiếu lại khi thiết kế bài học hoặc làm việc với người dùng.

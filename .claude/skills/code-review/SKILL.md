@@ -1,87 +1,87 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: Review các thay đổi kể từ một điểm cố định (commit, branch, tag, hoặc merge-base) theo hai trục — Standards (code có tuân theo tiêu chuẩn coding đã được tài liệu hóa của repo này không?) và Spec (code có khớp với những gì issue/spec gốc yêu cầu không?). Chạy cả hai review song song trong các sub-agent và báo cáo song song với nhau. Dùng khi người dùng muốn review một branch, một PR, các thay đổi đang làm dở, hoặc yêu cầu "review since X".
 ---
 
-Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
+Review hai trục của diff giữa `HEAD` và một điểm cố định do người dùng cung cấp:
 
-- **Standards** — does the code conform to this repo's documented coding standards?
-- **Spec** — does the code faithfully implement the originating issue / spec?
+- **Standards** — code có tuân theo tiêu chuẩn coding đã được tài liệu hóa của repo này không?
+- **Spec** — code có triển khai trung thực issue / spec gốc không?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+Cả hai trục đều chạy dưới dạng **sub-agent song song** để không làm nhiễu ngữ cảnh của nhau, sau đó skill này tổng hợp các phát hiện của chúng.
 
-The issue tracker should have been provided to you. If `docs/agents/issue-tracker.md` is missing, tell the user to run `/setup-matt-pocock-skills`.
+Issue tracker lẽ ra đã được cung cấp cho bạn. Nếu thiếu `docs/agents/issue-tracker.md`, hãy báo người dùng chạy `/setup-matt-pocock-skills`.
 
-## Process
+## Quy trình
 
-### 1. Pin the fixed point
+### 1. Cố định điểm mốc (fixed point)
 
-Whatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.
+Bất cứ điều gì người dùng nói chính là điểm cố định — một commit SHA, tên branch, tag, `main`, `HEAD~5`, v.v. Nếu họ không chỉ định, hãy hỏi.
 
-Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
+Ghi lại lệnh diff một lần: `git diff <fixed-point>...HEAD` (ba dấu chấm, để phép so sánh dựa trên merge-base). Cũng ghi chú danh sách commit qua `git log <fixed-point>..HEAD --oneline`.
 
-Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here — not inside two parallel sub-agents.
+Trước khi đi tiếp, xác nhận điểm cố định phân giải được (`git rev-parse <fixed-point>`) và diff không rỗng. Một ref sai hoặc diff rỗng cần thất bại ngay ở đây — không phải bên trong hai sub-agent song song.
 
-### 2. Identify the spec source
+### 2. Xác định nguồn spec
 
-Look for the originating spec, in this order:
+Tìm spec gốc, theo thứ tự sau:
 
-1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.) — fetch via the workflow in `docs/agents/issue-tracker.md`.
-2. A path the user passed as an argument.
-3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
-4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+1. Các tham chiếu issue trong commit message (`#123`, `Closes #45`, GitLab `!67`, v.v.) — lấy về qua quy trình trong `docs/agents/issue-tracker.md`.
+2. Một đường dẫn mà người dùng truyền vào như một tham số.
+3. Một file spec dưới `docs/`, `specs/`, hoặc `.scratch/` khớp với tên branch hoặc tên tính năng.
+4. Nếu không tìm thấy gì, hỏi người dùng spec ở đâu. Nếu họ nói không có, sub-agent **Spec** sẽ bỏ qua và báo cáo "no spec available" (không có spec).
 
-### 3. Identify the standards sources
+### 3. Xác định nguồn tiêu chuẩn (standards)
 
-Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
+Bất cứ thứ gì trong repo mô tả cách code nên được viết, như `CODING_STANDARDS.md` hoặc `CONTRIBUTING.md`.
 
-On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below — a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
+Bên cạnh bất cứ điều gì repo tài liệu hóa, trục Standards luôn mang theo **baseline mùi code (smell baseline)** bên dưới — một tập cố định các code smell của Fowler (_Refactoring_, chương 3) áp dụng ngay cả khi một repo không tài liệu hóa gì cả. Hai quy tắc ràng buộc nó:
 
-- **The repo overrides.** A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.
-- **Always a judgement call.** Each smell is a labelled heuristic ("possible Feature Envy"), never a hard violation — and, like any standard here, skip anything tooling already enforces.
+- **Repo được ưu tiên hơn.** Một tiêu chuẩn đã tài liệu hóa của repo luôn thắng; nơi nó tán thành điều mà baseline sẽ gắn cờ, hãy bỏ qua mùi đó.
+- **Luôn là một phán đoán chủ quan.** Mỗi mùi là một heuristic được gắn nhãn ("possible Feature Envy"), không bao giờ là một vi phạm cứng — và, giống như bất kỳ tiêu chuẩn nào ở đây, bỏ qua bất cứ điều gì tooling đã thực thi sẵn.
 
-Each smell reads *what it is* → *how to fix*; match it against the diff:
+Mỗi mùi đọc theo dạng *nó là gì* → *cách sửa*; đối chiếu nó với diff:
 
-- **Mysterious Name** — a function, variable, or type whose name doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.
-- **Duplicated Code** — the same logic shape appears in more than one hunk or file in the change. → extract the shared shape, call it from both.
-- **Feature Envy** — a method that reaches into another object's data more than its own. → move the method onto the data it envies.
-- **Data Clumps** — the same few fields or params keep travelling together (a type wanting to be born). → bundle them into one type, pass that.
-- **Primitive Obsession** — a primitive or string standing in for a domain concept that deserves its own type. → give the concept its own small type.
-- **Repeated Switches** — the same `switch`/`if`-cascade on the same type recurs across the change. → replace with polymorphism, or one map both sites share.
-- **Shotgun Surgery** — one logical change forces scattered edits across many files in the diff. → gather what changes together into one module.
-- **Divergent Change** — one file or module is edited for several unrelated reasons. → split so each module changes for one reason.
-- **Speculative Generality** — abstraction, parameters, or hooks added for needs the spec doesn't have. → delete it; inline back until a real need shows.
-- **Message Chains** — long `a.b().c().d()` navigation the caller shouldn't depend on. → hide the walk behind one method on the first object.
-- **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
-- **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
+- **Mysterious Name** (Tên bí ẩn) — một hàm, biến, hoặc kiểu có tên không tiết lộ nó làm gì hoặc chứa gì. → đổi tên nó; nếu không tìm ra tên trung thực nào, thiết kế đang mù mờ.
+- **Duplicated Code** (Code trùng lặp) — cùng một hình dạng logic xuất hiện trong nhiều hơn một hunk hoặc file trong thay đổi. → trích xuất hình dạng chung, gọi nó từ cả hai nơi.
+- **Feature Envy** (Ghen tị tính năng) — một phương thức truy cập vào dữ liệu của một đối tượng khác nhiều hơn dữ liệu của chính nó. → di chuyển phương thức đó sang dữ liệu mà nó "ghen tị".
+- **Data Clumps** (Cụm dữ liệu) — cùng vài trường hoặc tham số liên tục đi cùng nhau (một kiểu đang muốn được sinh ra). → gộp chúng vào một kiểu, truyền kiểu đó.
+- **Primitive Obsession** (Ám ảnh kiểu nguyên thủy) — một kiểu nguyên thủy hoặc chuỗi đứng thay cho một khái niệm nghiệp vụ đáng có kiểu riêng của nó. → cho khái niệm đó một kiểu nhỏ riêng.
+- **Repeated Switches** (Switch lặp lại) — cùng một `switch`/chuỗi `if` trên cùng một kiểu lặp lại xuyên suốt thay đổi. → thay bằng đa hình (polymorphism), hoặc một map dùng chung ở cả hai nơi.
+- **Shotgun Surgery** (Phẫu thuật súng hoa cải) — một thay đổi logic buộc phải sửa rải rác ở nhiều file trong diff. → gom những gì thay đổi cùng nhau vào một module.
+- **Divergent Change** (Thay đổi phân kỳ) — một file hoặc module bị sửa vì nhiều lý do không liên quan. → tách ra để mỗi module thay đổi chỉ vì một lý do.
+- **Speculative Generality** (Tổng quát hóa suy đoán) — trừu tượng hóa, tham số, hoặc hook được thêm vào cho những nhu cầu mà spec không có. → xóa nó; inline lại cho đến khi có nhu cầu thực sự xuất hiện.
+- **Message Chains** (Chuỗi thông điệp) — chuỗi điều hướng dài `a.b().c().d()` mà caller không nên phụ thuộc vào. → giấu chuỗi đi phía sau một phương thức trên đối tượng đầu tiên.
+- **Middle Man** (Người trung gian) — một class hoặc hàm chủ yếu chỉ ủy quyền tiếp. → cắt nó, gọi trực tiếp đích thật.
+- **Refused Bequest** (Từ chối kế thừa) — một subclass hoặc lớp triển khai bỏ qua hoặc ghi đè phần lớn những gì nó kế thừa. → bỏ kế thừa, dùng composition.
 
-### 4. Spawn both sub-agents in parallel
+### 4. Sinh cả hai sub-agent song song
 
-**Standards sub-agent prompt** — include:
+**Prompt cho sub-agent Standards** — bao gồm:
 
-- The full diff command and commit list.
-- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.
-- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
+- Lệnh diff đầy đủ và danh sách commit.
+- Danh sách các file nguồn tiêu chuẩn bạn tìm được ở bước 3, **cộng với smell baseline từ bước 3** dán nguyên văn vào — sub-agent không có cách nào khác để truy cập nó.
+- Nhiệm vụ: "Báo cáo — theo từng file/hunk nếu liên quan — (a) mọi nơi diff vi phạm một tiêu chuẩn đã tài liệu hóa: trích dẫn tiêu chuẩn (file + quy tắc); và (b) bất kỳ mùi baseline nào bạn phát hiện: đặt tên nó và trích dẫn hunk. Phân biệt vi phạm cứng với phán đoán chủ quan — vi phạm tiêu chuẩn đã tài liệu hóa có thể là cứng, nhưng mùi baseline luôn là phán đoán chủ quan, và một tiêu chuẩn repo đã tài liệu hóa sẽ ưu tiên hơn baseline. Bỏ qua bất cứ điều gì tooling đã thực thi. Dưới 400 từ."
 
-**Spec sub-agent prompt** — include:
+**Prompt cho sub-agent Spec** — bao gồm:
 
-- The diff command and commit list.
-- The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- Lệnh diff và danh sách commit.
+- Đường dẫn hoặc nội dung đã lấy về của spec.
+- Nhiệm vụ: "Báo cáo: (a) các yêu cầu spec đã yêu cầu nhưng bị thiếu hoặc chỉ làm một phần; (b) hành vi trong diff không được yêu cầu (scope creep — lấn phạm vi); (c) các yêu cầu trông như đã triển khai nhưng cách triển khai trông có vẻ sai. Trích dẫn dòng spec cho mỗi phát hiện. Dưới 400 từ."
 
-If the spec is missing, skip the Spec sub-agent and note this in the final report.
+Nếu thiếu spec, bỏ qua sub-agent Spec và ghi chú điều này trong báo cáo cuối cùng.
 
-### 5. Aggregate
+### 5. Tổng hợp
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
+Trình bày hai báo cáo dưới các heading `## Standards` và `## Spec`, nguyên văn hoặc chỉnh sửa nhẹ. **Không** gộp hoặc xếp hạng lại các phát hiện — hai trục cố tình được tách biệt (xem _Vì sao hai trục_).
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
+Kết thúc bằng một dòng tóm tắt: tổng số phát hiện theo mỗi trục, và vấn đề tệ nhất _trong từng trục_ (nếu có). Đừng chọn một người thắng duy nhất giữa các trục — đó chính là việc xếp hạng lại mà sự tách biệt này tồn tại để ngăn chặn.
 
-## Why two axes
+## Vì sao hai trục
 
-A change can pass one axis and fail the other:
+Một thay đổi có thể đạt trục này nhưng trượt trục kia:
 
-- Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**
-- Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**
+- Code tuân theo mọi tiêu chuẩn nhưng triển khai sai thứ → **Standards đạt, Spec trượt.**
+- Code làm đúng chính xác những gì issue yêu cầu nhưng phá vỡ các quy ước của dự án → **Spec đạt, Standards trượt.**
 
-Reporting them separately stops one axis from masking the other.
+Báo cáo chúng riêng biệt ngăn một trục che khuất trục kia.

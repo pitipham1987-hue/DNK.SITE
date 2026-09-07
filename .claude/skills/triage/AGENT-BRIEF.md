@@ -1,75 +1,75 @@
-# Writing Agent Briefs
+# Viết Agent Briefs (Writing Agent Briefs)
 
-An agent brief is a structured comment posted on a GitHub issue or PR when it moves to `ready-for-agent`. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.
+Một agent brief là một comment có cấu trúc được đăng trên một GitHub issue hoặc PR khi nó chuyển sang trạng thái `ready-for-agent`. Nó là bản tả kỹ thuật có thẩm quyền mà một agent AFK sẽ làm việc dựa vào. Nội dung ban đầu và các thảo luận là ngữ cảnh — agent brief mới là hợp đồng.
 
-The brief states **what the agent should do**, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do *to the existing diff* — finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.
+Brief nêu rõ **những gì agent nên làm**, kéo dài cho cả hai bề mặt: đối với an issue, đó là xây dựng thay đổi từ con số không; đối với một PR, đó là những gì còn lại cần làm *trên diff hiện có* — hoàn tất nó, đóng các khoảng trống, giải quyết các điểm review. Cùng các nguyên tắc theo cả hai cách; ví dụ PR bên dưới hiển thị sự khác biệt.
 
-## Principles
+## Các nguyên tắc
 
-### Durability over precision
+### Độ bền vượt trên sự chính xác tuyệt đối (Durability over precision)
 
-The issue may sit in `ready-for-agent` for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.
+Issue có thể nằm ở `ready-for-agent` trong nhiều ngày hoặc nhiều tuần. Codebase sẽ thay đổi trong thời gian đó. Hãy viết brief sao cho nó vẫn hữu ích ngay cả khi các file bị đổi tên, di chuyển, hoặc refactor.
 
-- **Do** describe interfaces, types, and behavioral contracts
-- **Do** name specific types, function signatures, or config shapes that the agent should look for or modify
-- **Don't** reference file paths — they go stale
-- **Don't** reference line numbers
-- **Don't** assume the current implementation structure will remain the same
+- **NÊN** mô tả các interface, kiểu (types), và hợp đồng hành vi (behavioral contracts)
+- **NÊN** nêu tên các kiểu cụ thể, chữ ký hàm (function signatures), hoặc hình dạng config mà agent nên tìm kiếm hoặc sửa đổi
+- **KHÔNG NÊN** tham chiếu đường dẫn file — chúng sẽ lỗi thời
+- **KHÔNG NÊN** tham chiếu số dòng
+- **KHÔNG NÊN** giả định cấu trúc triển khai hiện tại sẽ giữ nguyên
 
-### Behavioral, not procedural
+### Hướng hành vi, không hướng quy trình (Behavioral, not procedural)
 
-Describe **what** the system should do, not **how** to implement it. The agent will explore the codebase fresh and make its own implementation decisions.
+Mô tả **những gì** hệ thống nên làm, không phải **làm thế nào** để triển khai nó. Agent sẽ khám phá codebase một cách tươi mới và đưa ra các quyết định triển khai của riêng mình.
 
-- **Good:** "The `SkillConfig` type should accept an optional `schedule` field of type `CronExpression`"
-- **Bad:** "Open src/types/skill.ts and add a schedule field on line 42"
-- **Good:** "When a user runs `/triage` with no arguments, they should see a summary of issues needing attention"
-- **Bad:** "Add a switch statement in the main handler function"
+- **Tốt:** "Kiểu `SkillConfig` nên chấp nhận một trường `schedule` tùy chọn thuộc kiểu `CronExpression`"
+- **Xấu:** "Mở src/types/skill.ts và thêm một trường schedule ở dòng 42"
+- **Tốt:** "Khi một người dùng chạy `/triage` mà không có tham số, họ nên thấy bản tóm tắt các issue cần chú ý"
+- **Xấu:** "Thêm một câu lệnh switch trong hàm xử lý chính"
 
-### Complete acceptance criteria
+### Tiêu chí chấp nhận đầy đủ (Complete acceptance criteria)
 
-The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should be independently verifiable.
+Agent cần biết khi nào nó hoàn thành. Mỗi agent brief phải có các tiêu chí chấp nhận cụ thể, có thể kiểm thử được. Mỗi tiêu chí nên có thể xác minh được một cách độc lập.
 
-- **Good:** "Running `gh issue list --label needs-triage` returns issues that have been through initial classification"
-- **Bad:** "Triage should work correctly"
+- **Tốt:** "Chạy `gh issue list --label needs-triage` trả về các issue đã qua phân loại ban đầu"
+- **Xấu:** "Triage nên hoạt động chính xác"
 
-### Explicit scope boundaries
+### Ranh giới phạm vi rõ ràng (Explicit scope boundaries)
 
-State what is out of scope. This prevents the agent from gold-plating or making assumptions about adjacent features.
+Nêu rõ những gì nằm ngoài phạm vi (out of scope). Điều này ngăn agent làm quá đà (gold-plating) hoặc đưa ra các giả định về các tính năng liền kề.
 
-## Template
+## Mẫu (Template)
 
 ```markdown
 ## Agent Brief
 
 **Category:** bug / enhancement
-**Summary:** one-line description of what needs to happen
+**Summary:** tóm tắt một dòng về những gì cần xảy ra
 
 **Current behavior:**
-Describe what happens now. For bugs, this is the broken behavior.
-For enhancements, this is the status quo the feature builds on.
+Mô tả những gì xảy ra hiện tại. Đối với bug, đây là hành vi bị hỏng.
+Đối với enhancement, đây là trạng thái hiện tại mà tính năng xây dựng trên đó.
 
 **Desired behavior:**
-Describe what should happen after the agent's work is complete.
-Be specific about edge cases and error conditions.
+Mô tả những gì nên xảy ra sau khi công việc của agent hoàn tất.
+Hãy cụ thể về các trường hợp biên (edge cases) và các điều kiện lỗi.
 
 **Key interfaces:**
-- `TypeName` — what needs to change and why
-- `functionName()` return type — what it currently returns vs what it should return
-- Config shape — any new configuration options needed
+- `TypeName` — những gì cần thay đổi và tại sao
+- `functionName()` return type — những gì nó hiện trả về vs những gì nó nên trả về
+- Config shape — bất kỳ tùy chọn cấu hình mới nào cần thiết
 
 **Acceptance criteria:**
-- [ ] Specific, testable criterion 1
-- [ ] Specific, testable criterion 2
-- [ ] Specific, testable criterion 3
+- [ ] Tiêu chí cụ thể, có thể kiểm thử 1
+- [ ] Tiêu chí cụ thể, có thể kiểm thử 2
+- [ ] Tiêu chí cụ thể, có thể kiểm thử 3
 
 **Out of scope:**
-- Thing that should NOT be changed or addressed in this issue
-- Adjacent feature that might seem related but is separate
+- Điều KHÔNG nên thay đổi hoặc giải quyết trong issue này
+- Tính năng liền kề có vẻ liên quan nhưng là riêng biệt
 ```
 
-## Examples
+## Ví dụ
 
-### Good agent brief (bug)
+### Agent brief tốt (bug)
 
 ```markdown
 ## Agent Brief
@@ -104,7 +104,7 @@ and append "..." to indicate truncation.
 - Multi-line description support
 ```
 
-### Good agent brief (enhancement)
+### Agent brief tốt (enhancement)
 
 ```markdown
 ## Agent Brief
@@ -145,9 +145,9 @@ checked for matches.
 - Bug reports (only enhancement rejections go to `.out-of-scope/`)
 ```
 
-### Good agent brief (PR)
+### Agent brief tốt (PR)
 
-For a PR, "Current behavior" describes the state of the diff, and the brief asks the agent to finish or fix it rather than build from scratch.
+Đối với một PR, "Current behavior" mô tả trạng thái của diff, và brief yêu cầu agent hoàn tất hoặc sửa nó thay vì dựng lại từ đầu.
 
 ```markdown
 ## Agent Brief
@@ -182,7 +182,7 @@ is untouched when the flag is absent.
 - Changing the JSON shape of the success payload the PR already defined
 ```
 
-### Bad agent brief
+### Agent brief xấu
 
 ```markdown
 ## Agent Brief
@@ -198,10 +198,10 @@ The function around line 150 has the issue.
 - src/types.ts (line 42)
 ```
 
-This is bad because:
-- No category
-- Vague description ("the triage thing is broken")
-- References file paths and line numbers that will go stale
-- No acceptance criteria
-- No scope boundaries
-- No description of current vs desired behavior
+Đây là bản brief xấu vì:
+- Không có category
+- Mô tả mơ hồ ("the triage thing is broken")
+- Tham chiếu đường dẫn file và số dòng sẽ bị lỗi thời
+- Không có tiêu chí chấp nhận
+- Không có ranh giới phạm vi
+- Không có mô tả về hành vi hiện tại vs mong muốn

@@ -1,32 +1,32 @@
-# RESOURCES.md Format
+# Định dạng RESOURCES.md
 
-`RESOURCES.md` is the curated set of trusted sources for this topic. Knowledge for explainers should be drawn from here, not from parametric guesses. Wisdom comes from the communities listed here.
+`RESOURCES.md` là tập hợp các nguồn tài nguyên đáng tin cậy được tuyển chọn cho chủ đề này. Kiến thức cho các bài giải thích nên được rút ra từ đây, không phải từ các đoán mò tham số. Sự khôn ngoan (wisdom) đến từ các cộng đồng được liệt kê ở đây.
 
-## Structure
+## Cấu trúc
 
 ```md
-# {Topic} Resources
+# Tài nguyên {Topic}
 
-## Knowledge
+## Kiến thức (Knowledge)
 
-- [Book: _The Science and Practice of Strength Training_ — Zatsiorsky & Kraemer](https://example.com)
-  Foundational text on programming and adaptation. Use for: anything to do with periodisation, recovery, intensity zones.
-- [Article: "How Much Should I Train?" — Greg Nuckols (Stronger By Science)](https://example.com)
-  Evidence-based review of volume landmarks. Use for: weekly set targets per muscle group.
+- [Sách: _The Science and Practice of Strength Training_ — Zatsiorsky & Kraemer](https://example.com)
+  Văn bản nền tảng về lập trình và thích nghi. Dùng cho: bất kỳ điều gì liên quan đến chu kỳ hóa, phục hồi, các vùng cường độ.
+- [Bài viết: "How Much Should I Train?" — Greg Nuckols (Stronger By Science)](https://example.com)
+  Đánh giá dựa trên bằng chứng về các cột mốc khối lượng. Dùng cho: mục tiêu hiệp tập hàng tuần cho mỗi nhóm cơ.
 
-## Wisdom (Communities)
+## Sự Khôn ngoan (Wisdom - Cộng đồng)
 
 - [r/weightroom](https://reddit.com/r/weightroom)
-  High-signal subreddit, moderated against bro-science. Use for: programme critique, plateau troubleshooting.
-- Local: Tuesday strength class at {gym name}
-  Use for: real-time coaching feedback on lifts.
+  Subreddit tín hiệu cao, được kiểm duyệt chống lại bro-science. Dùng cho: nhận xét chương trình, xử lý sự bế tắc.
+- Cục bộ: Lớp học thể lực thứ Ba tại {tên phòng tập}
+  Dùng cho: phản hồi hướng dẫn thời gian thực về các động tác nâng.
 ```
 
-## Rules
+## Quy tắc
 
-- **High-trust only.** Prefer primary sources, recognised experts, peer-reviewed work, and communities with strong moderation. If a resource is marketing dressed as education, leave it out.
-- **Annotate every entry.** A bare link is useless in three months. Add one line: what it covers and when to reach for it.
-- **Group by Knowledge / Wisdom.** Mirrors the philosophy in [SKILL.md](./SKILL.md). It is fine for a resource to appear in only one group.
-- **Surface gaps explicitly.** If no good resource exists for an area the mission needs, write a `## Gaps` section listing what is missing. This drives future search.
-- **Prune ruthlessly.** A resource that turned out to be wrong, shallow, or off-mission should be removed, not buried. Better five sharp sources than thirty mediocre ones.
-- **Record community preferences.** If the user has opted out of joining communities, note it here so future sessions don't keep proposing them.
+- **Chỉ độ tin cậy cao.** Ưu tiên các nguồn sơ cấp, các chuyên gia được công nhận, công trình đã qua kiểm duyệt peer-review, và các cộng đồng với sự kiểm duyệt mạnh mẽ. Nếu một tài nguyên là marketing ngụy trang dưới dạng giáo dục, hãy bỏ nó ra.
+- **Chú thích cho mỗi mục.** Một link trần là vô dụng sau ba tháng. Thêm một dòng: nó bao phủ điều gì và khi nào nên tìm tới nó.
+- **Nhóm theo Kiến thức / Sự Khôn ngoan.** Phản ánh triết lý trong [SKILL.md](./SKILL.md). Việc một tài nguyên chỉ xuất hiện trong một nhóm là bình thường.
+- **Bộc lộ các khoảng trống một cách rõ ràng.** Nếu không có tài nguyên tốt nào tồn tại cho một khu vực mà mission cần, hãy viết mục `## Gaps` liệt kê những gì còn thiếu. Điều này thúc đẩy việc tìm kiếm tương lai.
+- **Cắt tỉa tàn nhẫn.** Một tài nguyên hóa ra sai, nông, hoặc chệch khỏi mission nên được loại bỏ, không phải chôn vùi. Thà có năm nguồn sắc bén còn hơn ba mươi nguồn trung bình.
+- **Ghi lại các sở thích cộng đồng.** Nếu người dùng đã từ chối tham gia các cộng đồng, hãy ghi chú ở đây để các phiên tương lai không tiếp tục đề xuất chúng.

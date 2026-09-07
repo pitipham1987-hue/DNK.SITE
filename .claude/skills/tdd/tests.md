@@ -1,11 +1,11 @@
-# Good and Bad Tests
+# các Test Tốt và Xấu
 
-## Good Tests
+## Các Test Tốt
 
-**Integration-style**: Test through real interfaces, not mocks of internal parts.
+**Kiểu tích hợp (Integration-style)**: Test thông qua các interface thật, không phải các mock của các phần nội bộ.
 
 ```typescript
-// GOOD: Tests observable behavior
+// TỐT: Test hành vi có thể quan sát được
 test("user can checkout with valid cart", async () => {
   const cart = createCart();
   cart.add(product);
@@ -14,20 +14,20 @@ test("user can checkout with valid cart", async () => {
 });
 ```
 
-Characteristics:
+Đặc điểm:
 
-- Tests behavior users/callers care about
-- Uses public API only
-- Survives internal refactors
-- Describes WHAT, not HOW
-- One logical assertion per test
+- Test hành vi mà người dùng / caller quan tâm
+- Chỉ sử dụng public API
+- Sống sót qua các đợt refactor nội bộ
+- Mô tả CÁI GÌ (WHAT), không phải LÀM THẾ NÀO (HOW)
+- Mỗi test một mục tiêu khẳng định (assertion) logic
 
-## Bad Tests
+## Các Test Xấu
 
-**Implementation-detail tests**: Coupled to internal structure.
+**Các test chi tiết triển khai (Implementation-detail tests)**: Gắn chặt với cấu trúc nội bộ.
 
 ```typescript
-// BAD: Tests implementation details
+// XẤU: Test chi tiết triển khai
 test("checkout calls paymentService.process", async () => {
   const mockPayment = jest.mock(paymentService);
   await checkout(cart, payment);
@@ -35,24 +35,24 @@ test("checkout calls paymentService.process", async () => {
 });
 ```
 
-Red flags:
+Cờ đỏ (Red flags):
 
-- Mocking internal collaborators
-- Testing private methods
-- Asserting on call counts/order
-- Test breaks when refactoring without behavior change
-- Test name describes HOW not WHAT
-- Verifying through external means instead of interface
+- Mock các thành phần hợp tác nội bộ
+- Test các phương thức private
+- Khẳng định trên số lần gọi / thứ tự gọi
+- Test bị hỏng khi refactor dù hành vi không đổi
+- Tên test mô tả LÀM THẾ NÀO (HOW) chứ không phải CÁI GÌ (WHAT)
+- Xác minh qua các phương tiện bên ngoài thay vì qua interface
 
 ```typescript
-// BAD: Bypasses interface to verify
+// XẤU: Bỏ qua interface để xác minh
 test("createUser saves to database", async () => {
   await createUser({ name: "Alice" });
   const row = await db.query("SELECT * FROM users WHERE name = ?", ["Alice"]);
   expect(row).toBeDefined();
 });
 
-// GOOD: Verifies through interface
+// TỐT: Xác minh thông qua interface
 test("createUser makes user retrievable", async () => {
   const user = await createUser({ name: "Alice" });
   const retrieved = await getUser(user.id);
@@ -60,17 +60,17 @@ test("createUser makes user retrievable", async () => {
 });
 ```
 
-**Tautological tests**: Expected value restates the implementation, so the test passes by construction.
+**Các test tự chứng minh (Tautological tests)**: Giá trị kỳ vọng tính lại việc triển khai, nên test pass theo đúng định nghĩa.
 
 ```typescript
-// BAD: Expected value is recomputed the way the code computes it
+// XẤU: Giá trị kỳ vọng được tính lại theo đúng cách code tính
 test("calculateTotal sums line items", () => {
   const items = [{ price: 10 }, { price: 5 }];
   const expected = items.reduce((sum, i) => sum + i.price, 0);
   expect(calculateTotal(items)).toBe(expected);
 });
 
-// GOOD: Expected value is an independent, known literal
+// TỐT: Giá trị kỳ vọng là một hằng số độc lập, đã biết
 test("calculateTotal sums line items", () => {
   expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
 });

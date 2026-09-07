@@ -1,12 +1,12 @@
 ---
 name: research
-description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
+description: Điều tra một câu hỏi dựa trên các nguồn sơ cấp có độ tin cậy cao và ghi lại kết quả dưới dạng một file Markdown trong repo. Dùng khi người dùng muốn nghiên cứu một chủ đề, thu thập tài liệu hoặc sự thật về API, hoặc giao công việc đọc tài liệu cho một agent chạy nền.
 ---
 
-Spin up a **background agent** to do the research, so you keep working while it reads.
+Khởi chạy một **agent chạy nền (background agent)** để thực hiện nghiên cứu, để bạn tiếp tục làm việc trong khi nó đọc tài liệu.
 
-Its job:
+Nhiệm vụ của nó:
 
-1. Investigate the question against **primary sources** — official docs, source code, specs, first-party APIs — not a secondary write-up of them. Follow every claim back to the source that owns it.
-2. Write the findings to a single Markdown file, citing each claim's source.
-3. Save it where the repo already keeps such notes; match the existing convention, and if there is none, put it somewhere sensible and say where.
+1. Điều tra câu hỏi dựa trên các **nguồn sơ cấp (primary sources)** — tài liệu chính thức, mã nguồn, specs, API chính chủ — không phải các bài viết thứ cấp lại từ chúng. Truy nguyên từng khẳng định về đúng nguồn sở hữu nó.
+2. Viết các phát hiện vào một file Markdown duy nhất, trích dẫn nguồn cho mỗi khẳng định.
+3. Lưu nó ở nơi mà repo đã lưu các ghi chú như vậy; khớp với quy ước hiện có, và nếu không có, hãy đặt ở một nơi hợp lý và thông báo vị trí.

@@ -1,47 +1,47 @@
-# ADR Format
+# Định dạng ADR
 
-ADRs live in `docs/adr/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
+ADR sống trong `docs/adr/` và dùng đánh số tuần tự: `0001-slug.md`, `0002-slug.md`, v.v.
 
-Create the `docs/adr/` directory lazily — only when the first ADR is needed.
+Tạo thư mục `docs/adr/` một cách lười (lazily) — chỉ khi ADR đầu tiên cần thiết.
 
-## Template
+## Mẫu (Template)
 
 ```md
-# {Short title of the decision}
+# {Tiêu đề ngắn gọn của quyết định}
 
-{1-3 sentences: what's the context, what did we decide, and why.}
+{1-3 câu: ngữ cảnh là gì, chúng ta đã quyết định gì, và tại sao.}
 ```
 
-That's it. An ADR can be a single paragraph. The value is in recording *that* a decision was made and *why* — not in filling out sections.
+Vậy là xong. Một ADR có thể chỉ là một đoạn văn duy nhất. Giá trị nằm ở việc ghi lại *rằng* một quyết định đã được đưa ra và *tại sao* — không phải ở việc điền đầy các mục.
 
-## Optional sections
+## Các mục tùy chọn
 
-Only include these when they add genuine value. Most ADRs won't need them.
+Chỉ đưa vào những mục này khi chúng mang lại giá trị thực sự. Hầu hết ADR sẽ không cần chúng.
 
-- **Status** frontmatter (`proposed | accepted | deprecated | superseded by ADR-NNNN`) — useful when decisions are revisited
-- **Considered Options** — only when the rejected alternatives are worth remembering
-- **Consequences** — only when non-obvious downstream effects need to be called out
+- **Status** frontmatter (`proposed | accepted | deprecated | superseded by ADR-NNNN`) — hữu ích khi các quyết định được xem xét lại
+- **Considered Options** (Các phương án đã xem xét) — chỉ khi các phương án bị loại bỏ đáng để ghi nhớ
+- **Consequences** (Hệ quả) — chỉ khi các hệ quả dây chuyền không rõ ràng cần được nêu rõ
 
-## Numbering
+## Đánh số
 
-Scan `docs/adr/` for the highest existing number and increment by one.
+Quét `docs/adr/` để tìm số hiện có cao nhất và tăng lên một.
 
-## When to offer an ADR
+## Khi nào nên đề xuất một ADR
 
-All three of these must be true:
+Cả ba điều sau đều phải đúng:
 
-1. **Hard to reverse** — the cost of changing your mind later is meaningful
-2. **Surprising without context** — a future reader will look at the code and wonder "why on earth did they do it this way?"
-3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
+1. **Khó đảo ngược** — chi phí thay đổi quyết định sau này là đáng kể
+2. **Gây ngạc nhiên nếu không có ngữ cảnh** — một người đọc trong tương lai sẽ nhìn vào code và tự hỏi "sao trời lại làm theo cách này?"
+3. **Kết quả của một sự đánh đổi thực sự** — có những phương án thay thế thực sự và bạn chọn một vì những lý do cụ thể
 
-If a decision is easy to reverse, skip it — you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing."
+Nếu một quyết định dễ đảo ngược, hãy bỏ qua nó — bạn sẽ chỉ đảo ngược nó thôi. Nếu nó không gây ngạc nhiên, sẽ không ai thắc mắc tại sao. Nếu không có phương án thay thế thực sự, không có gì để ghi lại ngoài "chúng tôi đã làm điều hiển nhiên."
 
-### What qualifies
+### Những gì đủ điều kiện
 
-- **Architectural shape.** "We're using a monorepo." "The write model is event-sourced, the read model is projected into Postgres."
-- **Integration patterns between contexts.** "Ordering and Billing communicate via domain events, not synchronous HTTP."
-- **Technology choices that carry lock-in.** Database, message bus, auth provider, deployment target. Not every library — just the ones that would take a quarter to swap out.
-- **Boundary and scope decisions.** "Customer data is owned by the Customer context; other contexts reference it by ID only." The explicit no-s are as valuable as the yes-s.
-- **Deliberate deviations from the obvious path.** "We're using manual SQL instead of an ORM because X." Anything where a reasonable reader would assume the opposite. These stop the next engineer from "fixing" something that was deliberate.
-- **Constraints not visible in the code.** "We can't use AWS because of compliance requirements." "Response times must be under 200ms because of the partner API contract."
-- **Rejected alternatives when the rejection is non-obvious.** If you considered GraphQL and picked REST for subtle reasons, record it — otherwise someone will suggest GraphQL again in six months.
+- **Hình dạng kiến trúc.** "Chúng tôi đang dùng một monorepo." "Write model được event-sourced, read model được chiếu (projected) vào Postgres."
+- **Các mẫu tích hợp giữa các context.** "Ordering và Billing giao tiếp qua domain event, không phải HTTP đồng bộ."
+- **Các lựa chọn công nghệ mang tính khóa chặt (lock-in).** Database, message bus, auth provider, deployment target. Không phải mọi thư viện — chỉ những cái mà việc thay thế sẽ mất cả một quý.
+- **Các quyết định về ranh giới và phạm vi.** "Dữ liệu khách hàng thuộc sở hữu của context Customer; các context khác chỉ tham chiếu nó qua ID." Những cái "không" rõ ràng cũng có giá trị như những cái "có".
+- **Những sai lệch có chủ đích khỏi con đường hiển nhiên.** "Chúng tôi dùng SQL thủ công thay vì ORM vì X." Bất cứ điều gì mà một người đọc hợp lý sẽ giả định điều ngược lại. Những cái này ngăn kỹ sư tiếp theo "sửa" một thứ vốn dĩ là có chủ đích.
+- **Các ràng buộc không thấy được trong code.** "Chúng tôi không thể dùng AWS vì yêu cầu tuân thủ (compliance)." "Thời gian phản hồi phải dưới 200ms vì hợp đồng API với đối tác."
+- **Các phương án bị loại bỏ khi việc loại bỏ đó không hiển nhiên.** Nếu bạn đã cân nhắc GraphQL và chọn REST vì những lý do tinh tế, hãy ghi lại — nếu không sáu tháng sau ai đó sẽ lại đề xuất GraphQL.

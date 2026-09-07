@@ -1,16 +1,16 @@
 ---
 name: handoff
-description: Compact the current conversation into a handoff document for another agent to pick up.
-argument-hint: "What will the next session be used for?"
+description: Nén cuộc hội thoại hiện tại thành một tài liệu bàn giao để agent khác tiếp tục.
+argument-hint: "Phiên làm việc tiếp theo sẽ được dùng để làm gì?"
 disable-model-invocation: true
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+Viết một tài liệu bàn giao tóm tắt cuộc hội thoại hiện tại để một agent mới có thể tiếp tục công việc. Lưu vào thư mục tạm (temporary directory) của hệ điều hành của người dùng - không phải workspace hiện tại.
 
-Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
+Bao gồm một mục "kỹ năng đề xuất" (suggested skills) trong tài liệu, nêu tên những skill mà agent tiếp theo nên gọi qua tool Skill.
 
-Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
+Không lặp lại nội dung đã được ghi lại trong các artifact khác (specs, plans, ADR, issues, commits, diffs). Thay vào đó, hãy tham chiếu chúng bằng đường dẫn hoặc URL.
 
-Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
+Ẩn (redact) mọi thông tin nhạy cảm, chẳng hạn như API keys, mật khẩu, hoặc thông tin định danh cá nhân.
 
-If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
+Nếu người dùng truyền vào tham số (arguments), hãy coi đó là mô tả về những gì phiên làm việc tiếp theo sẽ tập trung vào và điều chỉnh tài liệu cho phù hợp.

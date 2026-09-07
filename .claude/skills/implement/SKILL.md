@@ -1,15 +1,15 @@
 ---
 name: implement
-description: "Implement a piece of work based on a spec or set of tickets."
+description: "Triển khai một phần công việc dựa trên một spec hoặc một tập hợp ticket."
 disable-model-invocation: true
 ---
 
-Implement the work described by the user in the spec or tickets.
+Triển khai công việc được người dùng mô tả trong spec hoặc các ticket.
 
-Use /tdd where possible, at pre-agreed seams.
+Sử dụng /tdd bất cứ khi nào có thể, tại các "seam" (điểm nối) đã được thống nhất trước.
 
-Run typechecking regularly, single test files regularly, and the full test suite once at the end.
+Chạy typechecking thường xuyên, chạy từng file test đơn lẻ thường xuyên, và chạy toàn bộ test suite một lần vào cuối.
 
-Once done, use /code-review to review the work.
+Sau khi hoàn tất, sử dụng /code-review để review công việc.
 
-Commit your work to the current branch.
+Commit công việc của bạn vào nhánh (branch) hiện tại.

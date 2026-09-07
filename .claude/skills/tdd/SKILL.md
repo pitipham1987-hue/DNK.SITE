@@ -1,38 +1,38 @@
 ---
 name: tdd
-description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
+description: Phát triển hướng kiểm thử (Test-driven development). Dùng khi người dùng muốn xây dựng tính năng hoặc sửa bug theo hướng test-first, nhắc đến "red-green-refactor", hoặc muốn viết integration tests.
 ---
 
-# Test-Driven Development
+# Phát triển Hướng Kiểm thử (Test-Driven Development)
 
-TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle — consult them before and during the loop, not after.
+TDD là vòng lặp đỏ (red) → xanh (green). Skill này là tài liệu tham chiếu giúp vòng lặp đó tạo ra các test đáng giữ lại: một test tốt là gì, các test nằm ở đâu, các mẫu chống lại (anti-patterns), và các quy tắc của vòng lặp. Mọi phần đều áp dụng trên mỗi chu kỳ — hãy tham khảo chúng trước và trong vòng lặp, không phải sau đó.
 
-When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
+Khi khám phá codebase, hãy đọc `CONTEXT.md` (nếu có) để tên test và từ vựng interface khớp với ngôn ngữ nghiệp vụ của dự án, và tôn trọng các ADR trong khu vực bạn đang chạm vào.
 
-## What a good test is
+## Một test tốt là gì
 
-Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.
+Các test xác minh hành vi thông qua các interface công khai, không phải chi tiết triển khai. Code có thể thay đổi hoàn toàn; test thì không nên. Một test tốt đọc như một bản tả kỹ thuật (specification) — "user có thể thanh toán với giỏ hàng hợp lệ" cho bạn biết chính xác khả năng nào tồn tại — và sống sót qua các đợt refactor vì nó không quan tâm đến cấu trúc nội bộ.
 
-See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
+Xem [tests.md](tests.md) để biết các ví dụ và [mocking.md](mocking.md) để biết hướng dẫn về cách mock.
 
-## Seams — where tests go
+## Seams — nơi các test nằm
 
-A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+Một **seam** là ranh giới công khai mà bạn test tại đó: interface nơi bạn quan sát hành vi mà không cần chui vào bên trong. Các test sống tại các seam, không bao giờ test trực tiếp phần nội bộ.
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything — agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Chỉ test tại các seam đã thống nhất trước.** Trước khi viết bất kỳ test nào, hãy ghi ra các seam được test và xác nhận chúng với người dùng. Không có test nào được viết tại một seam chưa được xác nhận. Bạn không thể test mọi thứ — thống nhất các seam ngay từ đầu là cách để công sức kiểm thử rơi đúng vào các đường dẫn quan trọng và logic phức tạp thay vì mọi trường hợp biên.
 
-Ask: "What's the public interface, and which seams should we test?"
+Hãy hỏi: "Interface công khai là gì, và chúng ta nên test những seam nào?"
 
-When the shape of that interface is itself in question — how deep the module is, where the seam belongs, what the interface should expose — call the Skill tool with "codebase-design" for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is a reference to consult, not a session to run.
+Khi chính hình dạng của interface đó đang bị đặt nghi vấn — module sâu đến mức nào, seam thuộc về đâu, interface nên bộc lộ những gì — hãy gọi tool Skill với "codebase-design" để lấy từ vựng. Nó là nguồn chung cho các thuật ngữ module, interface, depth, seam, adapter, leverage và locality, và là một tài liệu tham chiếu để tra cứu, không phải một phiên làm việc để chạy.
 
-## Anti-patterns
+## Mẫu chống lại (Anti-patterns)
 
-- **Implementation-coupled** — mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
-- **Tautological** — the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth — a known-good literal, a worked example, the spec.
-- **Horizontal slicing** — writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead — one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
+- **Gắn chặt với việc triển khai (Implementation-coupled)** — mock các thành phần hợp tác nội bộ, test các phương thức private, hoặc xác minh qua một kênh phụ (truy vấn database thay vì dùng interface). Dấu hiệu nhận biết: test bị hỏng khi bạn refactor dù hành vi không hề thay đổi.
+- **Táo bạo tự chứng minh (Tautological)** — câu khẳng định tính toán lại giá trị kỳ vọng theo đúng cách code làm (`expect(add(a, b)).toBe(a + b)`, một snapshot được tạo thủ công theo cùng một cách, một hằng số được khẳng định bằng chính nó), nên nó pass theo đúng định nghĩa và không bao giờ có thể bất đồng với code. Giá trị kỳ vọng phải đến từ một nguồn chân lý độc lập — một giá trị hằng số đã biết là đúng, một ví dụ đã được tính toán, hoặc bản spec.
+- **Cắt lát ngang (Horizontal slicing)** — viết tất cả các test trước, sau đó mới viết tất cả phần triển khai. Viết test hàng loạt sẽ xác minh hành vi _tưởng tượng_: bạn test *hình dạng* của sự vật thay vì hành vi hướng tới người dùng, các test trở nên trơ với những thay đổi thực sự, và bạn cam kết với cấu trúc test trước khi hiểu việc triển khai. Thay vào đó hãy làm việc theo **các lát cắt dọc (vertical slices)** — một test → một triển khai → lặp lại, mỗi test là một **tracer bullet** phản hồi lại những gì chu kỳ trước đã dạy cho bạn.
 
-## Rules of the loop
+## Quy tắc của vòng lặp
 
-- **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
-- **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **Đỏ trước xanh (Red before green).** Viết test thất bại trước, sau đó chỉ viết đủ code để làm cho nó pass. Đừng dự đoán các test trong tương lai hoặc thêm các tính năng mang tính suy đoán.
+- **Mỗi lần một lát cắt.** Một seam, một test, một triển khai tối thiểu cho mỗi chu kỳ.
+- **Refactoring không phải là một phần của vòng lặp.** Nó thuộc về giai đoạn review (xem skill `code-review`), không thuộc về chu kỳ triển khai đỏ → xanh.

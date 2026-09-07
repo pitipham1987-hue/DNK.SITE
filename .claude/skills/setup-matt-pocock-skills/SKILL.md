@@ -1,116 +1,116 @@
 ---
 name: setup-matt-pocock-skills
-description: Configure this repo for the engineering skills — set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills.
+description: Cấu hình repo này cho các skill kỹ thuật — thiết lập issue tracker, từ vựng nhãn triage, và bố cục tài liệu domain. Chạy một lần trước khi sử dụng lần đầu các skill kỹ thuật khác.
 disable-model-invocation: true
 ---
 
 # Setup Matt Pocock's Skills
 
-Scaffold the per-repo configuration that the engineering skills assume:
+Khởi tạo cấu hình trên từng repo mà các skill kỹ thuật giả định sẵn:
 
-- **Issue tracker** — where issues live (GitHub by default; local markdown is also supported out of the box)
-- **Triage labels** — the strings used for the five canonical triage roles
-- **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
+- **Issue tracker** — nơi các issue sống (GitHub mặc định; markdown cục bộ cũng được hỗ trợ sẵn)
+- **Nhãn triage (Triage labels)** — các chuỗi được dùng cho 5 vai trò triage chuẩn hóa
+- **Tài liệu domain (Domain docs)** — nơi `CONTEXT.md` và các ADR sống, và các quy tắc dành cho người đọc để đọc chúng
 
-This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
+Đây là một skill được điều khiển bằng prompt, không phải một script tất định. Hãy khám phá, trình bày những gì bạn tìm thấy, xác nhận với người dùng, sau đó ghi file.
 
-## Process
+## Quy trình
 
-### 1. Explore
+### 1. Khám phá
 
-Look at the current repo to understand its starting state. Read whatever exists; don't assume:
+Nhìn vào repo hiện tại để hiểu trạng thái ban đầu của nó. Đọc những gì tồn tại; đừng giả định:
 
-- `git remote -v` and `.git/config` — is this a GitHub repo? Which one?
-- `AGENTS.md` and `CLAUDE.md` at the repo root — does either exist? Is there already an `## Agent skills` section in either?
-- `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
-- `docs/adr/` and any `src/*/docs/adr/` directories
-- `docs/agents/` — does this skill's prior output already exist?
-- `.scratch/` — sign that a local-markdown issue tracker convention is already in use
-- Is the `triage` skill installed? (a `triage` skill folder alongside this one, or `triage` in your available skills.) This decides whether Section B runs at all.
-- Monorepo signals — a `pnpm-workspace.yaml`, a `workspaces` field in `package.json`, or a populated `packages/*` with its own `src/`. Present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.
+- `git remote -v` và `.git/config` — đây có phải là repo GitHub không? Repo nào?
+- `AGENTS.md` và `CLAUDE.md` tại gốc repo — cái nào tồn tại? Đã có mục `## Agent skills` trong cái nào chưa?
+- `CONTEXT.md` và `CONTEXT-MAP.md` tại gốc repo
+- `docs/adr/` và bất kỳ thư mục `src/*/docs/adr/` nào
+- `docs/agents/` — output trước đây của skill này đã tồn tại chưa?
+- `.scratch/` — dấu hiệu cho thấy quy ước issue tracker bằng markdown cục bộ đã được sử dụng
+- Skill `triage` đã được cài đặt chưa? (một thư mục skill `triage` bên cạnh thư mục này, hoặc `triage` trong các skill khả dụng của bạn.) Điều này quyết định Phần B có chạy hay không.
+- Dấu hiệu monorepo — `pnpm-workspace.yaml`, một trường `workspaces` trong `package.json`, hoặc thư mục `packages/*` có chứa `src/` riêng. Chỉ xuất hiện trong các repo đa-package thực sự lớn; việc không có chúng đồng nghĩa với đơn-context (single-context), vốn là hầu hết mọi repo.
 
-### 2. Present findings and ask
+### 2. Trình bày phát hiện và hỏi
 
-Summarise what's present and what's missing. Then take the sections in order — one section, one answer, then the next.
+Tóm tắt những gì có mặt và những gì còn thiếu. Sau đó thực hiện các phần theo thứ tự — một phần, một câu trả lời, rồi sang phần tiếp theo.
 
-Lead each section with the recommended answer so the user can accept it in a word. Give a one-line explainer only when the choice genuinely branches; skip the section entirely when exploration already settled it (Section B when `triage` isn't installed, Section C when there's no monorepo).
+Mở đầu mỗi phần bằng câu trả lời được khuyến nghị để người dùng có thể chấp nhận bằng một từ. Chỉ đưa ra lời giải thích một dòng khi lựa chọn thực sự rẽ nhánh; bỏ qua hoàn toàn phần đó khi việc khám phá đã giải quyết xong (Phần B khi `triage` chưa được cài đặt, Phần C khi không có monorepo).
 
-**Section A — Issue tracker.**
+**Phần A — Issue tracker.**
 
-> Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-tickets`, `triage`, and `to-spec` read from and write to it — they need to know whether to call `gh issue create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
+> Lời giải thích: "Issue tracker" là nơi lưu trữ các issue cho repo này. Các skill như `to-tickets`, `triage`, và `to-spec` đọc và ghi vào đó — chúng cần biết nên gọi `gh issue create`, ghi file markdown dưới `.scratch/`, hay đi theo một workflow nào khác bạn mô tả. Hãy chọn nơi bạn thực sự theo dõi công việc cho repo này.
 
-Default posture: these skills were designed for GitHub. If a `git remote` points at GitHub, propose that. If a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab. Otherwise (or if the user prefers), offer:
+Tư thế mặc định: các skill này được thiết kế cho GitHub. Nếu `git remote` trỏ tới GitHub, hãy đề xuất GitHub. Nếu `git remote` trỏ tới GitLab (`gitlab.com` hoặc host tự nâng cấp), hãy đề xuất GitLab. Nếu không (hoặc nếu người dùng ưu tiên), hãy đưa ra các lựa chọn:
 
-- **GitHub** — issues live in the repo's GitHub Issues (uses the `gh` CLI)
-- **GitLab** — issues live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
-- **Local markdown** — issues live as files under `.scratch/<feature>/` in this repo (good for solo projects or repos without a remote)
-- **Other** (Jira, Linear, etc.) — ask the user to describe the workflow in one paragraph; the skill will record it as freeform prose
+- **GitHub** — issue sống trong GitHub Issues của repo (dùng CLI `gh`)
+- **GitLab** — issue sống trong GitLab Issues của repo (dùng CLI [`glab`](https://gitlab.com/gitlab-org/cli))
+- **Markdown cục bộ** — issue sống dưới dạng các file dưới `.scratch/<feature>/` trong repo này (tốt cho các dự án cá nhân hoặc repo không có remote)
+- **Khác** (Jira, Linear, v.v.) — yêu cầu người dùng mô tả workflow trong một đoạn văn; skill sẽ ghi lại dưới dạng văn xuôi tự do
 
-Record the choice in `docs/agents/issue-tracker.md`. The GitHub and GitLab templates carry a "PRs as a request surface" flag, defaulted **off** — leave it off and don't raise it; a user who wants external PRs in the triage queue can flip the flag in the file later.
+Ghi lại lựa chọn vào `docs/agents/issue-tracker.md`. Mẫu GitHub và GitLab mang theo cờ "PRs as a request surface", mặc định là **off** — hãy để off và đừng nêu ra; người dùng muốn PR bên ngoài nằm trong hàng đợi triage có thể bật cờ trong file sau.
 
-**Section B — Triage label vocabulary.** Skip this section entirely if the `triage` skill isn't installed (exploration told you) — an uninstalled skill needs no labels.
+**Phần B — Từ vựng nhãn triage.** Bỏ qua phần này nếu skill `triage` chưa được cài đặt (khám phá đã báo cho bạn) — một skill chưa cài đặt thì không cần nhãn.
 
-If it is installed, ask exactly one question:
+Nếu đã cài đặt, hãy hỏi đúng một câu:
 
-> Do you want to keep the default triage labels? (recommended: **yes**)
+> Bạn có muốn giữ các nhãn triage mặc định không? (khuyến nghị: **có**)
 
-The defaults are the five canonical roles, each label string equal to its name: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. On **yes**, write them as-is. Only if the user says no — usually because their tracker already uses other names (e.g. `bug:triage` for `needs-triage`) — collect the overrides so `triage` applies existing labels instead of creating duplicates.
+Các mặc định là 5 vai trò chuẩn hóa, mỗi chuỗi nhãn bằng tên của nó: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. Nếu **có**, ghi nguyên văn. Chỉ khi người dùng nói không — thường vì tracker của họ đã dùng các tên khác (ví dụ `bug:triage` cho `needs-triage`) — hãy thu thập các ghi đè để `triage` áp dụng các nhãn hiện có thay vì tạo trùng lặp.
 
-**Section C — Domain docs.** Default to **single-context** — one `CONTEXT.md` + `docs/adr/` at the repo root. This fits almost every repo; write it without asking.
+**Phần C — Tài liệu domain.** Mặc định là **đơn-context (single-context)** — một `CONTEXT.md` + `docs/adr/` tại gốc repo. Cách này phù hợp với hầu hết mọi repo; ghi file mà không cần hỏi.
 
-Offer **multi-context** — a root `CONTEXT-MAP.md` pointing to per-context `CONTEXT.md` files — only when exploration found monorepo signals. Then confirm which layout they want.
+Chỉ đề xuất **đa-context (multi-context)** — một `CONTEXT-MAP.md` gốc trỏ tới các file `CONTEXT.md` theo từng context — khi khám phá tìm thấy các dấu hiệu monorepo. Sau đó xác nhận bố cục nào họ muốn.
 
-### 3. Confirm and edit
+### 3. Xác nhận và chỉnh sửa
 
-Show the user a draft of:
+Cho người dùng xem bản nháp của:
 
-- The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
-- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md` (the last only when `triage` is installed)
+- Khối `## Agent skills` để thêm vào file nào đang được chỉnh sửa trong `CLAUDE.md` / `AGENTS.md` (xem bước 4 để biết quy tắc chọn file)
+- Nội dung của `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, và `docs/agents/triage-labels.md` (file cuối cùng chỉ có khi `triage` đã được cài đặt)
 
-Let them edit before writing.
+Cho phép họ chỉnh sửa trước khi ghi.
 
-### 4. Write
+### 4. Ghi file
 
-**Pick the file to edit:**
+**Chọn file để chỉnh sửa:**
 
-- If `CLAUDE.md` exists, edit it.
-- Else if `AGENTS.md` exists, edit it.
-- If neither exists, ask the user which one to create — don't pick for them.
+- Nếu `CLAUDE.md` tồn tại, chỉnh sửa nó.
+- Nếu không, nếu `AGENTS.md` tồn tại, chỉnh sửa nó.
+- Nếu không có cái nào tồn tại, hỏi người dùng nên tạo cái nào — không tự chọn giúp họ.
 
-Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa) — always edit the one that's already there.
+Không bao giờ tạo `AGENTS.md` khi `CLAUDE.md` đã tồn tại (hoặc ngược lại) — luôn chỉnh sửa cái đã có sẵn.
 
-If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
+Nếu khối `## Agent skills` đã tồn tại trong file đã chọn, hãy cập nhật nội dung của nó tại chỗ thay vì nối thêm bản trùng lặp. Đừng ghi đè lên các chỉnh sửa của người dùng ở các phần xung quanh.
 
-The block:
+Khối mã:
 
 ```markdown
 ## Agent skills
 
 ### Issue tracker
 
-[one-line summary of where issues are tracked]. See `docs/agents/issue-tracker.md`.
+[tóm tắt một dòng về nơi theo dõi issue]. Xem `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-[one-line summary of the label vocabulary]. See `docs/agents/triage-labels.md`.
+[tóm tắt một dòng về từ vựng nhãn]. Xem `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-[one-line summary of layout — "single-context" or "multi-context"]. See `docs/agents/domain.md`.
+[tóm tắt một dòng về bố cục — "single-context" hoặc "multi-context"]. Xem `docs/agents/domain.md`.
 ```
 
-Include the `### Triage labels` sub-block, and write `docs/agents/triage-labels.md`, only when `triage` is installed and Section B ran. When it isn't, both are omitted.
+Chỉ đưa vào khối phụ `### Triage labels`, và ghi `docs/agents/triage-labels.md`, khi `triage` đã được cài đặt và Phần B đã chạy. Khi chưa, cả hai đều bị bỏ qua.
 
-Then write the docs files using the seed templates in this skill folder as a starting point:
+Sau đó ghi các file tài liệu dùng mẫu khởi đầu trong thư mục skill này làm điểm bắt đầu:
 
 - [issue-tracker-github.md](./issue-tracker-github.md) — GitHub issue tracker
 - [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) — GitLab issue tracker
-- [issue-tracker-local.md](./issue-tracker-local.md) — local-markdown issue tracker
-- [triage-labels.md](./triage-labels.md) — label mapping (only if `triage` is installed)
-- [domain.md](./domain.md) — domain doc consumer rules + layout
+- [issue-tracker-local.md](./issue-tracker-local.md) — markdown issue tracker cục bộ
+- [triage-labels.md](./triage-labels.md) — ánh xạ nhãn (chỉ khi `triage` được cài đặt)
+- [domain.md](./domain.md) — quy tắc đọc tài liệu domain + bố cục
 
-For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
+Đối với các issue tracker "khác", viết `docs/agents/issue-tracker.md` từ đầu dựa trên mô tả của người dùng.
 
-### 5. Done
+### 5. Hoàn tất
 
-Tell the user the setup is complete and which engineering skills will now read from these files. Mention they can edit `docs/agents/*.md` directly later — re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.
+Nói với người dùng rằng việc thiết lập đã hoàn tất và những skill kỹ thuật nào giờ đây sẽ đọc từ các file này. Nhắc rằng họ có thể chỉnh sửa trực tiếp `docs/agents/*.md` sau này — việc chạy lại skill này chỉ cần thiết nếu họ muốn chuyển đổi issue tracker hoặc bắt đầu lại từ đầu.

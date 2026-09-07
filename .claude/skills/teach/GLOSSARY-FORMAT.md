@@ -1,35 +1,35 @@
-# GLOSSARY.md Format
+# Định dạng GLOSSARY.md
 
-`GLOSSARY.md` is the canonical language for this teaching workspace. All explainers, exercises, and learning records should adhere to its terminology. Building it is itself part of learning: compressing a concept into a tight definition is evidence the user understands it.
+`GLOSSARY.md` là ngôn ngữ chuẩn hóa cho không gian làm việc dạy học này. Tất cả các bài giải thích, bài tập và bản ghi học tập đều nên tuân thủ thuật ngữ của nó. Xây dựng nó là một phần của việc học: nén một khái niệm thành một định nghĩa chặt chẽ là bằng chứng cho thấy người dùng đã hiểu nó.
 
-## Structure
+## Cấu trúc
 
 ```md
-# {Topic} Glossary
+# Bảng thuật ngữ {Topic}
 
-{One or two sentence description of the topic this glossary covers.}
+{Mô tả một hoặc hai câu về chủ đề mà bảng thuật ngữ này bao phủ.}
 
-## Terms
+## Thuật ngữ
 
 **Hypertrophy**:
-Muscle growth driven by mechanical tension and metabolic stress over repeated training sessions.
-_Avoid_: Bulking, getting big
+Sự phát triển cơ bắp được thúc đẩy bởi căng thẳng cơ học và stress chuyển hóa qua các buổi tập lặp đi lặp lại.
+_Avoid_: Bulking, làm cho to ra
 
 **Progressive overload**:
-Systematically increasing the demand on a muscle over time — via load, volume, or intensity.
-_Avoid_: Pushing harder, levelling up
+Tăng dần nhu cầu lên cơ bắp một cách hệ thống theo thời gian — thông qua mức tạ, khối lượng tập, hoặc cường độ.
+_Avoid_: Đẩy mạnh hơn, tăng cấp
 
 **RPE (Rate of Perceived Exertion)**:
-A 1–10 self-rating of how hard a set felt, where 10 is failure and 8 means two reps left in the tank.
-_Avoid_: Effort score, intensity rating
+Thang tự đánh giá từ 1–10 về độ nặng của một hiệp tập, trong đó 10 là thất bại và 8 nghĩa là còn làm được 2 rep nữa.
+_Avoid_: Điểm nỗ lực, đánh giá cường độ
 ```
 
-## Rules
+## Quy tắc
 
-- **Add a term only when the user understands it.** The glossary is a record of compressed knowledge, not a dictionary the user reads to learn. If the user has just been introduced to a concept, wait until they can use it correctly before promoting it here.
-- **Be opinionated.** When several words exist for the same concept, pick the best one and list the rest as aliases to avoid. This is how language compresses.
-- **Keep definitions tight.** One or two sentences. Define what the term IS, not what it does or how to do it.
-- **Use the glossary's own terms inside definitions.** Once a term is in the glossary, prefer it everywhere — including inside other definitions. This is what makes complex terms easier to grasp later.
-- **Group under subheadings** when natural clusters emerge (e.g. `## Anatomy`, `## Programming`). A flat list is fine when terms cohere.
-- **Flag ambiguities explicitly.** If a term is used loosely in the wider field, note the resolution: "In this workspace, 'set' always means a working set — warm-ups are tracked separately."
-- **Revise as understanding deepens.** A definition the user wrote in week one may be wrong by week six. Update in place; do not leave stale entries.
+- **Chỉ thêm một thuật ngữ khi người dùng đã hiểu nó.** Bảng thuật ngữ là bản ghi lại kiến thức đã nén, không phải từ điển người dùng đọc để học. Nếu người dùng vừa mới được giới thiệu một khái niệm, hãy chờ cho đến khi họ có thể sử dụng nó chính xác trước khi đưa vào đây.
+- **Có chính kiến.** Khi có nhiều từ cùng tồn tại cho một khái niệm, chọn từ tốt nhất và liệt kê các từ còn lại làm từ đồng nghĩa cần tránh. Đây là cách ngôn ngữ nén lại.
+- **Giữ định nghĩa chặt chẽ.** Một hoặc hai câu. Định nghĩa thuật ngữ đó LÀ gì, không phải nó LÀM gì hay làm NƯ THẾ NÀO.
+- **Dùng chính các thuật ngữ của bảng thuật ngữ bên trong các định nghĩa.** Một khi một thuật ngữ đã có trong bảng thuật ngữ, hãy ưu tiên dùng nó ở mọi nơi — bao gồm cả bên trong các định nghĩa khác. Đây là điều làm cho các thuật ngữ phức tạp dễ nắm bắt hơn sau này.
+- **Nhóm dưới các heading phụ** khi các cụm tự nhiên xuất hiện (ví dụ `## Anatomy`, `## Programming`). Một danh sách phẳng cũng ổn khi các thuật ngữ gắn kết.
+- **Đánh dấu các sự mơ hồ một cách rõ ràng.** Nếu một thuật ngữ được dùng lỏng lẻo trong lĩnh vực rộng hơn, hãy ghi chú cách giải quyết: "Trong không gian làm việc này, 'set' luôn có nghĩa là một hiệp tập chính — các hiệp khởi động được theo dõi riêng."
+- **Chỉnh sửa khi hiểu biết sâu sắc hơn.** Một định nghĩa người dùng viết ở tuần thứ nhất có thể sai ở tuần thứ sáu. Hãy cập nhật tại chỗ; đừng để lại các mục đã lỗi thời.

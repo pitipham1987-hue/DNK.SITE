@@ -1,37 +1,37 @@
-# Deepening
+# Đào sâu (Deepening)
 
-How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in [SKILL.md](SKILL.md) — **module**, **interface**, **seam**, **adapter**.
+Cách đào sâu một cụm module nông (shallow module) một cách an toàn, dựa trên các dependency của nó. Giả định bạn đã biết từ vựng trong [SKILL.md](SKILL.md) — **module**, **interface**, **seam**, **adapter**.
 
-## Dependency categories
+## Các nhóm dependency
 
-When assessing a candidate for deepening, classify its dependencies. The category determines how the deepened module is tested across its seam.
+Khi đánh giá một ứng viên để đào sâu, hãy phân loại các dependency của nó. Nhóm này quyết định cách module đã đào sâu được test qua seam của nó như thế nào.
 
-### 1. In-process
+### 1. Trong tiến trình (In-process)
 
-Pure computation, in-memory state, no I/O. Always deepenable — merge the modules and test through the new interface directly. No adapter needed.
+Tính toán thuần túy, trạng thái trong bộ nhớ, không I/O. Luôn có thể đào sâu — gộp các module lại và test trực tiếp qua interface mới. Không cần adapter.
 
-### 2. Local-substitutable
+### 2. Có thể thay thế cục bộ (Local-substitutable)
 
-Dependencies that have local test stand-ins (PGLite for Postgres, in-memory filesystem). Deepenable if the stand-in exists. The deepened module is tested with the stand-in running in the test suite. The seam is internal; no port at the module's external interface.
+Các dependency có bản thay thế test cục bộ (PGLite cho Postgres, filesystem trong bộ nhớ). Có thể đào sâu nếu bản thay thế tồn tại. Module đã đào sâu được test với bản thay thế chạy trong test suite. Seam là nội bộ; không có port ở interface bên ngoài của module.
 
-### 3. Remote but owned (Ports & Adapters)
+### 3. Từ xa nhưng thuộc sở hữu (Remote but owned) (Ports & Adapters)
 
-Your own services across a network boundary (microservices, internal APIs). Define a **port** (interface) at the seam. The deep module owns the logic; the transport is injected as an **adapter**. Tests use an in-memory adapter. Production uses an HTTP/gRPC/queue adapter.
+Các service của riêng bạn qua một ranh giới mạng (microservice, API nội bộ). Định nghĩa một **port** (interface) tại seam. Module sâu sở hữu logic; tầng truyền tải (transport) được tiêm (inject) vào như một **adapter**. Test dùng một adapter trong bộ nhớ. Production dùng một adapter HTTP/gRPC/queue.
 
-Recommendation shape: *"Define a port at the seam, implement an HTTP adapter for production and an in-memory adapter for testing, so the logic sits in one deep module even though it's deployed across a network."*
+Hình dạng khuyến nghị: *"Định nghĩa một port tại seam, triển khai một adapter HTTP cho production và một adapter trong bộ nhớ cho test, để logic nằm trong một module sâu duy nhất dù nó được triển khai qua mạng."*
 
-### 4. True external (Mock)
+### 4. Bên ngoài thực sự (True external) (Mock)
 
-Third-party services (Stripe, Twilio, etc.) you don't control. The deepened module takes the external dependency as an injected port; tests provide a mock adapter.
+Các service bên thứ ba (Stripe, Twilio, v.v.) mà bạn không kiểm soát. Module đã đào sâu nhận dependency bên ngoài như một port được tiêm vào; test cung cấp một adapter mock.
 
-## Seam discipline
+## Kỷ luật về seam
 
-- **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a port unless at least two adapters are justified (typically production + test). A single-adapter seam is just indirection.
-- **Internal seams vs external seams.** A deep module can have internal seams (private to its implementation, used by its own tests) as well as the external seam at its interface. Don't expose internal seams through the interface just because tests use them.
+- **Một adapter nghĩa là một seam giả định. Hai adapter nghĩa là một seam thực.** Đừng đưa vào một port trừ khi có ít nhất hai adapter là hợp lý (thường là production + test). Một seam chỉ có một adapter chỉ là một lớp gián tiếp (indirection) mà thôi.
+- **Seam nội bộ vs seam bên ngoài.** Một module sâu có thể có các seam nội bộ (riêng tư với việc triển khai của nó, được dùng bởi test riêng của nó) cũng như seam bên ngoài tại interface của nó. Đừng phơi bày các seam nội bộ qua interface chỉ vì test dùng chúng.
 
-## Testing strategy: replace, don't layer
+## Chiến lược test: thay thế, đừng xếp chồng
 
-- Old unit tests on shallow modules become waste once tests at the deepened module's interface exist — delete them.
-- Write new tests at the deepened module's interface. The **interface is the test surface**.
-- Tests assert on observable outcomes through the interface, not internal state.
-- Tests should survive internal refactors — they describe behaviour, not implementation. If a test has to change when the implementation changes, it's testing past the interface.
+- Các unit test cũ trên các module nông trở thành lãng phí một khi các test tại interface của module đã đào sâu tồn tại — hãy xóa chúng.
+- Viết các test mới tại interface của module đã đào sâu. **Interface là bề mặt test**.
+- Test khẳng định (assert) trên các kết quả có thể quan sát được qua interface, không phải trạng thái nội bộ.
+- Test nên sống sót qua các lần refactor nội bộ — chúng mô tả hành vi, không phải cách triển khai. Nếu một test phải thay đổi khi việc triển khai thay đổi, nó đang test vượt qua interface.

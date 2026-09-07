@@ -1,22 +1,22 @@
 ---
 name: grilling
-description: Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
+description: Chất vấn người dùng không khoan nhượng về một kế hoạch, quyết định, hoặc ý tưởng. Dùng khi người dùng muốn kiểm tra độ vững chắc của suy nghĩ của họ, hoặc dùng bất kỳ cụm từ kích hoạt 'grill' nào.
 ---
 
-Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.
+Phỏng vấn người dùng không khoan nhượng cho đến khi đạt được sự hiểu biết chung. Ánh xạ việc này như một **cây quyết định thiết kế (design tree)**: mỗi quyết định phân nhánh thành các quyết định phụ thuộc vào nó.
 
-Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask _now_ without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.
+Làm việc trên cây theo từng **vòng (rounds)**. **Đường biên (frontier)** là mọi quyết định mà các điều kiện tiên quyết của nó đã được chốt: những câu hỏi bạn có thể hỏi *ngay bây giờ* mà không cần đoán mò các câu trả lời bạn chưa nghe. Hỏi toàn bộ đường biên trong một vòng: đánh số từng câu hỏi và đưa ra câu trả lời bạn đề xuất. Sau đó chờ câu trả lời của người dùng trước khi sang vòng tiếp theo.
 
-Each question should be formatted like so:
+Mỗi câu hỏi nên được định dạng như sau:
 
 ```
-❓ **Q1** - **<question title>**: <question body, might be multiple paragraphs, including multiple choices>
+❓ **Q1** - **<tiêu đề câu hỏi>**: <nội dung câu hỏi, có thể gồm nhiều đoạn, bao gồm nhiều lựa chọn>
 
-➡️ <your recommended answer>
+➡️ <câu trả lời bạn đề xuất>
 ```
 
-Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
+Mỗi vòng, các câu trả lời của người dùng sẽ định hình lại cây quyết định: các quyết định đã chốt sẽ đẩy đường biên ra xa hơn và mở khóa các câu hỏi từng phụ thuộc vào chúng. Tính lại đường biên và hỏi vòng tiếp theo. Một câu hỏi mà câu trả lời của nó phụ thuộc vào một câu hỏi khác vẫn còn bỏ ngỏ trong vòng này thì thuộc về một vòng *sau*, không phải vòng này.
 
-Finding _facts_ is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, etc.), dispatch a sub-agent to find it; don't ask the user for anything you could look up yourself. Don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait for the sub-agent to report; ask the rest of the frontier now. The _decisions_ are the user's: put each to them and wait.
+Tìm ra các *sự kiện (facts)* là công việc của bạn, không bao giờ là của người dùng. Khi một câu hỏi ở đường biên cần một sự kiện từ môi trường (hệ thống tệp, công cụ, v.v.), hãy triển khai một sub-agent để tìm nó; đừng hỏi người dùng bất cứ điều gì mà bạn có thể tự tra cứu. Đừng chặn tiến trình vì việc đó: một quá trình khám phá đang chạy là một điều kiện tiên quyết chưa được chốt, vì vậy chỉ những câu hỏi phụ thuộc vào nó mới phải chờ sub-agent báo cáo; hãy hỏi phần còn lại của đường biên ngay bây giờ. Các *quyết định* là của người dùng: đưa từng cái cho họ và chờ đợi.
 
-The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding.
+Phiên làm việc kết thúc khi đường biên trống rỗng: mọi nhánh của cây quyết định thiết kế đã được xem xét, không có gì bị âm thầm giả định. Không hành động dựa trên nó cho đến khi người dùng xác nhận rằng bạn đã đạt được sự hiểu biết chung.

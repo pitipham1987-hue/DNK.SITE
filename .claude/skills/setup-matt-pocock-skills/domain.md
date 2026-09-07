@@ -1,18 +1,18 @@
-# Domain Docs
+# Tài liệu Domain (Domain Docs)
 
-How the engineering skills should consume this repo's domain documentation when exploring the codebase.
+Cách các skill kỹ thuật tiêu thụ tài liệu domain của repo này khi khám phá codebase.
 
-## Before exploring, read these
+## Trước khi khám phá, hãy đọc những tài liệu này
 
-- **`CONTEXT.md`** at the repo root, or
-- **`CONTEXT-MAP.md`** at the repo root if it exists — it points at one `CONTEXT.md` per context. Read each one relevant to the topic.
-- **`docs/adr/`** — read ADRs that touch the area you're about to work in. In multi-context repos, also check `src/<context>/docs/adr/` for context-scoped decisions.
+- **`CONTEXT.md`** tại gốc repo, hoặc
+- **`CONTEXT-MAP.md`** tại gốc repo nếu nó tồn tại — nó trỏ tới một `CONTEXT.md` cho mỗi context. Đọc từng cái liên quan đến chủ đề.
+- **`docs/adr/`** — đọc các ADR chạm vào khu vực bạn sắp làm việc. Trong các repo đa-context, kiểm tra cả `src/<context>/docs/adr/` cho các quyết định thuộc phạm vi context đó.
 
-If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) creates them lazily when terms or decisions actually get resolved.
+Nếu bất kỳ file nào trong số này không tồn tại, **tiến hành trong im lặng**. Đừng báo động sự vắng mặt của chúng; đừng đề xuất tạo chúng ngay từ đầu. Skill `/domain-modeling` (tiếp cận qua `/grill-with-docs` và `/improve-codebase-architecture`) sẽ tạo chúng một cách lười khi các thuật ngữ hoặc quyết định thực sự được giải quyết.
 
-## File structure
+## Cấu trúc file
 
-Single-context repo (most repos):
+Repo đơn-context (hầu hết các repo):
 
 ```
 /
@@ -23,29 +23,29 @@ Single-context repo (most repos):
 └── src/
 ```
 
-Multi-context repo (presence of `CONTEXT-MAP.md` at the root):
+Repo đa-context (sự có mặt của `CONTEXT-MAP.md` tại gốc):
 
 ```
 /
 ├── CONTEXT-MAP.md
-├── docs/adr/                          ← system-wide decisions
+├── docs/adr/                          ← các quyết định toàn hệ thống
 └── src/
     ├── ordering/
     │   ├── CONTEXT.md
-    │   └── docs/adr/                  ← context-specific decisions
+    │   └── docs/adr/                  ← các quyết định riêng của context
     └── billing/
         ├── CONTEXT.md
         └── docs/adr/
 ```
 
-## Use the glossary's vocabulary
+## Dùng từ vựng của bảng thuật ngữ
 
-When your output names a domain concept (in an issue title, a refactor proposal, a hypothesis, a test name), use the term as defined in `CONTEXT.md`. Don't drift to synonyms the glossary explicitly avoids.
+Khi output của bạn nêu tên một khái niệm domain (trong tiêu đề issue, đề xuất refactor, giả thuyết, tên test), hãy dùng thuật ngữ như được định nghĩa trong `CONTEXT.md`. Đừng trôi sang các từ đồng nghĩa mà bảng thuật ngữ đã liệt kê dưới mục tránh dùng (`_Avoid_`).
 
-If the concept you need isn't in the glossary yet, that's a signal — either you're inventing language the project doesn't use (reconsider) or there's a real gap (note it for `/domain-modeling`).
+Nếu khái niệm bạn cần chưa có trong bảng thuật ngữ, đó là một tín hiệu — hoặc bạn đang bịa ra ngôn ngữ mà dự án không dùng (hãy cân nhắc lại) hoặc có một khoảng trống thực sự (ghi chú lại cho `/domain-modeling`).
 
-## Flag ADR conflicts
+## Đánh dấu xung đột ADR
 
-If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:
+Nếu output của bạn mâu thuẫn với một ADR hiện có, hãy nêu rõ ràng thay vì âm thầm ghi đè:
 
-> _Contradicts ADR-0007 (event-sourced orders) — but worth reopening because…_
+> _Mâu thuẫn với ADR-0007 (event-sourced orders) — nhưng đáng mở lại vì…_

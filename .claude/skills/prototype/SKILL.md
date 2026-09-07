@@ -1,26 +1,26 @@
 ---
 name: prototype
-description: Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like.
+description: Dựng một bản prototype dùng-một-lần-rồi-bỏ để trả lời một câu hỏi thiết kế. Dùng khi người dùng muốn kiểm tra thực tế xem một mô hình trạng thái hoặc logic có cảm giác đúng không, hoặc khám phá xem UI nên trông như thế nào.
 ---
 
 # Prototype
 
-A prototype is **throwaway code that answers a question**. The question decides the shape.
+Một prototype là **code dùng-một-lần-rồi-bỏ dùng để trả lời một câu hỏi**. Câu hỏi sẽ quyết định hình dạng của prototype.
 
-## Pick a branch
+## Chọn một nhánh
 
-Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
+Xác định câu hỏi nào đang được trả lời — từ prompt của người dùng, code xung quanh, hoặc bằng cách hỏi nếu người dùng đang có mặt:
 
-- **"Does this logic / state model feel right?"** → [LOGIC.md](LOGIC.md). Build a single shareable HTML file — free-play buttons plus tabbed guided walkthroughs — that pushes the state machine through cases that are hard to reason about on paper, and that a non-developer can drive.
-- **"What should this look like?"** → [UI.md](UI.md). Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
+- **"Mô hình trạng thái / logic này có cảm giác đúng không?"** → [LOGIC.md](LOGIC.md). Dựng một file HTML đơn lẻ có thể chia sẻ được — gồm các nút bấm tự do cộng với các bài hướng dẫn theo tab — giúp đẩy state machine qua các trường hợp khó suy luận trên giấy mà một người không phải developer cũng có thể điều khiển được.
+- **"Cái này nên trông như thế nào?"** → [UI.md](UI.md). Tạo ra nhiều biến thể UI khác biệt triệt để trên một route duy nhất, có thể chuyển đổi qua tham số tìm kiếm URL và một thanh công cụ nổi ở đáy màn hình.
 
-The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.
+Hai nhánh tạo ra các artifact rất khác nhau — chọn sai nhánh sẽ làm lãng phí toàn bộ prototype. Nếu câu hỏi thực sự mơ hồ và người dùng không thể tiếp cận được, hãy mặc định chọn nhánh phù hợp hơn với code xung quanh (một module backend → logic; một trang hoặc component → UI) và nêu rõ giả định ở đầu prototype.
 
-## Rules that apply to both
+## Quy tắc áp dụng cho cả hai
 
-1. **Throwaway from day one, and clearly marked as such.** Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious — but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.
-2. **Trivial to run.** A UI prototype starts from one command in the project's task runner — `pnpm <name>`, `python <path>`, `bun <path>`, etc. A logic demo is a single HTML file the user double-clicks. Either way, no thinking required to start it.
-3. **No persistence by default.** State lives in memory. Persistence is the thing the prototype is _checking_, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE — wipe me" name.
-4. **Skip the polish.** No tests, no error handling beyond what makes the prototype _runnable_, no abstractions. The point is to learn something fast.
-5. **Surface the state.** After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.
-6. **Capture it when done.** Fold any validated decision into the real code, then capture the prototype itself as a **primary source**: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too — the verdict and the question it settled — in the issue or a commit. The main branch keeps only the validated decision.
+1. **Dùng-một-lần-rồi-bỏ ngay từ ngày đầu tiên, và được đánh dấu rõ ràng.** Đặt code prototype gần nơi nó thực sự được sử dụng (bên cạnh module hoặc trang mà nó làm prototype) để ngữ cảnh được rõ ràng — nhưng đặt tên sao cho người đọc bình thường thấy đây là prototype, không phải sản phẩm chính thức. Đối với các route UI dùng-một-lần-rồi-bỏ, hãy tuân theo quy ước routing mà dự án đã sử dụng; không tự bịa ra cấu trúc cấp cao nhất mới.
+2. **Cực kỳ dễ chạy.** Một UI prototype bắt đầu bằng một lệnh duy nhất trong task runner của dự án — `pnpm <name>`, `python <path>`, `bun <path>`, v.v. Một logic demo là một file HTML đơn lẻ mà người dùng chỉ cần nhấp đôi chuột. Dù theo cách nào, không cần phải suy nghĩ để khởi chạy.
+3. **Mặc định không lưu trữ dữ liệu (no persistence).** Trạng thái nằm trong bộ nhớ. Lưu trữ dữ liệu là thứ mà prototype đang _kiểm tra_, chứ không phải thứ nó nên phụ thuộc vào. Nếu câu hỏi liên quan rõ ràng đến cơ sở dữ liệu, hãy truy cập vào một DB nháp hoặc một file cục bộ với tên rõ ràng "PROTOTYPE — wipe me".
+4. **Bỏ qua phần trau chuốt.** Không viết test, không xử lý lỗi ngoài những gì làm cho prototype _chạy được_, không tạo abstraction. Mục tiêu là học được điều gì đó nhanh chóng.
+5. **Bộc lộ trạng thái.** Sau mỗi hành động (logic) hoặc trên mỗi lần chuyển đổi biến thể (UI), hãy in hoặc hiển thị toàn bộ trạng thái liên quan để người dùng có thể thấy điều gì đã thay đổi.
+6. **Ghi lại khi hoàn tất.** Gấp bất kỳ quyết định nào đã được xác minh vào code thật, sau đó ghi lại chính bản prototype như một **nguồn sơ cấp (primary source)**: commit nó vào một branch dùng-một-lần-rồi-bỏ, ngoài main, và để lại một con trỏ ngữ cảnh trỏ tới branch đó trên issue triển khai. Ghi lại cả câu trả lời — phán quyết và câu hỏi mà nó đã giải quyết — trong issue hoặc commit. Branch main chỉ giữ lại quyết định đã được xác minh.

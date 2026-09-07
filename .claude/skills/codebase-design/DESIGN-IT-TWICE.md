@@ -1,44 +1,44 @@
-# Design It Twice
+# Thiết kế hai lần (Design It Twice)
 
-When the user wants to explore alternative interfaces for a chosen deepening candidate, use this parallel sub-agent pattern. Based on "Design It Twice" (Ousterhout) — your first idea is unlikely to be the best.
+Khi người dùng muốn khám phá các interface thay thế cho một ứng viên đào sâu đã chọn, hãy dùng mẫu sub-agent song song này. Dựa trên "Design It Twice" (Ousterhout) — ý tưởng đầu tiên của bạn khó có khả năng là tốt nhất.
 
-Uses the vocabulary in [SKILL.md](SKILL.md) — **module**, **interface**, **seam**, **adapter**, **leverage**.
+Dùng từ vựng trong [SKILL.md](SKILL.md) — **module**, **interface**, **seam**, **adapter**, **leverage**.
 
-## Process
+## Quy trình
 
-### 1. Frame the problem space
+### 1. Đóng khung không gian bài toán
 
-Before spawning sub-agents, write a user-facing explanation of the problem space for the chosen candidate:
+Trước khi sinh các sub-agent, hãy viết một giải thích hướng tới người dùng về không gian bài toán cho ứng viên đã chọn:
 
-- The constraints any new interface would need to satisfy
-- The dependencies it would rely on, and which category they fall into (see [DEEPENING.md](DEEPENING.md))
-- A rough illustrative code sketch to ground the constraints — not a proposal, just a way to make the constraints concrete
+- Các ràng buộc mà bất kỳ interface mới nào cũng cần thỏa mãn
+- Các dependency mà nó sẽ dựa vào, và chúng thuộc nhóm nào (xem [DEEPENING.md](DEEPENING.md))
+- Một bản phác thảo code minh họa sơ bộ để làm cụ thể hóa các ràng buộc — không phải một đề xuất, chỉ là một cách để làm cho các ràng buộc trở nên cụ thể
 
-Show this to the user, then immediately proceed to Step 2. The user reads and thinks while the sub-agents work in parallel.
+Cho người dùng xem cái này, rồi ngay lập tức tiến sang Bước 2. Người dùng đọc và suy nghĩ trong khi các sub-agent làm việc song song.
 
-### 2. Spawn sub-agents
+### 2. Sinh các sub-agent
 
-Spawn 3+ sub-agents in parallel. Each must produce a **radically different** interface for the deepened module.
+Sinh 3+ sub-agent song song. Mỗi cái phải tạo ra một interface **khác biệt triệt để** cho module đã đào sâu.
 
-Prompt each sub-agent with a separate technical brief (file paths, coupling details, dependency category from [DEEPENING.md](DEEPENING.md), what sits behind the seam). The brief is independent of the user-facing problem-space explanation in Step 1. Give each agent a different design constraint:
+Đưa cho mỗi sub-agent một bản tóm tắt kỹ thuật riêng (đường dẫn file, chi tiết coupling, nhóm dependency từ [DEEPENING.md](DEEPENING.md), những gì nằm sau seam). Bản tóm tắt này độc lập với giải thích không gian bài toán hướng tới người dùng ở Bước 1. Cho mỗi agent một ràng buộc thiết kế khác nhau:
 
-- Agent 1: "Minimize the interface — aim for 1–3 entry points max. Maximise leverage per entry point."
-- Agent 2: "Maximise flexibility — support many use cases and extension."
-- Agent 3: "Optimise for the most common caller — make the default case trivial."
-- Agent 4 (if applicable): "Design around ports & adapters for cross-seam dependencies."
+- Agent 1: "Tối thiểu hóa interface — nhắm tới tối đa 1–3 điểm truy cập (entry point). Tối đa hóa leverage trên mỗi điểm truy cập."
+- Agent 2: "Tối đa hóa tính linh hoạt — hỗ trợ nhiều trường hợp sử dụng và khả năng mở rộng."
+- Agent 3: "Tối ưu hóa cho caller phổ biến nhất — làm cho trường hợp mặc định trở nên đơn giản."
+- Agent 4 (nếu áp dụng): "Thiết kế xoay quanh ports & adapters cho các dependency vượt seam."
 
-Include both [SKILL.md](SKILL.md) vocabulary and CONTEXT.md vocabulary in the brief so each sub-agent names things consistently with the architecture language and the project's domain language.
+Đưa vào bản tóm tắt cả từ vựng [SKILL.md](SKILL.md) lẫn từ vựng CONTEXT.md để mỗi sub-agent gọi tên mọi thứ nhất quán với ngôn ngữ kiến trúc và ngôn ngữ nghiệp vụ của dự án.
 
-Each sub-agent outputs:
+Mỗi sub-agent xuất ra:
 
-1. Interface (types, methods, params — plus invariants, ordering, error modes)
-2. Usage example showing how callers use it
-3. What the implementation hides behind the seam
-4. Dependency strategy and adapters (see [DEEPENING.md](DEEPENING.md))
-5. Trade-offs — where leverage is high, where it's thin
+1. Interface (kiểu, phương thức, tham số — cộng với các bất biến (invariant), thứ tự, các chế độ lỗi)
+2. Ví dụ sử dụng cho thấy caller dùng nó như thế nào
+3. Những gì việc triển khai giấu sau seam
+4. Chiến lược dependency và các adapter (xem [DEEPENING.md](DEEPENING.md))
+5. Đánh đổi — nơi leverage cao, nơi nó mỏng
 
-### 3. Present and compare
+### 3. Trình bày và so sánh
 
-Present designs sequentially so the user can absorb each one, then compare them in prose. Contrast by **depth** (leverage at the interface), **locality** (where change concentrates), and **seam placement**.
+Trình bày các thiết kế theo tuần tự để người dùng có thể tiếp thu từng cái, sau đó so sánh chúng bằng văn xuôi. Đối chiếu theo **độ sâu (depth)** (leverage tại interface), **tính cục bộ (locality)** (nơi thay đổi tập trung), và **vị trí seam**.
 
-After comparing, give your own recommendation: which design you think is strongest and why. If elements from different designs would combine well, propose a hybrid. Be opinionated — the user wants a strong read, not a menu.
+Sau khi so sánh, đưa ra khuyến nghị của riêng bạn: bạn nghĩ thiết kế nào mạnh nhất và tại sao. Nếu các phần tử từ các thiết kế khác nhau có thể kết hợp tốt, hãy đề xuất một phương án lai (hybrid). Hãy có chính kiến — người dùng muốn một nhận định mạnh mẽ, không phải một thực đơn.

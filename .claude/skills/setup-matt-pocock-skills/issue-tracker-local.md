@@ -1,30 +1,30 @@
-# Issue tracker: Local Markdown
+# Issue tracker: Markdown cục bộ
 
-Issues and specs for this repo live as markdown files in `.scratch/`.
+Các issue và spec cho repo này sống dưới dạng các file markdown trong `.scratch/`.
 
-## Conventions
+## Quy ước
 
-- One feature per directory: `.scratch/<feature-slug>/`
-- The spec is `.scratch/<feature-slug>/spec.md`
-- Implementation issues are one file per ticket at `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` — never a single combined tickets file
-- Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
-- Comments and conversation history append to the bottom of the file under a `## Comments` heading
+- Mỗi tính năng một thư mục: `.scratch/<feature-slug>/`
+- Spec là `.scratch/<feature-slug>/spec.md`
+- Các issue triển khai là một file cho mỗi ticket tại `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, đánh số từ `01` — không bao giờ là một file ticket gộp duy nhất
+- Trạng thái Triage được ghi dưới dạng một dòng `Status:` gần đầu mỗi file issue (xem `triage-labels.md` để biết các chuỗi vai trò)
+- Comments và lịch sử hội thoại được nối vào cuối file dưới heading `## Comments`
 
-## When a skill says "publish to the issue tracker"
+## Khi một skill nói "xuất bản lên issue tracker"
 
-Create a new file under `.scratch/<feature-slug>/` (creating the directory if needed).
+Tạo một file mới dưới `.scratch/<feature-slug>/` (tạo thư mục nếu cần).
 
-## When a skill says "fetch the relevant ticket"
+## Khi một skill nói "lấy ticket liên quan"
 
-Read the file at the referenced path. The user will normally pass the path or the issue number directly.
+Đọc file tại đường dẫn được tham chiếu. Người dùng thường sẽ truyền trực tiếp đường dẫn hoặc số issue.
 
-## Wayfinding operations
+## Các thao tác Wayfinding
 
-Used by `/wayfinder`. The **map** is a file with one **child** file per ticket.
+Được sử dụng bởi `/wayfinder`. **Bản đồ (map)** là một file với mỗi file **con (child)** cho một ticket.
 
-- **Map**: `.scratch/<effort>/map.md` — the Notes / Decisions-so-far / Fog body.
-- **Child ticket**: `.scratch/<effort>/issues/NN-<slug>.md`, numbered from `01`, with the question in the body. A `Type:` line records the ticket type (`research`/`prototype`/`grilling`/`task`); a `Status:` line records `claimed`/`resolved`.
-- **Blocking**: a `Blocked by: NN, NN` line near the top. A ticket is unblocked when every file it lists is `resolved`.
-- **Frontier**: scan `.scratch/<effort>/issues/` for files that are open, unblocked, and unclaimed; first by number wins.
-- **Claim**: set `Status: claimed` and save before any work.
-- **Resolve**: append the answer under an `## Answer` heading, set `Status: resolved`, then append a context pointer (gist + link) to the map's Decisions-so-far in `map.md`.
+- **Bản đồ**: `.scratch/<effort>/map.md` — phần body Ghi chú / Quyết định-cho-đến-nay / Sương mù.
+- **Ticket con**: `.scratch/<effort>/issues/NN-<slug>.md`, đánh số từ `01`, với câu hỏi trong body. Dòng `Type:` ghi loại ticket (`research`/`prototype`/`grilling`/`task`); dòng `Status:` ghi `claimed`/`resolved`.
+- **Chặn (Blocking)**: dòng `Blocked by: NN, NN` gần đầu file. Một ticket được bỏ chặn khi mọi file nó liệt kê đều là `resolved`.
+- **Đường biên (Frontier)**: quét `.scratch/<effort>/issues/` để tìm các file đang mở (open), không bị chặn (unblocked), và chưa có người nhận (unclaimed); file đầu tiên theo số sẽ thắng.
+- **Nhận làm (Claim)**: đặt `Status: claimed` và lưu trước bất kỳ công việc nào.
+- **Giải quyết (Resolve)**: nối thêm câu trả lời dưới heading `## Answer`, đặt `Status: resolved`, sau đó nối thêm một con trỏ ngữ cảnh (ý chính + link) vào mục Quyết định-cho-đến-nay của bản đồ trong `map.md`.

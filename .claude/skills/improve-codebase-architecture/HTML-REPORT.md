@@ -1,8 +1,8 @@
-# HTML Report Format
+# Định dạng Báo cáo HTML (HTML Report Format)
 
-The architectural review is rendered as a single self-contained HTML file in the OS temp directory. Tailwind and Mermaid both come from CDNs. Mermaid handles graph-shaped diagrams reliably; hand-built divs and inline SVG handle the more editorial visuals (mass diagrams, cross-sections). Mix the two — don't lean on Mermaid for everything, it'll start to look generic.
+Buổi review kiến trúc được xuất ra dưới dạng một file HTML tự chứa duy nhất trong thư mục tạm của hệ điều hành. Tailwind và Mermaid đều đến từ CDN. Mermaid xử lý các sơ đồ dạng đồ thị một cách đáng tin cậy; các div tự tạo và SVG nội tuyến xử lý các hình ảnh mang tính biên tập hơn (sơ đồ khối lượng, lát cắt ngang). Hãy trộn lẫn cả hai — đừng dựa vào Mermaid cho mọi thứ, nó sẽ bắt đầu trông đơn điệu.
 
-## Scaffold
+## Khung trang (Scaffold)
 
 ```html
 <!doctype html>
@@ -16,8 +16,8 @@ The architectural review is rendered as a single self-contained HTML file in the
       mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
     </script>
     <style>
-      /* small custom layer for things Tailwind doesn't cover cleanly:
-         dashed seam lines, hand-drawn-feeling arrow heads, etc. */
+      /* lớp tùy chỉnh nhỏ cho những thứ Tailwind không cover sạch:
+         đường seam đứt nét, đầu mũi tên cảm giác vẽ tay, v.v. */
       .seam { stroke-dasharray: 4 4; }
       .leak { stroke: #dc2626; }
       .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
@@ -35,32 +35,32 @@ The architectural review is rendered as a single self-contained HTML file in the
 
 ## Header
 
-Repo name, date, and a compact legend: solid box = module, dashed line = seam, red arrow = leakage, thick dark box = deep module. No introduction paragraph — straight into the candidates.
+Tên repo, ngày tháng, và một chú giải cô đọng: hộp nét liền = module, đường đứt nét = seam, mũi tên đỏ = rò rỉ (leakage), hộp tối dày = module sâu. Không có đoạn văn giới thiệu — đi thẳng vào các ứng viên.
 
-## Candidate card
+## Card ứng viên (Candidate card)
 
-The diagrams carry the weight. Prose is sparse, plain, and uses the glossary terms (from the `/codebase-design` skill) without ceremony.
+Các sơ đồ gánh trọng trách chính. Văn xuôi thưa thớt, rõ ràng, và dùng các thuật ngữ bảng giải thích (từ skill `/codebase-design`) mà không cầu kỳ.
 
-Each candidate is one `<article>`:
+Mỗi ứng viên là một `<article>`:
 
-- **Title** — short, names the deepening (e.g. "Collapse the Order intake pipeline").
-- **Badge row** — recommendation strength (`Strong` = emerald, `Worth exploring` = amber, `Speculative` = slate), plus a tag for the dependency category (`in-process`, `local-substitutable`, `ports & adapters`, `mock`).
-- **Files** — monospaced list, `font-mono text-sm`.
-- **Before / After diagram** — the centrepiece. Two columns, side by side. See patterns below.
-- **Problem** — one sentence. What hurts.
-- **Solution** — one sentence. What changes.
-- **Wins** — bullets, ≤6 words each. e.g. "Tests hit one interface", "Pricing logic stops leaking", "Delete 4 shallow wrappers".
-- **ADR callout** (if applicable) — one line in an amber-tinted box.
+- **Title** — ngắn gọn, nêu tên việc đào sâu (ví dụ "Collapse the Order intake pipeline").
+- **Badge row** — mức độ khuyến nghị (`Strong` = emerald, `Worth exploring` = amber, `Speculative` = slate), cộng với thẻ cho nhóm dependency (`in-process`, `local-substitutable`, `ports & adapters`, `mock`).
+- **Files** — danh sách monospaced, `font-mono text-sm`.
+- **Before / After diagram** — phần trọng tâm. Hai cột đặt cạnh nhau. Xem các mẫu bên dưới.
+- **Problem** — một câu. Điều gì gây đau đớn.
+- **Solution** — một câu. Điều gì thay đổi.
+- **Wins** — các gạch đầu dòng, ≤6 từ mỗi cái. Ví dụ "Tests hit one interface", "Pricing logic stops leaking", "Delete 4 shallow wrappers".
+- **ADR callout** (nếu áp dụng) — một dòng trong một box màu hổ phách.
 
-No paragraphs of explanation. If the diagram needs a paragraph to be understood, redraw the diagram.
+Không có các đoạn văn giải thích. Nếu sơ đồ cần một đoạn văn mới hiểu được, hãy vẽ lại sơ đồ.
 
-## Diagram patterns
+## Các mẫu sơ đồ (Diagram patterns)
 
-Pick the pattern that fits the candidate. Mix them. Don't make every diagram look the same — variety is part of the point.
+Chọn mẫu phù hợp với ứng viên. Trộn lẫn chúng. Đừng làm mọi sơ đồ trông giống hệt nhau — sự đa dạng là một phần của mục tiêu.
 
-### Mermaid graph (the workhorse for dependencies / call flow)
+### Đồ thị Mermaid (ngựa chiến cho dependency / luồng gọi)
 
-Use a Mermaid `flowchart` or `graph` when the point is "X calls Y calls Z, and look at the mess." Wrap it in a Tailwind-styled card so it doesn't feel parachuted in. Style with classDef to colour leakage edges red and the deep module dark. Sequence diagrams work well for "before: 6 round-trips; after: 1."
+Dùng Mermaid `flowchart` hoặc `graph` khi điểm cần nói là "X gọi Y gọi Z, và hãy nhìn vào sự hỗn loạn này." Bọc nó trong một card mang style Tailwind để nó không có cảm giác bị ném vào ngẫu nhiên. Style với classDef để tô màu các cạnh rò rỉ màu đỏ và module sâu màu tối. Sơ đồ trình tự (sequence diagram) hoạt động tốt cho "trước: 6 vòng đi-về; sau: 1."
 
 ```html
 <div class="rounded-lg border border-slate-200 bg-white p-4">
@@ -75,49 +75,49 @@ Use a Mermaid `flowchart` or `graph` when the point is "X calls Y calls Z, and l
 </div>
 ```
 
-### Hand-built boxes-and-arrows (when Mermaid's layout fights you)
+### Hộp-và-mũi-tên tự dựng (khi bố cục của Mermaid chống lại bạn)
 
-Modules as `<div>`s with borders and labels. Arrows as inline SVG `<line>` or `<path>` elements positioned absolutely over a relative container. Reach for this when you want the "after" diagram to feel like one thick-bordered deep module with greyed-out internals — Mermaid won't render that with the right weight.
+Các module là các `<div>` với viền và nhãn. Mũi tên là các phần tử SVG `<line>` hoặc `<path>` nội tuyến được đặt vị trí tuyệt đối (absolute) trên một container tương đối (relative). Hãy dùng cách này khi bạn muốn sơ đồ "sau" mang cảm giác như một module sâu viền dày với phần bên trong mờ đi — Mermaid sẽ không render điều đó với độ nặng phù hợp.
 
-### Cross-section (good for layered shallowness)
+### Lát cắt ngang (Cross-section - tốt cho tính chất nông theo tầng)
 
-Stack horizontal bands (`h-12 border-l-4`) to show layers a call passes through. Before: 6 thin layers each doing nothing. After: 1 thick band labelled with the consolidated responsibility.
+Xếp chồng các dải ngang (`h-12 border-l-4`) để hiển thị các tầng mà một lệnh gọi đi qua. Trước: 6 tầng mỏng mỗi tầng không làm gì cả. Sau: 1 dải dày được dán nhãn trách nhiệm đã gộp.
 
-### Mass diagram (good for "interface as wide as implementation")
+### Sơ đồ khối lượng (Mass diagram - tốt cho "interface rộng bằng implementation")
 
-Two rectangles per module — one for interface surface area, one for implementation. Before: interface rectangle is nearly as tall as the implementation rectangle (shallow). After: interface rectangle is short, implementation rectangle is tall (deep).
+Hai hình chữ nhật cho mỗi module — một cho diện tích bề mặt interface, một cho implementation. Trước: hình chữ nhật interface cao gần bằng hình chữ nhật implementation (nông). Sau: hình chữ nhật interface ngắn, hình chữ nhật implementation cao (sâu).
 
-### Call-graph collapse
+### Thu gọn đồ thị gọi (Call-graph collapse)
 
-Before: a tree of function calls rendered as nested boxes. After: the same tree collapsed into one box, with the now-internal calls shown faded inside it.
+Trước: một cây các lệnh gọi hàm được render dưới dạng các hộp lồng nhau. Sau: cùng cây đó thu gọn thành một hộp, với các lệnh gọi giờ đây là nội bộ được hiển thị mờ bên trong nó.
 
-## Style guidance
+## Hướng dẫn phong cách (Style guidance)
 
-- Lean editorial, not corporate-dashboard. Generous whitespace. Serif optional for headings (`font-serif` works well with stone/slate).
-- Colour sparingly: one accent (emerald or indigo) plus red for leakage and amber for warnings.
-- Keep diagrams ~320px tall so before/after sits comfortably side by side without scrolling.
-- Use `text-xs uppercase tracking-wider` for module labels inside diagrams — they should read as schematic, not as UI.
-- The only scripts are the Tailwind CDN and the Mermaid ESM import. The report is otherwise static — no app code, no interactivity beyond Mermaid's own rendering.
+- Thiên về hướng biên tập (editorial), không phải dashboard doanh nghiệp. Khoảng trắng rộng rãi. Serif là tùy chọn cho tiêu đề (`font-serif` hoạt động tốt với tone stone/slate).
+- Dùng màu sắc tiết kiệm: một màu nhấn (emerald hoặc indigo) cộng với đỏ cho rò rỉ và màu hổ phách cho cảnh báo.
+- Giữ các sơ đồ cao ~320px để trước/sau nằm thoải mái cạnh nhau mà không cần scroll.
+- Dùng `text-xs uppercase tracking-wider` cho các nhãn module bên trong sơ đồ — chúng nên đọc như sơ đồ kỹ thuật, không phải UI.
+- Các script duy nhất là Tailwind CDN và import ESM của Mermaid. Báo cáo hoàn toàn tĩnh — không có code app, không có tính tương tác ngoài việc render của chính Mermaid.
 
-## Top recommendation section
+## Mục Top recommendation
 
-One larger card. Candidate name, one sentence on why, anchor link to its card. That's it.
+Một card lớn hơn. Tên ứng viên, một câu về lý do tại sao, link anchor tới card của nó. Vậy là xong.
 
-## Tone
+## Giọng văn (Tone)
 
-Plain English, concise — but the architectural nouns and verbs come straight from the `/codebase-design` skill. Concision is not an excuse to drift.
+Rõ ràng, ngắn gọn — nhưng các danh từ và động từ kiến trúc đến thẳng từ skill `/codebase-design`. Sự ngắn gọn không phải là cớ để trôi dạt thuật ngữ.
 
-**Use exactly:** module, interface, implementation, depth, deep, shallow, seam, adapter, leverage, locality.
+**Dùng chính xác:** module, interface, implementation, depth, deep, shallow, seam, adapter, leverage, locality.
 
-**Never substitute:** component, service, unit (for module) · API, signature (for interface) · boundary (for seam) · layer, wrapper (for module, when you mean module).
+**Không bao giờ thay thế:** component, service, unit (cho module) · API, signature (cho interface) · boundary (cho seam) · layer, wrapper (cho module, khi bạn có ý nói module).
 
-**Phrasings that fit the style:**
+**Các cách diễn đạt phù hợp phong cách:**
 
 - "Order intake module is shallow — interface nearly matches the implementation."
 - "Pricing leaks across the seam."
 - "Deepen: one interface, one place to test."
 - "Two adapters justify the seam: HTTP in prod, in-memory in tests."
 
-**Wins bullets** name the gain in glossary terms: *"locality: bugs concentrate in one module"*, *"leverage: one interface, N call sites"*, *"interface shrinks; implementation absorbs the wrappers"*. Don't write *"easier to maintain"* or *"cleaner code"* — those terms aren't in the glossary and don't earn their place.
+**Các gạch đầu dòng Wins** nêu tên phần thu được bằng các thuật ngữ bảng giải thích: *"locality: bugs concentrate in one module"*, *"leverage: one interface, N call sites"*, *"interface shrinks; implementation absorbs the wrappers"*. Đừng viết *"easier to maintain"* hay *"cleaner code"* — những thuật ngữ đó không có trong bảng giải thích và không đáng có mặt.
 
-No hedging, no throat-clearing, no "it's worth noting that…". If a sentence could be a bullet, make it a bullet. If a bullet could be cut, cut it. If a term isn't in the `/codebase-design` glossary, reach for one that is before inventing a new one.
+Không quanh co, không chuẩn bị tinh thần, không "it's worth noting that…". Nếu một câu có thể là một gạch đầu dòng, hãy biến nó thành gạch đầu dòng. Nếu một gạch đầu dòng có thể cắt, hãy cắt nó. Nếu một thuật ngữ không có trong bảng giải thích `/codebase-design`, hãy tìm một thuật ngữ có sẵn trước khi bịa ra thuật ngữ mới.

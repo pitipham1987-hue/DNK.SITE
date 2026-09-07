@@ -1,67 +1,67 @@
 # Logic Prototype
 
-A single, self-contained HTML file — a **shareable demo** — that lets anyone drive a state model by clicking buttons. Use this when the question is about **business logic, state transitions, or data shape** — the kind of thing that looks reasonable on paper but only feels wrong once you push it through real cases.
+Một file HTML đơn lẻ, tự chứa — một **bản demo có thể chia sẻ** — cho phép bất kỳ ai điều khiển một mô hình trạng thái bằng cách nhấp vào các nút bấm. Sử dụng cách này khi câu hỏi xoay quanh **logic nghiệp vụ, chuyển đổi trạng thái, hoặc hình dạng dữ liệu** — những thứ trông có vẻ hợp lý trên giấy nhưng chỉ thấy sai khi bạn đẩy nó qua các trường hợp thực tế.
 
-Because it's one file with nothing to install, you can hand it to a non-developer — a designer, a PM, a domain expert — and let them feel the model for themselves. So it speaks their language, not the code's.
+Vì đây là một file duy nhất không cần cài đặt gì, bạn có thể đưa nó cho một người không phải developer — một designer, một PM, một chuyên gia nghiệp vụ — và để họ tự mình cảm nhận mô hình. Vì vậy nó nói ngôn ngữ của họ, không phải ngôn ngữ của code.
 
-## When this is the right shape
+## Khi nào đây là hình dạng phù hợp
 
-- "I'm not sure if this state machine handles the edge case where X then Y."
-- "Does this data model actually let me represent the case where..."
-- "I want to feel out what the API should look like before writing it."
-- Anything where someone wants to **press buttons and watch state change**.
+- "Tôi không chắc liệu state machine này có xử lý được edge case nơi X rồi đến Y hay không."
+- "Mô hình dữ liệu này có thực sự cho phép tôi biểu diễn trường hợp nơi mà..."
+- "Tôi muốn cảm nhận API sẽ trông như thế nào trước khi viết nó."
+- Bất kỳ trường hợp nào mà ai đó muốn **nhấn nút và xem trạng thái thay đổi**.
 
-If the question is "what should this look like" — wrong branch. Use [UI.md](UI.md).
+Nếu câu hỏi là "cái này nên trông như thế nào" — sai nhánh. Hãy dùng [UI.md](UI.md).
 
-## Process
+## Quy trình
 
-### 1. State the question
+### 1. Nêu rõ câu hỏi
 
-Before writing code, write down what state model and what question you're prototyping. One paragraph, at the top of the demo (in a visible intro, not just a comment). A logic prototype that answers the wrong question is pure waste — make the question explicit so it can be checked later, whether the user is watching now or returning to it AFK.
+Trước khi viết code, hãy ghi lại mô hình trạng thái nào và câu hỏi nào bạn đang làm prototype. Một đoạn văn, ở đầu bản demo (trong phần giới thiệu hiển thị được, không chỉ là một comment). Một logic prototype trả lời sai câu hỏi là hoàn toàn lãng phí — hãy làm cho câu hỏi rõ ràng để có thể kiểm tra sau, dù người dùng đang theo dõi ngay bây giờ hay quay lại sau (AFK).
 
-### 2. Isolate the logic in a portable module
+### 2. Cô lập logic trong một module có thể di chuyển
 
-Put the actual logic — the bit that's answering the question — in a single `<script>` block written as a small, pure module that could be lifted out and dropped into the real codebase later. The page around it is throwaway; this module isn't.
+Đặt logic thực sự — phần trả lời câu hỏi — trong một khối `<script>` duy nhất được viết như một module nhỏ, thuần túy có thể nhấc ra và thả vào codebase thật sau này. Trang xung quanh nó là dùng-một-lần-rồi-bỏ; module này thì không.
 
-The right shape depends on the question:
+Hình dạng phù hợp phụ thuộc vào câu hỏi:
 
-- **A pure reducer** — `(state, action) => state`. Good when actions are discrete events and state is a single value.
-- **A state machine** — explicit states and transitions. Good when "which actions are even legal right now" is part of the question.
-- **A small set of pure functions** over a plain data type. Good when there's no implicit current state — just transformations.
-- **A class or module with a clear method surface** when the logic genuinely owns ongoing internal state.
+- **Một reducer thuần túy** — `(state, action) => state`. Tốt khi các hành động là các sự kiện rời rạc và trạng thái là một giá trị duy nhất.
+- **Một state machine** — các trạng thái và chuyển đổi rõ ràng. Tốt khi "hành động nào hợp lệ ngay lúc này" là một phần của câu hỏi.
+- **Một tập hợp nhỏ các hàm thuần túy** trên một kiểu dữ liệu đơn giản. Tốt khi không có trạng thái hiện tại ngầm định — chỉ có các phép biến đổi.
+- **Một class hoặc module với bề mặt phương thức rõ ràng** khi logic thực sự sở hữu trạng thái nội bộ đang diễn ra.
 
-Pick whichever shape best fits the question being asked, *not* whichever is easiest to wire to a page. Keep it pure: no DOM, no `document`, no button handlers reaching inside it. The page calls into it; nothing flows the other direction. This is what makes the prototype useful past its own lifetime: once the question's answered, the validated reducer / machine / function set lifts into the real module on its own.
+Chọn hình dạng nào phù hợp nhất với câu hỏi được hỏi, *không phải* hình dạng nào dễ nối với trang nhất. Giữ cho nó thuần túy: không DOM, không `document`, không button handler nào chui vào bên trong nó. Trang gọi vào nó; không có gì đi theo chiều ngược lại. Đây là điều làm cho prototype có ích vượt quá vòng đời của chính nó: một khi câu hỏi được trả lời, reducer / machine / tập hàm đã xác minh được nhấc vào module thật một cách độc lập.
 
-### 3. Build the shareable HTML file
+### 3. Dựng file HTML có thể chia sẻ
 
-One file, plain HTML/CSS/JS — no framework, no bundler, no server, everything inline so it opens by double-click and survives being emailed around. Anyone should be able to run it by opening it.
+Một file, HTML/CSS/JS thuần — không framework, không bundler, không server, mọi thứ inline để nó mở được bằng nhấp đôi chuột và sống sót khi được gửi qua email. Bất kỳ ai cũng có thể chạy nó bằng cách mở nó lên.
 
-Write it for a non-developer. Every label is in **domain language**, not code — buttons and state read like the business, not the reducer. Explain in plain words what's happening.
+Viết nó cho một người không phải developer. Mọi nhãn đều bằng **ngôn ngữ nghiệp vụ (domain language)**, không phải code — các nút bấm và trạng thái đọc như nghiệp vụ, không phải reducer. Giải thích bằng từ ngữ đơn giản những gì đang diễn ra.
 
-Lay it out with a clean hierarchy, top to bottom:
+Bố trí nó với một hệ thống phân cấp sạch sẽ, từ trên xuống dưới:
 
-1. **Title and one-line explanation** of what this demo lets you explore (the question from step 1).
-2. **Current state** — the full relevant state, rendered as a readable panel (labelled fields, not a raw JSON dump), re-rendered after every click so the change is visible. Where it helps a non-developer follow, call out what just changed.
-3. **Free-play buttons** — one button per action, always available, so anyone can poke at the model in any order. Each click dispatches its action and re-renders the state.
-4. **Guided walkthroughs** — a set of **scenarios**, one per tab. Each tab holds a short plain-language description of the scenario — the situation it sets up and what to watch for — and underneath it, the ordered **buttons to press** for that scenario. Each step is a real button: clicking it performs that action and moves to the next step. Starting a walkthrough resets to a known initial state so the scenario runs the same way every time.
+1. **Tiêu đề và giải thích một dòng** về những gì bản demo này cho phép bạn khám phá (câu hỏi từ bước 1).
+2. **Trạng thái hiện tại** — toàn bộ trạng thái liên quan, được hiển thị dưới dạng một panel dễ đọc (các trường có nhãn, không phải JSON thô), được hiển thị lại sau mỗi lần click để thay đổi được nhìn thấy rõ ràng. Nơi nào giúp người không phải developer theo dõi, hãy nêu rõ điều gì vừa thay đổi.
+3. **Các nút bấm tự do (Free-play buttons)** — một nút cho mỗi hành động, luôn có sẵn, để bất kỳ ai cũng có thể chọc vào mô hình theo bất kỳ thứ tự nào. Mỗi lần click sẽ dispatch hành động của nó và render lại trạng thái.
+4. **Hướng dẫn theo kịch bản (Guided walkthroughs)** — một tập hợp các **kịch bản (scenarios)**, một kịch bản cho mỗi tab. Mỗi tab giữ một mô tả bằng ngôn ngữ đơn giản ngắn gọn về kịch bản — tình huống nó đặt ra và những gì cần theo dõi — và bên dưới nó, các **nút cần bấm** theo thứ tự cho kịch bản đó. Mỗi bước là một nút thật: click vào nó sẽ thực hiện hành động đó và chuyển sang bước tiếp theo. Bắt đầu một walkthrough sẽ reset về trạng thái ban đầu đã biết để kịch bản chạy cùng một cách mỗi lần.
 
-Choose scenarios that demonstrate the awkward cases — the happy path, a tricky edge case, an attempt at something that should be illegal — the ones hard to reason about on paper.
+Chọn các kịch bản minh họa những trường hợp oái ăm — con đường hạnh phúc (happy path), một edge case lắt léo, một nỗ lực làm điều gì đó lẽ ra phải bất hợp lệ — những trường hợp khó suy luận trên giấy.
 
-Keep it beautiful but restrained: clean typography, generous spacing, one accent colour. No animations, no gimmicks — nothing that competes with the state and the buttons.
+Giữ cho nó đẹp nhưng kiềm chế: typography sạch sẽ, khoảng cách rộng rãi, một màu nhấn duy nhất. Không animation, không chiêu trò — không có gì cạnh tranh với trạng thái và các nút bấm.
 
-### 4. Hand it over
+### 4. Bàn giao
 
-Send them the file, or open it for them. They'll click through the walkthroughs and free-play whenever they get to it; the interesting moments are when they say "wait, that shouldn't be possible" or "huh, I assumed X would be different" — those are the bugs in the _idea_, which is the whole point. If they want new actions or a new scenario, add them. Prototypes evolve.
+Gửi cho họ file đó, hoặc mở nó cho họ. Họ sẽ click qua các walkthrough và tự do thử nghiệm bất cứ khi nào họ rảnh; những khoảnh khắc thú vị là khi họ nói "khoan, điều đó lẽ ra không thể xảy ra" hoặc "ồ, tôi cứ tưởng X sẽ khác" — đó chính là các con bug trong _ý tưởng_, đó là toàn bộ mục tiêu. Nếu họ muốn các hành động mới hoặc một kịch bản mới, hãy thêm chúng vào. Prototype tiến hóa.
 
-### 5. Capture the answer and the prototype
+### 5. Ghi lại câu trả lời và prototype
 
-Once the prototype has answered its question, capture the answer, then capture the prototype the way the [SKILL](SKILL.md) describes. The logic-specific mapping: the validated reducer / machine / function set lifts into the real module (the decision, absorbed); the HTML shell rides along to the throwaway branch that keeps the prototype as a primary source — and being one self-contained file, it stays trivially re-runnable there.
+Một khi prototype đã trả lời câu hỏi của nó, hãy ghi lại câu trả lời, sau đó ghi lại prototype theo cách mà [SKILL](SKILL.md) mô tả. Ánh xạ đặc thù cho logic: reducer / machine / tập hàm đã xác minh nhấc vào module thật (quyết định được hấp thụ); vỏ HTML đi cùng sang branch dùng-một-lần-rồi-bỏ giữ prototype như một nguồn sơ cấp — và là một file tự chứa duy nhất, nó vẫn dễ dàng chạy lại được ở đó.
 
-## Anti-patterns
+## Mẫu chống lại (Anti-patterns)
 
-- **Don't add tests.** A prototype that needs tests is no longer a prototype.
-- **Don't wire it to the real database.** Use in-memory state unless the question is specifically about persistence.
-- **Don't generalise.** No "what if we wanted to support X later." The prototype answers one question.
-- **Don't blur the logic and the page together.** If the pure module references the DOM, `document`, or button handlers, it's no longer liftable. Keep the page as a thin shell over a pure module.
-- **Don't reach for a framework, bundler, or server.** One file the recipient double-clicks; a React app or a dev server defeats "shareable".
-- **Don't ship the HTML shell into production.** The page is optimised for being clicked through by hand. The logic module behind it is the bit worth keeping.
+- **Đừng thêm test.** Một prototype cần test thì không còn là prototype nữa.
+- **Đừng nối nó vào cơ sở dữ liệu thật.** Dùng trạng thái trong bộ nhớ trừ khi câu hỏi đặc biệt xoay quanh việc lưu trữ dữ liệu.
+- **Đừng tổng quát hóa.** Không "nếu chúng ta muốn hỗ trợ X sau này thì sao". Prototype trả lời một câu hỏi.
+- **Đừng làm mờ ranh giới giữa logic và trang.** Nếu module thuần túy tham chiếu tới DOM, `document`, hoặc các button handler, nó không còn nhấc ra được nữa. Giữ trang như một vỏ mỏng trên một module thuần túy.
+- **Đừng tìm đến framework, bundler, hoặc server.** Một file người nhận nhấp đôi chuột vào; một app React hoặc dev server sẽ đánh bại tính "có thể chia sẻ".
+- **Đừng đưa vỏ HTML vào production.** Trang được tối ưu hóa cho việc được nhấp qua bằng tay. Module logic đằng sau nó mới là phần đáng giữ lại.

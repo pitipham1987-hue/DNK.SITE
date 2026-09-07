@@ -1,90 +1,90 @@
 ---
 name: ask-matt
-description: Ask which skill or flow fits your situation. A router over the skills in this repo.
+description: Hỏi xem skill hay flow nào phù hợp với tình huống của bạn. Một bộ định tuyến (router) qua các skill trong repo này.
 disable-model-invocation: true
 ---
 
 # Ask Matt
 
-You don't remember every skill, so ask.
+Bạn không nhớ hết mọi skill, vậy nên hãy hỏi.
 
-A **flow** is a path through the skills. Most paths run along one **main flow**, and two **on-ramps** merge onto it. Everything else is standalone, or a vocabulary layer that runs underneath.
+Một **flow** là một đường đi qua các skill. Hầu hết các đường đi chạy dọc theo một **flow chính (main flow)**, và có hai **đường nhập (on-ramp)** hòa vào đó. Mọi thứ còn lại là độc lập (standalone), hoặc là một lớp từ vựng chạy bên dưới.
 
-## The main flow: idea → ship
+## Flow chính: ý tưởng → giao sản phẩm (idea → ship)
 
-The route most work travels. You have an idea and want it built.
+Con đường mà hầu hết công việc đi qua. Bạn có một ý tưởng và muốn xây nó.
 
-1. **`/grill-with-docs`** — sharpen the idea by interview. Start here whenever you are **working in a working directory**: it's stateful, retaining what it learns in `CONTEXT.md` and ADRs. (No working directory? Use `/grill-me` — see Standalone. Both run the same `/grilling` primitive; `grill-with-docs` is the one that leaves a paper trail, which makes it the better of the two whenever a repo is there to leave it in.)
-2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by **`/handoff`** in both directions (a prototype lives in its own directory, which is exactly what `/handoff` is for — see Phase boundaries):
-   - **`/handoff`** out, then open a fresh session against that file,
-   - **`/prototype`** to answer the question with throwaway code,
-   - **`/handoff`** back what you learned, and reference it from the original idea thread.
-3. **Branch — is this a multi-session build?**
-   - **Yes** → **`/to-spec`** (turn the thread into a spec), then **`/to-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`/implement`** per ticket, **`/clear`ing context between each one**. Each ticket is self-contained, so the last one's context is disposable.
-   - **No** → **`/implement`** right here, in the same context window.
+1. **`/grill-with-docs`** — mài sắc ý tưởng bằng cách phỏng vấn. Bắt đầu ở đây bất cứ khi nào bạn **đang làm việc trong một thư mục làm việc (working directory)**: nó có trạng thái (stateful), lưu giữ những gì nó học được vào `CONTEXT.md` và các ADR. (Không có thư mục làm việc? Dùng `/grill-me` — xem mục Standalone. Cả hai đều chạy cùng một cơ chế nền tảng `/grilling`; `grill-with-docs` là phiên bản để lại dấu vết giấy tờ, điều này khiến nó trở thành lựa chọn tốt hơn bất cứ khi nào có một repo để lưu lại dấu vết đó.)
+2. **Rẽ nhánh — bạn có thể giải quyết mọi câu hỏi trong hội thoại không?** Nếu một câu hỏi cần một câu trả lời có thể chạy được (trạng thái, logic nghiệp vụ, một UI bạn phải nhìn thấy), hãy đi vòng qua một prototype, được nối bằng **`/handoff`** theo cả hai chiều (một prototype sống trong thư mục riêng của nó, đó chính xác là mục đích của `/handoff` — xem Phase boundaries):
+   - **`/handoff`** ra ngoài, sau đó mở một phiên mới trỏ vào file đó,
+   - **`/prototype`** để trả lời câu hỏi bằng code dùng-một-lần-rồi-bỏ,
+   - **`/handoff`** quay lại những gì bạn học được, và tham chiếu nó từ thread ý tưởng ban đầu.
+3. **Rẽ nhánh — đây có phải là một dự án xây dựng nhiều phiên (multi-session build) không?**
+   - **Có** → **`/to-spec`** (biến thread thành một spec), sau đó **`/to-tickets`** để tách nó thành các ticket dạng tracer-bullet, mỗi ticket khai báo **các cạnh chặn (blocking edges)** của nó. Trên một tracker cục bộ, đó là một file cho mỗi ticket dưới `.scratch/<feature>/issues/`, được làm thủ công theo thứ tự ưu tiên các blocker trước; trên một tracker thực sự, các cạnh này trở thành liên kết chặn (blocking link) gốc, nên bất kỳ ticket nào có các blocker đã xong đều có thể được lấy ra làm — khởi động **`/implement`** cho từng ticket, **`/clear` ngữ cảnh giữa mỗi ticket**. Mỗi ticket là tự chứa (self-contained), nên ngữ cảnh của ticket cuối cùng là bỏ đi được.
+   - **Không** → **`/implement`** ngay tại đây, trong cùng cửa sổ ngữ cảnh.
 
-   Either way, **`/implement`** builds each issue by driving **`/tdd`** internally — one red-green slice at a time — then closes out by running **`/code-review`**, a two-axis review (Standards + Spec) of the diff, before committing. Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
+   Dù theo cách nào, **`/implement`** cũng xây dựng từng issue bằng cách điều khiển **`/tdd`** bên trong — từng lát cắt đỏ-xanh (red-green) một — sau đó kết thúc bằng cách chạy **`/code-review`**, một review hai trục (Standards + Spec) của diff, trước khi commit. Dùng riêng **`/tdd`** khi bạn chỉ muốn xây một hành vi cụ thể theo hướng test-first mà không cần một spec đầy đủ, và dùng riêng **`/code-review`** bất cứ khi nào bạn muốn review một branch hoặc PR so với một điểm cố định.
 
-### Context hygiene
+### Vệ sinh ngữ cảnh (Context hygiene)
 
-Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `/to-tickets` — so the grilling, spec, and tickets all build on the same thinking. Each `/implement` then starts fresh, working from the ticket.
+Giữ các bước 1–3 trong **một cửa sổ ngữ cảnh liền mạch** — đừng compact hay clear cho đến sau `/to-tickets` — để việc grilling, spec, và tickets đều xây dựng trên cùng một mạch suy nghĩ. Sau đó mỗi `/implement` bắt đầu mới hoàn toàn, làm việc dựa trên ticket.
 
-The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: the window (~150k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before `/to-tickets`, don't push on degraded — `/compact` at the nearest phase boundary and carry on (see Phase boundaries).
+Giới hạn ở đây là **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: cửa sổ (~150k token trên các model tiên tiến nhất) mà trong đó model vẫn còn suy luận sắc bén. Nếu một phiên tiến gần đến giới hạn đó trước khi `/to-tickets`, đừng cố đẩy tiếp khi đã suy giảm — `/compact` tại ranh giới pha gần nhất rồi tiếp tục (xem Phase boundaries).
 
-## On-ramps
+## Các đường nhập (On-ramps)
 
-A starting situation that generates work, then merges onto the main flow.
+Một tình huống khởi đầu sinh ra công việc, rồi hòa vào flow chính.
 
-- **Bugs and requests piling up** → **`/triage`**. It moves issues through triage roles and produces agent-ready issues, which **`/implement`** later picks up.
+- **Bug và yêu cầu chất đống** → **`/triage`**. Nó di chuyển các issue qua các vai trò triage và tạo ra các issue sẵn sàng cho agent, mà **`/implement`** sau đó sẽ lấy để làm.
 
-  Triage is only for issues **you didn't create** — bug reports, incoming feature requests, anything that arrives raw. Tickets that `/to-tickets` produced are already agent-ready, so **don't triage them**.
+  Triage chỉ dành cho các issue **mà bạn không tạo ra** — báo cáo lỗi, yêu cầu tính năng gửi đến, bất cứ thứ gì đến ở dạng thô. Các ticket mà `/to-tickets` tạo ra đã sẵn sàng cho agent rồi, nên **đừng triage chúng**.
 
-- **Something's broken** → **`/diagnosing-bugs`**. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a **tight feedback loop** — one command that already goes red on *this* bug — then fixes with a regression test. Its post-mortem hands off to **`/improve-codebase-architecture`** when the real finding is that there's no good seam to lock the bug down.
+- **Có gì đó bị hỏng** → **`/diagnosing-bugs`**. Dành cho những ca khó: con bug không chịu lộ diện ngay từ cái nhìn đầu tiên, sự chập chờn không liên tục (flake), sự hồi quy (regression) len lỏi vào giữa hai trạng thái đã biết là tốt. Nó từ chối đưa ra lý thuyết cho đến khi có một **vòng phản hồi chặt (tight feedback loop)** — một lệnh duy nhất đã báo đỏ trên *chính* con bug này — rồi sửa bằng một regression test. Phần hậu kiểm (post-mortem) của nó bàn giao sang **`/improve-codebase-architecture`** khi phát hiện thực sự là không có một điểm nối (seam) tốt để khóa chặt con bug lại.
 
-- **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`/wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.
+- **Một nỗ lực lớn, mờ mịt — một dự án greenfield hoặc một tính năng khổng lồ, quá lớn cho một phiên** → **`/wayfinder`**, flow đòi hỏi tư duy cao nhất ở đây. Khi con đường từ đây đến đích chưa hiện rõ, nó vẽ ra một **bản đồ chung (shared map)** gồm các **ticket quyết định (decision tickets)** trên issue tracker và giải quyết chúng từng cái một — tạo ra **các quyết định, không phải sản phẩm bàn giao** — cho đến khi sương mù được đẩy lùi và con đường trở nên rõ ràng. Trong khi **`/grill-with-docs`** mài sắc một ý tưởng bạn có thể nắm gọn trong một phiên, thì wayfinder dành cho ý tưởng mà bạn không thể — và nó chậm hơn và dày đặc hơn, nên hãy dành nó cho đúng trường hợp đó, không bao giờ dùng cho một tính năng đã được xác định phạm vi rõ ràng.
 
-  When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/to-spec`**, which collapses the map's linked decisions into a buildable plan, then `/to-tickets` and `/implement` as usual. Looping the map straight into `/implement` skips that collapse and throws the linked detail away — go straight to `/implement` only when the effort turned out genuinely small.
+  Khi bản đồ trở nên rõ ràng, **nó bàn giao, nó không xây dựng**: hòa vào flow chính tại **`/to-spec`**, nơi gộp các quyết định liên kết trong bản đồ thành một kế hoạch có thể xây dựng được, sau đó `/to-tickets` và `/implement` như bình thường. Việc lặp bản đồ thẳng vào `/implement` bỏ qua bước gộp đó và vứt bỏ chi tiết liên kết — chỉ đi thẳng vào `/implement` khi nỗ lực thực ra hóa ra nhỏ.
 
-## Codebase health
+## Sức khỏe codebase (Codebase health)
 
-Not feature work — upkeep.
+Không phải công việc tính năng — mà là bảo trì.
 
-- **`/improve-codebase-architecture`** — run whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces **deepening opportunities**; picking one _generates an idea_ you can take into the main flow at `/grill-with-docs`. It's the survey that finds the candidates; **`/codebase-design`** (below) is the bench you design the chosen one on.
+- **`/improve-codebase-architecture`** — chạy bất cứ khi nào bạn có thời gian rảnh để giữ cho codebase tốt cho agent vận hành. Nó phát hiện ra các **cơ hội đào sâu (deepening opportunities)**; chọn một cái sẽ _sinh ra một ý tưởng_ mà bạn có thể mang vào flow chính tại `/grill-with-docs`. Nó là công cụ khảo sát tìm ứng viên; **`/codebase-design`** (bên dưới) là bàn thiết kế nơi bạn thiết kế ứng viên đã chọn.
 
-## Vocabulary underneath
+## Từ vựng bên dưới
 
-Two model-invoked references that run *beneath* the other skills — each the single source of truth for its vocabulary. Reach for them directly when the **words**, not the process, are the problem; or let the skills above pull them in.
+Hai tài liệu tham chiếu do model tự gọi (model-invoked), chạy *bên dưới* các skill khác — mỗi cái là nguồn chân lý duy nhất cho từ vựng của nó. Dùng trực tiếp khi vấn đề nằm ở **từ ngữ**, không phải ở quy trình; hoặc để các skill ở trên tự kéo chúng vào.
 
-- **`/domain-modeling`** — sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline `/grill-with-docs` drives to keep `CONTEXT.md` a clean glossary.
-- **`/codebase-design`** — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `/tdd` and `/improve-codebase-architecture` both speak it.
+- **`/domain-modeling`** — mài sắc ngôn ngữ *nghiệp vụ (domain)* của dự án: thách thức một thuật ngữ mơ hồ, giải quyết một từ bị quá tải nghĩa ("account" đang làm ba việc), ghi lại một quyết định khó đảo ngược dưới dạng ADR. Đây là kỷ luật chủ động mà `/grill-with-docs` thúc đẩy để giữ cho `CONTEXT.md` là một bảng thuật ngữ sạch.
+- **`/codebase-design`** — từ vựng module-sâu (module, interface, depth, seam, adapter, leverage, locality) để thiết kế *hình dạng* của một module: nhiều hành vi đằng sau một interface nhỏ tại một seam sạch. Cả `/tdd` và `/improve-codebase-architecture` đều dùng từ vựng này.
 
-## Phase boundaries
+## Ranh giới pha (Phase boundaries)
 
-A **phase** is a chunk of work inside a session — the grilling, the implementation, the QA. At the **boundary** between two of them you have five options, and picking between them is the fuzziest decision in this whole map:
+Một **pha (phase)** là một khối công việc bên trong một phiên — việc grilling, việc implement, việc QA. Tại **ranh giới** giữa hai pha, bạn có năm lựa chọn, và việc chọn giữa chúng là quyết định mơ hồ nhất trong toàn bộ bản đồ này:
 
-- **Continue** — stay put. Costs nothing, loses nothing.
-- **`/clear`** — empty the window, when nothing here matters to what's next.
-- **`/handoff`** — write a portable markdown file. Narrow: only for a **new harness**, a **new directory**, a **colleague**, or forking a side task **mid-phase**. What it buys is portability.
-- **Subagent** — send a tightly-scoped task to its own window and get a report back.
-- **`/compact`** — compress this context and seed a fresh session with it. The **default**, at the bottom of the tree rather than the first reach.
+- **Continue** — ở nguyên tại chỗ. Không tốn gì, không mất gì.
+- **`/clear`** — xóa sạch cửa sổ, khi không có gì ở đây quan trọng cho việc tiếp theo.
+- **`/handoff`** — ghi ra một file markdown có thể mang theo. Hẹp: chỉ dùng cho một **harness mới**, một **thư mục mới**, một **đồng nghiệp**, hoặc tách một nhánh việc phụ **giữa pha**. Cái nó mang lại là tính di động.
+- **Subagent** — gửi một tác vụ được giới hạn chặt chẽ sang cửa sổ riêng của nó và nhận lại báo cáo.
+- **`/compact`** — nén ngữ cảnh này và khởi tạo một phiên mới với nó. **Mặc định**, ở dưới cùng cây quyết định chứ không phải lựa chọn đầu tiên.
 
-Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree — the five questions, the reasoning behind each branch, and why the primary-source cost makes **Continue** the one to rule out first. Make the decision **at** a boundary; mid-phase, continue or split the rest into subagents.
+Đọc [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) để biết cây quyết định theo thứ tự — năm câu hỏi, lý lẽ đằng sau mỗi nhánh, và tại sao chi phí của nguồn sơ cấp khiến **Continue** là lựa chọn cần loại trừ trước tiên. Đưa ra quyết định **tại** một ranh giới; giữa pha thì tiếp tục hoặc chia phần còn lại cho các subagent.
 
-## Standalone
+## Độc lập (Standalone)
 
-Off the main flow entirely.
+Nằm hoàn toàn ngoài flow chính.
 
-- **`/grill-me`** — the same relentless interview as `/grill-with-docs`, but **stateless**: it saves nothing locally and builds no `CONTEXT.md`. Reach for it when you are **not working in a working directory** — sharpening a plan, a design, a piece of writing, anything with no repo under it. If you are in a working directory, use `/grill-with-docs` instead: it runs the same interview and leaves a paper trail, so it is strictly the better one.
-- **`/grilling`** — the interview primitive itself: rounds, the frontier, facts are the agent's job and decisions are yours. `/grill-me` and `/grill-with-docs` are the two named ways in, and `/triage`, `/wayfinder` and `/improve-codebase-architecture` all run it internally. Reach for it directly only when you want the interview with no wrapper around it.
-- **`/resolving-merge-conflicts`** — work an in-progress merge or rebase conflict hunk by hunk, resolving by **intent** traced to each side's primary source rather than by picking lines, then finish the operation. It never runs `--abort`. Standalone and off every flow: reach for it when you are already mid-conflict.
-- **`/prototype`** — a small, throwaway program that answers one design question: does this state model feel right, or what should this UI look like. Throwaway is a constraint on how the code is written, not a promise to destroy it: the answer folds into the real code, and the prototype itself is kept as a **primary source** on a `prototype/<name>` branch out of main, pointed at from the implementation issue. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.
-- **`/research`** — delegate reading legwork to a **background agent**: it investigates a question against **primary sources**, then leaves a cited Markdown file in the repo. Keep working while it reads. The file it produces is something to take *into* the main flow at `/grill-with-docs` — research feeds the thinking, it doesn't replace it.
-- **`/to-questionnaire`** — when the thing blocking you isn't in your head or the codebase but in **someone else's**, this writes them a questionnaire to fill in. It's the inverse of `/grill-me`: instead of interviewing you about the subject, it interviews you about the **send** — who it's going to, what you need back — and aims the questions at the gap. What comes back is material for `/grill-with-docs` or `/to-spec`.
-- **`/wizard`** — for the steps only a **human** can take: provisioning infrastructure, setting up credentials or CI secrets, clicking through an unfamiliar third-party dashboard, running a one-off migration or cutover. It generates an interactive bash script that opens each URL, captures each value, and writes it into `.env` and GitHub secrets — so the procedure stops being something you re-explain to an agent every time. Model-invoked, so the agent reaches for it the moment it hits a wall only you can pass. If the agent could just do it itself, it should; this is for where a human is genuinely in the loop.
-- **`/wait-what`** — the corrective for a message that didn't land. Use it mid-conversation, inside any other skill, and the agent re-pitches what it just said with the context you were missing, in plain English, using the `CONTEXT.md` vocabulary. It works after the fact; `/grill-with-docs` is the upfront cure, because a shared language agreed early is what stops the jargon arriving at all.
-- **`/teach`** — learn a concept over multiple sessions, using the current directory as a stateful workspace.
-- **`/writing-for-agents`** — reference for writing documents agents consume: skills, AGENTS.md, pointed-at docs.
+- **`/grill-me`** — cuộc phỏng vấn không khoan nhượng giống như `/grill-with-docs`, nhưng **không trạng thái (stateless)**: nó không lưu gì cục bộ và không xây dựng `CONTEXT.md`. Dùng nó khi bạn **không làm việc trong một thư mục làm việc** — mài sắc một kế hoạch, một thiết kế, một bài viết, bất cứ thứ gì không có repo bên dưới. Nếu bạn đang ở trong một thư mục làm việc, hãy dùng `/grill-with-docs` thay vào đó: nó chạy cùng cuộc phỏng vấn nhưng để lại dấu vết giấy tờ, nên nó chắc chắn là lựa chọn tốt hơn.
+- **`/grilling`** — bản thân cơ chế phỏng vấn nền tảng: các vòng (rounds), ranh giới hiểu biết (frontier), sự thật là việc của agent còn quyết định là của bạn. `/grill-me` và `/grill-with-docs` là hai cách đặt tên để vào nó, và `/triage`, `/wayfinder` và `/improve-codebase-architecture` đều chạy nó ở bên trong. Chỉ dùng trực tiếp khi bạn muốn cuộc phỏng vấn không có lớp bọc nào xung quanh.
+- **`/resolving-merge-conflicts`** — xử lý một xung đột merge hoặc rebase đang diễn ra, từng hunk một, giải quyết theo **ý định (intent)** truy ngược về nguồn sơ cấp của mỗi bên thay vì chọn dòng theo cảm tính, rồi hoàn tất thao tác. Nó không bao giờ chạy `--abort`. Độc lập và nằm ngoài mọi flow: dùng nó khi bạn đang giữa một xung đột.
+- **`/prototype`** — một chương trình nhỏ, dùng-một-lần-rồi-bỏ, trả lời một câu hỏi thiết kế duy nhất: mô hình trạng thái này có cảm giác đúng không, hoặc UI này nên trông như thế nào. Dùng-một-lần-rồi-bỏ là một ràng buộc về cách viết code, không phải một lời hứa sẽ hủy nó: câu trả lời được gấp vào code thật, còn bản thân prototype được giữ lại như một **nguồn sơ cấp** trên một branch `prototype/<name>` tách ra từ main, được trỏ tới từ issue implementation. Đây là bước đi vòng ở bước 2 của flow chính, nhưng hãy dùng nó bất cứ khi nào một câu hỏi thiết kế khó giải quyết trên giấy.
+- **`/research`** — giao việc đọc tài liệu cho một **agent chạy nền (background agent)**: nó điều tra một câu hỏi dựa trên **nguồn sơ cấp**, rồi để lại một file Markdown có trích dẫn trong repo. Bạn tiếp tục làm việc trong khi nó đọc. File nó tạo ra là thứ để mang *vào* flow chính tại `/grill-with-docs` — nghiên cứu nuôi dưỡng tư duy, nó không thay thế tư duy.
+- **`/to-questionnaire`** — khi thứ đang chặn bạn không nằm trong đầu bạn hay trong codebase mà nằm trong **đầu người khác**, skill này viết cho họ một bảng câu hỏi để điền vào. Nó là nghịch đảo của `/grill-me`: thay vì phỏng vấn bạn về chủ đề, nó phỏng vấn bạn về **việc gửi** — gửi cho ai, bạn cần nhận lại gì — và nhắm các câu hỏi vào khoảng trống đó. Những gì nhận lại là tư liệu cho `/grill-with-docs` hoặc `/to-spec`.
+- **`/wizard`** — dành cho các bước chỉ **con người** mới làm được: cấp phát hạ tầng, thiết lập credential hoặc CI secret, click qua một dashboard bên thứ ba xa lạ, chạy một cuộc di trú (migration) hoặc chuyển đổi (cutover) một lần. Nó tạo ra một script bash tương tác mở từng URL, thu thập từng giá trị, và ghi nó vào `.env` và GitHub secrets — để quy trình đó không còn là thứ bạn phải giải thích lại cho agent mỗi lần. Do model tự gọi, nên agent sẽ dùng nó ngay khi gặp một bức tường mà chỉ con người mới vượt qua được. Nếu agent có thể tự làm được, nó nên tự làm; skill này dành cho nơi con người thực sự cần tham gia.
+- **`/wait-what`** — biện pháp khắc phục cho một tin nhắn không được tiếp nhận đúng. Dùng nó giữa cuộc hội thoại, bên trong bất kỳ skill nào khác, và agent sẽ trình bày lại những gì nó vừa nói với ngữ cảnh mà bạn còn thiếu, bằng tiếng Anh đơn giản, dùng từ vựng trong `CONTEXT.md`. Nó hoạt động sau khi sự việc đã xảy ra; `/grill-with-docs` là liều thuốc phòng ngừa từ đầu, vì một ngôn ngữ chung được thống nhất sớm chính là thứ ngăn thuật ngữ chuyên môn xuất hiện ngay từ đầu.
+- **`/teach`** — học một khái niệm qua nhiều phiên, dùng thư mục hiện tại như một không gian làm việc có trạng thái.
+- **`/writing-for-agents`** — tài liệu tham chiếu để viết các tài liệu mà agent tiêu thụ: skill, AGENTS.md, các tài liệu được trỏ tới.
 
-## Precondition
+## Điều kiện tiên quyết
 
-**`/setup-matt-pocock-skills`** — run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.
+**`/setup-matt-pocock-skills`** — chạy trước flow kỹ thuật đầu tiên của bạn để cấu hình issue tracker, các nhãn triage, và cách bố trí tài liệu mà các skill khác giả định sẵn có. Các issue tracker tùy chỉnh cũng hoạt động được.

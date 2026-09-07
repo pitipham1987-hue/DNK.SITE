@@ -1,64 +1,64 @@
 # UI Prototype
 
-Generate **several radically different UI variations** on a single route, switchable from a floating bottom bar. The user flips between variants in the browser, picks one (or steals bits from each), then throws the rest away.
+Tạo ra **nhiều biến thể UI khác biệt triệt để** trên một route duy nhất, có thể chuyển đổi qua một thanh nổi ở đáy màn hình. Người dùng lật qua các biến thể trong trình duyệt, chọn một cái (hoặc nhặt các chi tiết từ mỗi cái), sau đó vứt bỏ phần còn lại.
 
-If the question is about logic/state rather than what something looks like — wrong branch. Use [LOGIC.md](LOGIC.md).
+Nếu câu hỏi xoay quanh logic/trạng thái hơn là giao diện trông như thế nào — sai nhánh. Hãy dùng [LOGIC.md](LOGIC.md).
 
-## When this is the right shape
+## Khi nào đây là hình dạng phù hợp
 
-- "What should this page look like?"
-- "I want to see a few options for this dashboard before committing."
-- "Try a different layout for the settings screen."
-- Any time the user would otherwise spend a day picking between three vague mockups in their head.
+- "Trang này nên trông như thế nào?"
+- "Tôi muốn xem một vài phương án cho dashboard này trước khi cam kết triển khai."
+- "Thử một bố cục khác cho màn hình cài đặt."
+- Bất kỳ khi nào người dùng nếu không làm vậy sẽ phải dành cả ngày để chọn giữa ba bản mockup mơ hồ trong đầu họ.
 
-## Two sub-shapes — strongly prefer sub-shape A
+## Hai hình dạng phụ — cực kỳ ưu tiên hình dạng phụ A
 
-A UI prototype is much easier to judge when it's **butting up against the rest of the app** — real header, real sidebar, real data, real density. A throwaway route on its own is a vacuum: every variant looks fine in isolation. Default to sub-shape A whenever there's a plausible existing page to host the variants. Only reach for sub-shape B if the prototype genuinely has no nearby home.
+Một UI prototype dễ đánh giá hơn nhiều khi nó **đặt cạnh phần còn lại của ứng dụng** — header thật, sidebar thật, dữ liệu thật, mật độ thật. Một route dùng-một-lần-rồi-bỏ nằm một mình là một môi trường chân không: mọi biến thể trông đều ổn khi đứng cô lập. Hãy mặc định chọn hình dạng phụ A bất cứ khi nào có một trang hiện có hợp lý để chứa các biến thể. Chỉ chọn hình dạng phụ B nếu prototype thực sự không có ngôi nhà nào gần đó.
 
-### Sub-shape A — adjustment to an existing page (preferred)
+### Hình dạng phụ A — điều chỉnh một trang hiện có (ưu tiên)
 
-The route already exists. Variants are rendered **on the same route**, gated by a `?variant=` URL search param. The existing data fetching, params, and auth all stay — only the rendering swaps. This is the default; pick it unless there's a specific reason not to.
+Route đã tồn tại. Các biến thể được render **trên cùng route**, được kiểm soát bởi tham số tìm kiếm URL `?variant=`. Việc lấy dữ liệu hiện có, các param, và auth đều giữ nguyên — chỉ có phần rendering được hoán đổi. Đây là mặc định; hãy chọn nó trừ khi có lý do đặc biệt để không chọn.
 
-If the prototype is for something that doesn't yet have a page but *would naturally live inside one* (a new section of the dashboard, a new card on the settings screen, a new step in an existing flow) — that's still sub-shape A. Mount the variants inside the host page.
+Nếu prototype dành cho một thứ chưa có trang nhưng *nằm trong một trang hiện có một cách tự nhiên* (một phần mới của dashboard, một card mới trên màn hình cài đặt, một bước mới trong một luồng hiện có) — đó vẫn là hình dạng phụ A. Gắn các biến thể bên trong trang chủ (host page).
 
-### Sub-shape B — a new page (last resort)
+### Hình dạng phụ B — một trang mới (lựa chọn cuối cùng)
 
-Only use this when the thing being prototyped genuinely has no existing page to live inside — e.g. an entirely new top-level surface, or a flow that can't be embedded anywhere sensible.
+Chỉ dùng cách này khi thứ đang làm prototype thực sự không có trang hiện có nào để sống bên trong — ví dụ một bề mặt cấp cao nhất hoàn toàn mới, hoặc một luồng không thể nhúng vào đâu một cách hợp lý.
 
-Create a **throwaway route** following whatever routing convention the project already uses — don't invent a new top-level structure. Name it so it's obviously a prototype (e.g. include the word `prototype` in the path or filename). Same `?variant=` pattern.
+Tạo một **route dùng-một-lần-rồi-bỏ** tuân theo bất kỳ quy ước routing nào dự án đang dùng — không tự bịa ra cấu trúc cấp cao nhất mới. Đặt tên sao cho rõ ràng là một prototype (ví dụ đưa từ `prototype` vào path hoặc filename). Cùng mô hình `?variant=`.
 
-Before committing to sub-shape B, sanity-check: is there really no existing page this could be embedded in? An empty route hides design problems that a populated one would expose.
+Trước khi chọn hình dạng phụ B, hãy kiểm tra lại: thực sự không có trang hiện có nào có thể nhúng cái này vào sao? Một route trống rỗng sẽ giấu đi các vấn đề thiết kế mà một route có dữ liệu sẽ bộc lộ.
 
-In both sub-shapes the floating bottom bar is identical.
+Trong cả hai hình dạng phụ, thanh công cụ nổi ở đáy màn hình là giống hệt nhau.
 
-## Process
+## Quy trình
 
-### 1. State the question and pick N
+### 1. Nêu rõ câu hỏi và chọn N
 
-Default to **3 variants**. More than 5 stops being radically different and starts being noise — cap there.
+Mặc định là **3 biến thể**. Nhiều hơn 5 biến thể sẽ không còn là khác biệt triệt để mà bắt đầu trở thành nhiễu — hãy giới hạn ở đó.
 
-Write down the plan in one line, in the prototype's location or a top-of-file comment:
+Ghi lại kế hoạch bằng một dòng, tại vị trí của prototype hoặc một comment ở đầu file:
 
 > "Three variants of the settings page, switchable via `?variant=`, on the existing `/settings` route."
 
-This works whether the user is here to push back or not.
+Cách này hoạt động dù người dùng có ở đây để phản hồi hay không.
 
-### 2. Generate radically different variants
+### 2. Tạo ra các biến thể khác biệt triệt me
 
-Draft each variant. Hold each one to:
+Phác thảo từng biến thể. Giữ từng cái tuân theo:
 
-- The page's purpose and the data it has access to.
-- The project's component library / styling system (TailwindCSS, shadcn, MUI, plain CSS, whatever).
-- A clear exported component name, e.g. `VariantA`, `VariantB`, `VariantC`.
+- Mục đích của trang và dữ liệu mà nó có quyền truy cập.
+- Thư viện component / hệ thống style của dự án (TailwindCSS, shadcn, MUI, plain CSS, bất cứ thứ gì).
+- Một tên component được export rõ ràng, ví dụ `VariantA`, `VariantB`, `VariantC`.
 
-Variants must be **structurally different** — different layout, different information hierarchy, different primary affordance, not just different colours. Three slightly-tweaked card grids isn't a UI prototype, it's wallpaper. If two drafts come out too similar, redo one with explicit "do not use a card grid" guidance.
+Các biến thể phải **khác biệt về cấu trúc** — layout khác nhau, hệ thống phân cấp thông tin khác nhau, yếu tố tương tác chính khác nhau, không chỉ là màu sắc khác nhau. Ba lưới card được chỉnh sửa nhẹ không phải là một UI prototype, đó là giấy dán tường. Nếu hai bản phác thảo ra quá giống nhau, hãy làm lại một cái với hướng dẫn rõ ràng "không dùng lưới card".
 
-### 3. Wire them together
+### 3. Nối chúng lại với nhau
 
-Create a single switcher component on the route:
+Tạo một component switcher duy nhất trên route:
 
 ```tsx
-// pseudo-code — adapt to the project's framework
+// pseudo-code — điều chỉnh theo framework của dự án
 const variant = searchParams.get('variant') ?? 'A';
 return (
   <>
@@ -70,43 +70,43 @@ return (
 );
 ```
 
-For sub-shape A (existing page): keep all the existing data fetching above the switcher; only the rendered subtree changes per variant.
+Đối với hình dạng phụ A (trang hiện có): giữ tất cả logic lấy dữ liệu hiện có ở phía trên switcher; chỉ có cây component được render thay đổi theo từng biến thể.
 
-For sub-shape B (new page): the throwaway route under `/prototype/<name>` mounts the same switcher.
+Đối với hình dạng phụ B (trang mới): route dùng-một-lần-rồi-bỏ dưới `/prototype/<name>` gắn cùng một switcher.
 
-### 4. Build the floating switcher
+### 4. Dựng thanh switcher nổi
 
-A small fixed-position bar at the bottom-centre of the screen with three pieces:
+Một thanh nhỏ cố định vị trí ở giữa đáy màn hình với ba phần:
 
-- **Left arrow** — cycles to the previous variant (wraps around).
-- **Variant label** — shows the current variant key and, if the variant exports a name, that name too. e.g. `B — Sidebar layout`.
-- **Right arrow** — cycles forward (wraps around).
+- **Mũi tên trái** — chuyển sang biến thể trước (quay vòng).
+- **Nhãn biến thể** — hiển thị key của biến thể hiện tại và, nếu biến thể export một tên, hiển thị cả tên đó. Ví dụ `B — Sidebar layout`.
+- **Mũi tên phải** — chuyển sang biến thể tiếp theo (quay vòng).
 
-Behaviour:
+Hành vi:
 
-- Clicking an arrow updates the URL search param (use the framework's router — `router.replace` on Next, `navigate` on React Router, etc) so the variant is shareable and reload-stable.
-- Keyboard: `←` and `→` arrow keys also cycle. Don't intercept arrow keys when an `<input>`, `<textarea>`, or `[contenteditable]` is focused.
-- Visually distinct from the page (e.g. high-contrast pill, subtle shadow) so it's obviously not part of the design being evaluated.
-- Hidden in production builds — gate on `process.env.NODE_ENV !== 'production'` or an equivalent check, so a stray prototype merge can't ship the bar to users.
+- Click vào mũi tên sẽ cập nhật tham số tìm kiếm URL (dùng router của framework — `router.replace` trên Next, `navigate` trên React Router, v.v.) để biến thể có thể chia sẻ được và giữ nguyên khi reload.
+- Bàn phím: phím mũi tên `←` và `→` cũng thực hiện quay vòng. Đừng chặn phím mũi tên khi một `<input>`, `<textarea>`, hoặc `[contenteditable]` đang được focus.
+- Trực quan khác biệt so với trang (ví dụ pill độ tương phản cao, bóng mờ nhẹ) để rõ ràng không phải là một phần của thiết kế đang được đánh giá.
+- Ẩn trong các bản build production — kiểm tra dựa trên `process.env.NODE_ENV !== 'production'` hoặc kiểm tra tương đương, để một đợt merge prototype vô tình không đưa thanh này tới người dùng cuối.
 
-Put the switcher in a single shared component so both sub-shapes can reuse it. Locate it wherever shared UI lives in the project.
+Đặt switcher trong một component dùng chung duy nhất để cả hai hình dạng phụ đều có thể tái sử dụng. Đặt nó ở bất kỳ đâu UI dùng chung sống trong dự án.
 
-### 5. Hand it over
+### 5. Bàn giao
 
-Surface the URL (and the `?variant=` keys). The user will flip through whenever they get to it. The interesting feedback is usually **"I want the header from B with the sidebar from C"** — that's the actual design they want.
+Cung cấp URL (và các key `?variant=`). Người dùng sẽ lật qua bất cứ khi nào họ rảnh. Phản hồi thú vị nhất thường là **"Tôi muốn header của B với sidebar của C"** — đó chính là thiết kế thực sự họ muốn.
 
-### 6. Capture the answer and clean up
+### 6. Ghi lại câu trả lời và dọn dẹp
 
-Once a variant has won, capture the answer — which variant and why — then capture the prototype the way the [SKILL](SKILL.md) describes. Fold the winner into the real code and move the rest onto the throwaway branch, not into main:
+Một khi một biến thể đã thắng, hãy ghi lại câu trả lời — biến thể nào và tại sao — sau đó ghi lại prototype theo cách mà [SKILL](SKILL.md) mô tả. Gấp biến thể thắng vào code thật và chuyển phần còn lại sang branch dùng-một-lần-rồi-bỏ, không đưa vào main:
 
-- **Sub-shape A** — fold the winner into the existing page; drop the losing variants and the switcher from main.
-- **Sub-shape B** — promote the winning variant to a real route; drop the throwaway route and the switcher from main.
+- **Hình dạng phụ A** — gấp biến thể thắng vào trang hiện có; bỏ các biến thể thua và switcher khỏi main.
+- **Hình dạng phụ B** — nâng cấp biến thể thắng thành một route thật; bỏ route dùng-một-lần-rồi-bỏ và switcher khỏi main.
 
-The full set of variants is the primary source, so it lands on the throwaway branch, not the bin — variant components and the switcher left in the main branch rot fast and confuse the next reader.
+Toàn bộ tập hợp biến thể là nguồn sơ cấp, nên nó nằm trên branch dùng-một-lần-rồi-bỏ, không phải thùng rác — các component biến thể và switcher còn lại trong branch main sẽ nhanh chóng thối rữa và làm rối người đọc tiếp theo.
 
-## Anti-patterns
+## Mẫu chống lại (Anti-patterns)
 
-- **Variants that differ only in colour or copy.** That's a tweak, not a prototype. Real variants disagree about structure.
-- **Sharing too much code between variants.** A shared `<Header>` is fine; a shared `<Layout>` defeats the point. Each variant should be free to throw out the layout.
-- **Wiring variants to real mutations.** Read-only prototypes are fine. If a variant needs to mutate, point it at a stub — the question is "what should this look like", not "does the backend work".
-- **Promoting the prototype directly to production.** The variant code was written under prototype constraints (no tests, minimal error handling). Rewrite it properly when you fold it in.
+- **Các biến thể chỉ khác nhau về màu sắc hoặc văn bản.** Đó là chỉnh sửa nhỏ, không phải prototype. Các biến thể thực sự bất đồng về cấu trúc.
+- **Chia sẻ quá nhiều code giữa các biến thể.** Một `<Header>` dùng chung thì ổn; một `<Layout>` dùng chung sẽ đánh bại mục tiêu. Mỗi biến thể nên tự do vứt bỏ layout.
+- **Nối các biến thể với các mutation thật.** Prototype chỉ đọc (read-only) là ổn. Nếu một biến thể cần mutate, hãy trỏ nó vào một stub — câu hỏi là "cái này nên trông như thế nào", không phải "backend có chạy không".
+- **Nâng cấp trực tiếp prototype lên production.** Code biến thể được viết dưới các ràng buộc prototype (không test, xử lý lỗi tối thiểu). Hãy viết lại nó một cách đàng hoàng khi bạn gấp nó vào.

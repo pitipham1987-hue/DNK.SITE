@@ -1,53 +1,53 @@
 ---
 name: to-questionnaire
-description: Turn a decision you can't fully answer into a questionnaire for someone else to fill in.
+description: Biến một quyết định mà bạn không thể tự mình trả lời đầy đủ thành một bảng câu hỏi để người khác điền vào.
 disable-model-invocation: true
 ---
 
-Turn something the user can't answer alone into a **questionnaire** — a Markdown document they hand to one person to fill in async, or fill out together over a meeting. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.
+Biến một điều gì đó mà người dùng không thể tự trả lời đơn độc thành một **bảng câu hỏi (questionnaire)** — một tài liệu Markdown mà họ đưa cho một người khác điền bất đồng bộ, hoặc cùng điền trong một cuộc họp. Người nhận nắm giữ kiến thức mà người dùng còn thiếu; bảng câu hỏi sẽ rút kiến thức đó ra từ họ.
 
-**Grill the send, not the subject.** Interview the user only about the _send_, which they can always answer: who it goes to, and what they need back. The questions in the document then target the **gap** between what the recipient knows and what the user needs.
+**Phỏng vấn việc gửi, không phải chủ đề.** Phỏng vấn người dùng chỉ về việc _gửi_, điều mà họ luôn có thể trả lời: gửi cho ai, và họ cần nhận lại gì. Các câu hỏi trong tài liệu sau đó sẽ nhắm vào **khoảng trống (gap)** giữa những gì người nhận biết và những gì người dùng cần.
 
-1. **Who is it going to?** Ask, in one exchange, the recipient's role, expertise, and relationship to the user. This fixes the questionnaire's tone and how much context it must carry. Done when you know who the recipient is and what they know that the user doesn't.
+1. **Gửi cho ai?** Hỏi, trong một lần trao đổi, vai trò, chuyên môn, và mối quan hệ của người nhận với người dùng. Điều này cố định giọng văn của bảng câu hỏi và lượng ngữ cảnh mà nó phải mang theo. Hoàn tất khi bạn biết người nhận là ai và họ biết điều gì mà người dùng không biết.
 
-2. **What do you need back?** Ask, in one exchange, the specific decisions or facts the user can't resolve alone and needs from this person. Done when you have a concrete list of what the user must walk away able to do or decide.
+2. **Bạn cần nhận lại gì?** Hỏi, trong một lần trao đổi, các quyết định hoặc sự kiện cụ thể mà người dùng không thể tự giải quyết một mình và cần từ người này. Hoàn tất khi bạn có một danh sách cụ thể về những gì người dùng phải bước ra có thể làm hoặc quyết định được.
 
-3. **Write the questionnaire.** Draft questions aimed at the gap from steps 1–2, following the Document structure below. Write it to `to-questionnaire-<slug>.md` in the current directory (slug from the topic) and report the path. Done when the file exists and every item the user named in step 2 is covered by a question.
+3. **Viết bảng câu hỏi.** Phác thảo các câu hỏi nhắm vào khoảng trống từ bước 1–2, tuân theo Cấu trúc Tài liệu bên dưới. Viết nó vào `to-questionnaire-<slug>.md` trong thư mục hiện tại (slug từ chủ đề) và thông báo đường dẫn. Hoàn tất khi file tồn tại và mọi mục người dùng nêu tên ở bước 2 đều được bao phủ bởi một câu hỏi.
 
-## Document structure
+## Cấu trúc tài liệu
 
-Frame the document as a **discovery questionnaire**: the user lacks context, the recipient holds it. Order questions most-important-first — async means you may only get one pass — and group them under `##` headings by theme once there are more than a handful. Write it using the template below.
+Đóng khung tài liệu dưới dạng một **bảng câu hỏi khám phá (discovery questionnaire)**: người dùng thiếu ngữ cảnh, người nhận nắm giữ nó. Sắp xếp các câu hỏi theo thứ tự quan trọng-nhất-trước — làm việc bất đồng bộ nghĩa là bạn có thể chỉ có một lượt gửi — và nhóm chúng dưới các heading `##` theo chủ đề một khi có nhiều hơn một vài câu hỏi. Viết nó dùng mẫu bên dưới.
 
 <questionnaire-template>
 
-# <Questionnaire title>
+# <Tên bảng câu hỏi>
 
-**Purpose:** why this questionnaire exists and the decision riding on it.
+**Mục đích:** tại sao bảng câu hỏi này tồn tại và quyết định nào phụ thuộc vào nó.
 
-**From:** <the user> — **To:** <the recipient> — **How your answers will be used:** <where they go>
+**Từ:** <người dùng> — **Tới:** <người nhận> — **Cách câu trả lời của bạn sẽ được sử dụng:** <chúng đi đâu>
 
-## Context
+## Ngữ cảnh
 
-One paragraph orienting a recipient who wasn't in the user's head. Enough to answer well, not a page.
+Một đoạn văn định hướng cho người nhận không nằm trong đầu của người dùng. Đủ để trả lời tốt, không phải cả một trang.
 
-## How to answer
+## Cách trả lời
 
-Deadline and rough effort. Partial answers and "I don't know" are useful — flag anything you're unsure of rather than skipping it.
+Hạn chót và công sức ước tính. Các câu trả lời một phần và "tôi không biết" đều có ích — hãy đánh dấu bất kỳ điều gì bạn không chắc chắn thay vì bỏ qua.
 
-## <Theme heading>
+## <Heading chủ đề>
 
-One `##` section per theme. Under each, its questions, most-important-first. Every question is one idea — never compound — with an answer stub directly beneath, and a one-line _why this matters_ only where the question could be misread or invite a throwaway answer.
+Một phần `##` cho mỗi chủ đề. Dưới mỗi phần, các câu hỏi của nó, quan trọng-nhất-trước. Mỗi câu hỏi là một ý — không bao giờ ghép phức hợp — với một khung trả lời ngay bên dưới, và một dòng _tại sao điều này quan trọng_ chỉ ở nơi câu hỏi có thể bị đọc hiểu sai hoặc mời gọi một câu trả lời qua loa.
 
 <question-example>
-### What load is the system expected to handle at launch?
+### Tải mà hệ thống dự kiến sẽ xử lý khi ra mắt là bao nhiêu?
 
-_Why this matters: it decides whether we provision for burst traffic now or defer it._
+_Tại sao điều này quan trọng: nó quyết định liệu chúng ta nên cấp phát cho lưu lượng đột biến ngay bây giờ hay hoãn lại._
 
 >
 </question-example>
 
-## Anything else?
+## Còn điều gì khác không?
 
-A closing catch-all: anything we didn't ask that we should know?
+Một câu hỏi chốt cuối cùng mở rộng: có điều gì chúng ta chưa hỏi mà chúng ta nên biết không?
 
 </questionnaire-template>

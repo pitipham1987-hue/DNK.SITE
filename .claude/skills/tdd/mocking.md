@@ -1,59 +1,59 @@
-# When to Mock
+# Khi nào nên Mock
 
-Mock at **system boundaries** only:
+Chỉ mock tại các **ranh giới hệ thống (system boundaries)**:
 
-- External APIs (payment, email, etc.)
-- Databases (sometimes - prefer test DB)
-- Time/randomness
-- File system (sometimes)
+- Các API bên ngoài (thanh toán, email, v.v.)
+- Cơ sở dữ liệu (đôi khi - ưu tiên dùng test DB)
+- Thời gian / tính ngẫu nhiên (time/randomness)
+- File system (đôi khi)
 
-Don't mock:
+Đừng mock:
 
-- Your own classes/modules
-- Internal collaborators
-- Anything you control
+- Các class / module của chính bạn
+- Các thành phần hợp tác nội bộ
+- Bất kỳ thứ gì bạn kiểm soát
 
-## Designing for Mockability
+## Thiết kế để dễ Mock (Designing for Mockability)
 
-At system boundaries, design interfaces that are easy to mock:
+Tại ranh giới hệ thống, hãy thiết kế các interface dễ mock:
 
-**1. Use dependency injection**
+**1. Dùng dependency injection**
 
-Pass external dependencies in rather than creating them internally:
+Truyền các dependency bên ngoài vào thay vì tự khởi tạo chúng bên trong:
 
 ```typescript
-// Easy to mock
+// Dễ mock
 function processPayment(order, paymentClient) {
   return paymentClient.charge(order.total);
 }
 
-// Hard to mock
+// Khó mock
 function processPayment(order) {
   const client = new StripeClient(process.env.STRIPE_KEY);
   return client.charge(order.total);
 }
 ```
 
-**2. Prefer SDK-style interfaces over generic fetchers**
+**2. Ưu tiên các interface dạng SDK hơn các bộ lấy dữ liệu chung (generic fetchers)**
 
-Create specific functions for each external operation instead of one generic function with conditional logic:
+Tạo các hàm cụ thể cho từng thao tác bên ngoài thay vì một hàm chung duy nhất chứa logic điều kiện:
 
 ```typescript
-// GOOD: Each function is independently mockable
+// TỐT: Mỗi hàm có thể mock một cách độc lập
 const api = {
   getUser: (id) => fetch(`/users/${id}`),
   getOrders: (userId) => fetch(`/users/${userId}/orders`),
   createOrder: (data) => fetch('/orders', { method: 'POST', body: data }),
 };
 
-// BAD: Mocking requires conditional logic inside the mock
+// XẤU: Mocking đòi hỏi logic điều kiện bên trong bản mock
 const api = {
   fetch: (endpoint, options) => fetch(endpoint, options),
 };
 ```
 
-The SDK approach means:
-- Each mock returns one specific shape
-- No conditional logic in test setup
-- Easier to see which endpoints a test exercises
-- Type safety per endpoint
+Cách tiếp cận SDK nghĩa là:
+- Mỗi mock trả về một hình dạng dữ liệu cụ thể
+- Không có logic điều kiện trong phần thiết lập test (test setup)
+- Dễ thấy endpoint nào mà một test đang thực thi
+- An toàn về kiểu (type safety) cho từng endpoint

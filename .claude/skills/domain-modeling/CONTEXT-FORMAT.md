@@ -1,60 +1,60 @@
-# CONTEXT.md Format
+# Định dạng CONTEXT.md
 
-## Structure
+## Cấu trúc
 
 ```md
-# {Context Name}
+# {Tên Context}
 
-{One or two sentence description of what this context is and why it exists.}
+{Mô tả một hoặc hai câu về context này là gì và tại sao nó tồn tại.}
 
 ## Language
 
 **Order**:
-{A one or two sentence description of the term}
+{Mô tả một hoặc hai câu về thuật ngữ}
 _Avoid_: Purchase, transaction
 
 **Invoice**:
-A request for payment sent to a customer after delivery.
+Một yêu cầu thanh toán gửi cho khách hàng sau khi giao hàng.
 _Avoid_: Bill, payment request
 
 **Customer**:
-A person or organization that places orders.
+Một cá nhân hoặc tổ chức đặt đơn hàng.
 _Avoid_: Client, buyer, account
 ```
 
-## Rules
+## Quy tắc
 
-- **Be opinionated.** When multiple words exist for the same concept, pick the best one and list the others under `_Avoid_`.
-- **Keep definitions tight.** One or two sentences max. Define what it IS, not what it does.
-- **Only include terms specific to this project's context.** General programming concepts (timeouts, error types, utility patterns) don't belong even if the project uses them extensively. Before adding a term, ask: is this a concept unique to this context, or a general programming concept? Only the former belongs.
-- **Group terms under subheadings** when natural clusters emerge. If all terms belong to a single cohesive area, a flat list is fine.
+- **Có chính kiến.** Khi có nhiều từ tồn tại cho cùng một khái niệm, hãy chọn từ tốt nhất và liệt kê những từ còn lại dưới `_Avoid_`.
+- **Giữ định nghĩa chặt chẽ.** Tối đa một hoặc hai câu. Định nghĩa nó LÀ gì, không phải nó LÀM gì.
+- **Chỉ đưa vào những thuật ngữ đặc thù cho context của dự án này.** Các khái niệm lập trình chung (timeout, kiểu lỗi, các mẫu tiện ích) không thuộc về đây dù dự án có dùng chúng nhiều đến đâu. Trước khi thêm một thuật ngữ, hãy hỏi: đây có phải là khái niệm riêng của context này, hay là một khái niệm lập trình chung? Chỉ cái trước mới thuộc về đây.
+- **Nhóm các thuật ngữ dưới các heading phụ** khi các cụm tự nhiên xuất hiện. Nếu tất cả thuật ngữ thuộc về một khu vực gắn kết duy nhất, một danh sách phẳng cũng ổn.
 
-## Single vs multi-context repos
+## Repo đơn context vs đa context
 
-**Single context (most repos):** One `CONTEXT.md` at the repo root.
+**Đơn context (hầu hết các repo):** Một `CONTEXT.md` tại gốc repo.
 
-**Multiple contexts:** A `CONTEXT-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
+**Đa context:** Một `CONTEXT-MAP.md` tại gốc repo liệt kê các context, chúng sống ở đâu, và chúng liên quan với nhau như thế nào:
 
 ```md
 # Context Map
 
 ## Contexts
 
-- [Ordering](./src/ordering/CONTEXT.md) — receives and tracks customer orders
-- [Billing](./src/billing/CONTEXT.md) — generates invoices and processes payments
-- [Fulfillment](./src/fulfillment/CONTEXT.md) — manages warehouse picking and shipping
+- [Ordering](./src/ordering/CONTEXT.md) — nhận và theo dõi đơn hàng của khách
+- [Billing](./src/billing/CONTEXT.md) — tạo hóa đơn và xử lý thanh toán
+- [Fulfillment](./src/fulfillment/CONTEXT.md) — quản lý việc lấy hàng và giao hàng tại kho
 
 ## Relationships
 
-- **Ordering → Fulfillment**: Ordering emits `OrderPlaced` events; Fulfillment consumes them to start picking
-- **Fulfillment → Billing**: Fulfillment emits `ShipmentDispatched` events; Billing consumes them to generate invoices
-- **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
+- **Ordering → Fulfillment**: Ordering phát ra sự kiện `OrderPlaced`; Fulfillment tiêu thụ chúng để bắt đầu lấy hàng
+- **Fulfillment → Billing**: Fulfillment phát ra sự kiện `ShipmentDispatched`; Billing tiêu thụ chúng để tạo hóa đơn
+- **Ordering ↔ Billing**: Các kiểu dùng chung cho `CustomerId` và `Money`
 ```
 
-The skill infers which structure applies:
+Skill này suy luận cấu trúc nào áp dụng:
 
-- If `CONTEXT-MAP.md` exists, read it to find contexts
-- If only a root `CONTEXT.md` exists, single context
-- If neither exists, create a root `CONTEXT.md` lazily when the first term is resolved
+- Nếu `CONTEXT-MAP.md` tồn tại, đọc nó để tìm các context
+- Nếu chỉ có `CONTEXT.md` gốc tồn tại, đó là đơn context
+- Nếu không có cái nào tồn tại, tạo một `CONTEXT.md` gốc một cách lười khi thuật ngữ đầu tiên được giải quyết
 
-When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.
+Khi có nhiều context tồn tại, hãy suy luận chủ đề hiện tại liên quan đến context nào. Nếu không rõ, hãy hỏi.

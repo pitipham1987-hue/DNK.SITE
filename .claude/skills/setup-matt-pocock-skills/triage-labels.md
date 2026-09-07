@@ -1,15 +1,15 @@
-# Triage Labels
+# Nhãn Triage (Triage Labels)
 
-The skills speak in terms of five canonical triage roles. This file maps those roles to the actual label strings used in this repo's issue tracker.
+Các skill nói về 5 vai trò triage chuẩn hóa. File này ánh xạ các vai trò đó sang các chuỗi nhãn thực tế được sử dụng trong issue tracker của repo này.
 
-| Label in mattpocock/skills | Label in our tracker | Meaning                                  |
+| Nhãn trong mattpocock/skills | Nhãn trong tracker của chúng ta | Ý nghĩa                                  |
 | -------------------------- | -------------------- | ---------------------------------------- |
-| `needs-triage`             | `needs-triage`       | Maintainer needs to evaluate this issue  |
-| `needs-info`               | `needs-info`         | Waiting on reporter for more information |
-| `ready-for-agent`          | `ready-for-agent`    | Fully specified, ready for an AFK agent  |
-| `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
-| `wontfix`                  | `wontfix`            | Will not be actioned                     |
+| `needs-triage`             | `needs-triage`       | Maintainer cần đánh giá issue này        |
+| `needs-info`               | `needs-info`         | Đang chờ người báo cáo cung cấp thêm thông tin |
+| `ready-for-agent`          | `ready-for-agent`    | Đã mô tả đầy đủ, sẵn sàng cho agent AFK  |
+| `ready-for-human`          | `ready-for-human`    | Đòi hỏi con người thực hiện              |
+| `wontfix`                  | `wontfix`            | Sẽ không xử lý                           |
 
-When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
+Khi một skill nhắc đến một vai trò (ví dụ "áp dụng nhãn triage sẵn sàng cho AFK"), hãy dùng chuỗi nhãn tương ứng từ bảng này.
 
-Edit the right-hand column to match whatever vocabulary you actually use.
+Chỉnh sửa cột bên phải để khớp với bất kỳ từ vựng nào bạn thực sự sử dụng.

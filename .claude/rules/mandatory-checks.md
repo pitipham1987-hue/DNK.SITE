@@ -1,0 +1,5 @@
+# Quy tắc bắt buộc trước khi coi một section/trang là hoàn thành
+
+- **So sánh design sau mỗi thay đổi lớn**: sau khi implement/sửa xong 1 section hoặc 1 trang, dùng skill `browser-automation` (hoặc `run`) chụp screenshot trang đang chạy, rồi so sánh trực quan với `weav.com_RS.png` (bố cục, khối màu, spacing, tỷ lệ). Nêu rõ điểm khác biệt và chỉnh sửa nếu lệch nhiều so với tinh thần thiết kế gốc.
+- **Mobile-friendly bắt buộc**: mọi section phải kiểm tra và hoạt động tốt ở mobile (~390px) trước khi coi là hoàn thành — không chỉ desktop. Chụp screenshot ở cả viewport mobile và desktop khi so sánh design.
+- **Animation khi scroll bắt buộc cho mọi section**: mỗi `<section>` phải có hiệu ứng xuất hiện khi cuộn tới (vd: fade-in + dịch chuyển nhẹ theo trục Y) dùng `IntersectionObserver` thuần trong `main.js`, thêm/bỏ class (vd: `.is-visible`) để trigger transition CSS. Tôn trọng `prefers-reduced-motion: reduce` — tắt/giảm animation khi user bật cờ này. Không dùng thư viện animation nặng (GSAP/AOS) trừ khi được yêu cầu. Cách gắn animation cho section mới: xem `javascript.md`.
