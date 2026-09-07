@@ -1,7 +1,7 @@
 ---
 name: wait-what
-description: Stop. That last message did not land — re-pitch it.
+description: Dừng lại. Tin nhắn vừa rồi chưa rõ ràng — hãy giải thích lại.
 disable-model-invocation: true
 ---
 
-Wait — I don't understand where you've got to here. Re-pitch that: give me a little bit of context, talk in ASD-STE100 Simplified Technical English, and use the ubiquitous language from `CONTEXT.md`.
+Chờ đã — tôi chưa hiểu bạn đã đi tới bước nào ở đây. Hãy giải thích lại: cho tôi thêm một chút ngữ cảnh, diễn đạt bằng Tiếng Anh Kỹ Thuật Đơn Giản Hóa (ASD-STE100 Simplified Technical English), và sử dụng ngôn ngữ chung (ubiquitous language) từ file `CONTEXT.md`.
