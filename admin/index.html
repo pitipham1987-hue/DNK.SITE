@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản trị blog | DNK's House</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section class="admin-login" id="login-view" aria-labelledby="login-title">
+        <a class="admin-brand" href="../index.html">DNK's House</a>
+        <p class="eyebrow">KHU VỰC QUẢN TRỊ</p>
+        <h1 id="login-title">Đăng nhập</h1>
+        <p class="admin-lead">Dành riêng cho quản trị viên nội dung.</p>
+        <form id="login-form" class="admin-form">
+          <label>Email <input type="email" name="email" autocomplete="email" required /></label>
+          <label>Mật khẩu <input type="password" name="password" autocomplete="current-password" minlength="6" required /></label>
+          <p class="form-message" id="login-message" role="alert"></p>
+          <button class="admin-button" type="submit">Đăng nhập</button>
+        </form>
+      </section>
+
+      <section class="admin-dashboard" id="dashboard-view" hidden aria-labelledby="dashboard-title">
+        <header class="admin-header">
+          <a class="admin-brand" href="../index.html">DNK's House</a>
+          <div><span id="admin-email"></span><button class="admin-link" id="logout-button" type="button">Đăng xuất</button></div>
+        </header>
+        <div class="admin-content">
+          <div class="dashboard-title"><div><p class="eyebrow">BLOG</p><h1 id="dashboard-title">Quản lý bài viết</h1></div><button class="admin-button" id="new-post-button" type="button">+ Bài viết mới</button></div>
+          <div class="admin-tabs" role="tablist"><button class="is-active" type="button" data-filter="active">Đang dùng</button><button type="button" data-filter="trash">Thùng rác</button></div>
+          <p class="form-message" id="dashboard-message" role="status"></p>
+          <div class="post-list" id="post-list" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="editor-panel" id="editor-view" hidden aria-labelledby="editor-title">
+        <header class="admin-header"><button class="admin-link" id="back-button" type="button">← Danh sách bài viết</button><a class="admin-brand" href="../index.html">DNK's House</a></header>
+        <div class="editor-content"><p class="eyebrow">BLOG</p><h1 id="editor-title">Bài viết mới</h1>
+          <form id="post-form" class="post-form">
+            <input type="hidden" name="id" />
+            <label>Tiêu đề <input name="title" maxlength="160" required /></label>
+            <label>Slug <input name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /><small>Chữ thường, số và dấu gạch ngang.</small></label>
+            <label>Tóm tắt <textarea name="excerpt" maxlength="320" rows="3" required></textarea></label>
+            <label>Danh mục <select name="category_id" id="category-select"><option value="">Chưa phân loại</option></select></label>
+            <label>Ảnh đại diện <input name="cover_image" type="file" accept="image/png,image/jpeg,image/webp" /><small id="cover-note">PNG, JPG hoặc WebP, tối đa 5 MB.</small></label>
+            <label>Nội dung (Markdown) <textarea name="content" rows="16" required></textarea><small>HTML thô không được hiển thị. Hỗ trợ heading, đậm, nghiêng, link, danh sách và ảnh Markdown.</small></label>
+            <div class="editor-actions"><button class="admin-button" type="submit" name="intent" value="draft">Lưu nháp</button><button class="admin-button admin-button-dark" type="submit" name="intent" value="published">Xuất bản</button></div>
+            <p class="form-message" id="editor-message" role="alert"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/admin.js"></script>
+  </body>
+</html>
