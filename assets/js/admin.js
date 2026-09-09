@@ -6,7 +6,6 @@
     dashboard: document.querySelector("#dashboard-view"),
     editor: document.querySelector("#editor-view"),
   };
-  const loginForm = document.querySelector("#login-form");
   const postForm = document.querySelector("#post-form");
   let session = readSession();
   let currentFilter = "active";
@@ -15,6 +14,18 @@
 
   function readSession() {
     try { return JSON.parse(localStorage.getItem(sessionKey)); } catch { return null; }
+  }
+  function captureOAuthSession() {
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const accessToken = params.get("access_token");
+    const refreshToken = params.get("refresh_token");
+    if (!accessToken || !refreshToken) {
+      if (params.get("error_description")) message("#login-message", params.get("error_description"));
+      return;
+    }
+    session = { access_token: accessToken, refresh_token: refreshToken };
+    localStorage.setItem(sessionKey, JSON.stringify(session));
+    history.replaceState(null, document.title, window.location.pathname);
   }
   function authHeaders(extra = {}) {
     return { apikey: config.anonKey, Authorization: `Bearer ${session.access_token}`, ...extra };
@@ -122,17 +133,14 @@
     } catch (error) { message("#editor-message", error.message); }
     finally { submitter.disabled = false; }
   }
-  loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const data = new FormData(loginForm);
-    try {
-      message("#login-message", "Đang đăng nhập…", true);
-      session = await request("/auth/v1/token?grant_type=password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: data.get("email"), password: data.get("password") }) }, false);
-      localStorage.setItem(sessionKey, JSON.stringify(session));
-      if (await ensureAdmin()) { await loadCategories(); show("dashboard"); await loadPosts(); }
-    } catch (error) { message("#login-message", error.message); }
+  document.querySelector("#google-login-button").addEventListener("click", () => {
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    window.location.assign(`${config.url}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectTo)}`);
   });
-  document.querySelector("#logout-button").addEventListener("click", () => { localStorage.removeItem(sessionKey); session = null; show("login"); loginForm.reset(); });
+  document.querySelector("#logout-button").addEventListener("click", async () => {
+    try { await request("/auth/v1/logout", { method: "POST" }); } catch { /* Local logout still completes. */ }
+    localStorage.removeItem(sessionKey); session = null; show("login");
+  });
   document.querySelector("#new-post-button").addEventListener("click", () => openEditor());
   document.querySelector("#back-button").addEventListener("click", async () => { show("dashboard"); await loadPosts(); });
   document.querySelector("#post-list").addEventListener("click", async (event) => {
@@ -152,5 +160,6 @@
   });
   postForm.elements.title.addEventListener("input", () => { if (!postForm.elements.id.value) postForm.elements.slug.value = slugify(postForm.elements.title.value); });
   postForm.addEventListener("submit", savePost);
+  captureOAuthSession();
   (async () => { if (await ensureAdmin()) { await loadCategories(); show("dashboard"); await loadPosts(); } else show("login"); })();
 })();

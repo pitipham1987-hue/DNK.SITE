@@ -23,3 +23,29 @@ Hướng dẫn chi tiết được tách theo chủ đề trong `.claude/rules/`
 | `design-system.md`       | `assets/css/**`, `**/*.html` | Màu, typography, component patterns, bố cục trang chủ        |
 | `javascript.md`          | `assets/js/**`               | Vanilla IIFE, `main.js`, `contact.js`, reveal pattern        |
 | `content-and-brand.md`   | `**/*.html`                  | Thông tin công ty, giọng văn, ngôn ngữ, kênh liên hệ         |
+
+## Trạng thái triển khai: Blog & Admin (cập nhật 2026-09-09)
+
+### Đã hoàn thành
+
+- Blog công khai lấy tối đa ba bài `published` từ Supabase tại section `#insights` trên trang chủ; trang chi tiết dùng URL `pages/blog.html?slug=<slug>`.
+- Khu vực quản trị tại `admin/index.html`: đăng nhập Google OAuth, kiểm tra role `admin`, tạo/sửa bài, lưu nháp, xuất bản, upload ảnh đại diện, xóa mềm và khôi phục từ thùng rác.
+- Nội dung bài viết được lưu Markdown và render theo tập cú pháp giới hạn; HTML thô không được render để giảm rủi ro XSS.
+- Migration `supabase/001_admin_blog.sql` tạo/cập nhật schema blog (`profiles`, `categories`, `posts`), trigger profile, RLS policies, bucket `post-images`, và policy Storage. Script có thể chạy trên project đã có `public.profiles`.
+- Đã xác minh tĩnh: JavaScript qua `node --check`; `/admin/` và `/pages/blog.html` trả HTTP 200 qua local server.
+
+### Bước tiếp theo
+
+- Vận hành: tạo các danh mục ban đầu trong `public.categories`, sau đó tạo và xuất bản bài viết đầu tiên tại `/admin/`.
+- Deploy: thêm URL production của site vào Supabase Authentication → URL Configuration → Redirect URLs, bên cạnh URL local `http://localhost:8000/admin/`.
+- Thiết lập dọn thùng rác: lên lịch Supabase Cron để xóa vĩnh viễn các bài có `deleted_at` quá 30 ngày.
+- Kiểm thử trước khi public: đăng nhập Google, tạo/lưu nháp/xuất bản/xóa/khôi phục một bài, kiểm tra ảnh đại diện và trang chi tiết trên desktop lẫn mobile.
+
+### Quyết định quan trọng
+
+- Giữ kiến trúc HTML/CSS/JavaScript vanilla; không thêm framework hay build step, phù hợp website hiện có.
+- Dùng Supabase cho Auth, Postgres và Storage để có backend thực dụng mà không phải duy trì server riêng.
+- Dùng Google OAuth thay cho email/mật khẩu vì tài khoản quản trị hiện hữu đã được tạo bằng Google provider; admin không cần quản lý thêm password.
+- Không có đăng ký công khai: tài khoản chỉ có quyền quản trị khi `public.profiles.role = 'admin'`.
+- Frontend chỉ dùng Supabase URL và anon key cùng RLS; không bao giờ ghi hoặc sử dụng `service_role` key ở client hay trong repository.
+- Khách chỉ đọc được bài `published` chưa bị xóa; toàn bộ CRUD bài viết, danh mục và ảnh bị giới hạn bởi policy `is_admin()`.
