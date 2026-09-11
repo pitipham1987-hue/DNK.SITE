@@ -1,0 +1,79 @@
+graph TB
+    subgraph Browser["🌐 Browser / Client (Untrusted Zone)"]
+        Pages["📄 Pages<br/>index.html<br/>about.html<br/>services.html<br/>contact.html<br/>blog.html<br/>admin/index.html"]
+        
+        CSS["🎨 CSS System<br/>tokens.css<br/>base.css<br/>components.css<br/>admin.css"]
+        
+        JS["⚙️ JavaScript Modules<br/>supabase-config.js<br/>main.js (scroll reveal)<br/>contact.js (validation)<br/>blog.js (fetch & render)<br/>admin.js (OAuth + CRUD)"]
+        
+        LocalStorage["💾 localStorage<br/>contact form log<br/>OAuth tokens"]
+        
+        DOM["🖼️ Rendered DOM<br/>Interactive UI<br/>Event handlers"]
+    end
+    
+    subgraph ExternalServices["🌍 External Services"]
+        GoogleFonts["📚 Google Fonts API<br/>Be Vietnam Pro<br/>CDN-loaded"]
+        
+        GoogleAuth["🔐 Google OAuth<br/>Provider<br/>accounts.google.com"]
+    end
+    
+    subgraph SupabaseEndpoint["☁️ Supabase REST Layer (HTTPS Transport)"]
+        Auth["🔑 Auth Endpoint<br/>/auth/v1/user<br/>Token validation"]
+        
+        REST["🔗 REST API<br/>/rest/v1/posts<br/>/rest/v1/categories<br/>/rest/v1/profiles"]
+        
+        Storage["📦 Storage API<br/>/storage/v1/<br/>post-images bucket"]
+    end
+    
+    subgraph Backend["🛡️ Supabase Backend (Trusted Zone - RLS Enforced)"]
+        Profiles["👤 Profiles Table<br/>id, role, display_name<br/>created_at"]
+        
+        Categories["📂 Categories<br/>id, name, slug<br/>Regex validated"]
+        
+        Posts["📝 Posts Table<br/>id, title, slug, content<br/>status, published_at<br/>deleted_at (soft delete)<br/>author_id, category_id"]
+        
+        PostImages["🖼️ Storage Bucket<br/>post-images/<br/>Public read<br/>Admin write only"]
+        
+        RLS["🔒 RLS Policies<br/>is_admin() check<br/>Role-based access<br/>Row-level filtering"]
+        
+        Triggers["⚡ DB Triggers<br/>set_updated_at()<br/>auto-create profile"]
+    end
+    
+    Pages -->|Load| CSS
+    CSS -->|Apply styles| DOM
+    Pages -->|Load| JS
+    JS -->|Execute| DOM
+    
+    JS -->|Capture redirect| LocalStorage
+    JS -->|Validate form| LocalStorage
+    
+    JS -->|Fetch| GoogleFonts
+    JS -->|OAuth redirect| GoogleAuth
+    
+    JS -->|HTTP GET| Auth
+    JS -->|HTTP GET/POST| REST
+    JS -->|HTTP PUT| Storage
+    
+    Auth -->|Check token| RLS
+    REST -->|Query| Profiles
+    REST -->|Query| Categories
+    REST -->|Query| Posts
+    Storage -->|Upload/Read| PostImages
+    
+    RLS -->|Enforce| Profiles
+    RLS -->|Enforce| Categories
+    RLS -->|Enforce| Posts
+    RLS -->|Enforce| PostImages
+    
+    Triggers -->|Auto-update| Posts
+    Triggers -->|Auto-create| Profiles
+    
+    REST -->|Filter results via RLS| JS
+    Storage -->|URL response| JS
+    
+    style Browser fill:#e3f2fd,stroke:#1976d2,color:#000
+    style ExternalServices fill:#f3e5f5,stroke:#7b1fa2,color:#000
+    style SupabaseEndpoint fill:#fff3e0,stroke:#f57c00,color:#000
+    style Backend fill:#e8f5e9,stroke:#388e3c,color:#000
+    
+    style RLS fill:#ffebee,stroke:#d32f2f,color:#000,font-weight:bold
